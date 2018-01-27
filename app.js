@@ -28,7 +28,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(static('public'));
 
-app.set('views', __dirname+'/views');
+app.set('views', path.join(__dirname,'views/pages'));
 app.set('view engine', config.view_engine);
 
 router.route('/').get(function(req,res) {
