@@ -1,14 +1,14 @@
-var database;
+let database;
 
-var init = function(db) {
+const init = (db) => {
     database = db;
 }
 
 
-var addUser = function (id, password, grade, callback) {
+const addUser = (id, password, grade, callback) => {
     console.log('addUser 호출됨.');
 
-    database.getConnection(function (err, conn) {
+    database.getConnection( (err, conn) => {
         if(err) {
             if (conn) {
                 conn.release();
@@ -18,9 +18,9 @@ var addUser = function (id, password, grade, callback) {
         }
 
         console.log('데이터베이스 연결 스레드 아이디: ' + conn.threadId);
-        var data = { userid:id , userpassword:password , usergrade:grade};
+        const data = { userid:id , userpassword:password , usergrade:grade};
 
-        var exec = conn.query('insert into users set ?',data, function(err,result) {
+        const exec = conn.query('insert into users set ?',data, function(err,result) {
             conn.release();
             console.log('실행 대상 SQL : ' + exec.sql);
 
@@ -38,10 +38,10 @@ var addUser = function (id, password, grade, callback) {
 }
 
 
-var authUser = function(id,password, callback) {
+const authUser = (id,password, callback) => {
     console.log('authUser 호출됨.');
 
-    database.getConnection(function(err,conn){
+    database.getConnection( (err,conn) => {
         if(err) {
             if(conn) {
                 conn.release();
@@ -51,10 +51,10 @@ var authUser = function(id,password, callback) {
         }
         console.log('데이터베이스 연결 스레드 아이디' + conn.threadId);
 
-        var columns = ['userid','userpassword'];
-        var tablename = 'users';
+        const columns = ['userid','userpassword'];
+        const tablename = 'users';
 
-        var exec = conn.query("select ?? from ?? where userid = ? and userpassword = ? "
+        const exec = conn.query("select ?? from ?? where userid = ? and userpassword = ? "
         , [columns , tablename , id,password],function(err,result) {
             conn.release();
             console.log('실행 대상 SQL: ' + exec.sql);

@@ -1,4 +1,4 @@
-var express = require('express')
+const express = require('express')
     , http = require('http')
     , path = require('path')
     , bodyParser = require('body-parser')
@@ -8,11 +8,11 @@ var express = require('express')
     , router = express.Router()
     , expressErrorHandler = require('express-error-handler');
 
-var user = require('./routes/userjs');
-var config = require('./config/config');
+const user = require('./routes/userjs');
+const config = require('./config/config');
 
 
-var pool = mysql.createPool({
+const pool = mysql.createPool({
     connectionLimit: 10,
     host: 'localhost',
     user: 'root',
@@ -31,25 +31,19 @@ app.use(static('public'));
 app.set('views', path.join(__dirname,'views/pages'));
 app.set('view engine', config.view_engine);
 
-router.route('/').get(function(req,res) {
-    res.render('index');
-});
-router.route('/login').get(function(req,res) {
-    res.render('login');
-});
-router.route('/signup').get(function(req,res) {
-    res.render('signup');
-});
+router.route('/').get( (req,res) => res.render('index'));
+router.route('/login').get( (req,res) => res.render('login'));
+router.route('/signup').get( (req,res) => res.render('signup'));
 
-router.route('/process/adduser').post(function(req,res){
+router.route('/process/adduser').post((req,res) => {
     console.log('/process/adduser 호출됨');
     
-    var paramId = req.body.id || req.query.id;
-    var paramPassword = req.body.password || req.query.password;
-    var paramgrade = req.body.usergrade || req.query.usergrade;
+    const paramId = req.body.id || req.query.id;
+    const paramPassword = req.body.password || req.query.password;
+    const paramgrade = req.body.usergrade || req.query.usergrade;
 
     if(pool) {
-        user.addUser(paramId , paramPassword , paramgrade, function(err,adduser) {
+        user.addUser(paramId , paramPassword , paramgrade, (err,adduser) => {
             if(err) {
                 console.error('사용자 추가 중 오류발생 : ' + err.stack);
 
@@ -63,8 +57,6 @@ router.route('/process/adduser').post(function(req,res){
             if(adduser) {
                 console.dir(adduser);
                 console.log('inserted '+ adduser.affectedRows + 'rows');
-
-                var insertId = adduser.insertId;
 
                 res.writeHead('200',{'Content-Type' : 'text/html;charset=utf8'});
                 res.write('<h2>사용자 추가 성공</h2>');
@@ -82,16 +74,16 @@ router.route('/process/adduser').post(function(req,res){
     }
 });
 
-router.route('/process/login').post(function(req,res) {
+router.route('/process/login').post( (req,res) => {
     console.log('/process/login 호출됨.');
 
-    var paramId = req.body.id || req.query.id;
-    var paramPassword = req.body.password || req.query.password;
+    const paramId = req.body.id || req.query.id;
+    const paramPassword = req.body.password || req.query.password;
 
     console.log('요청 파라미터 : ' + paramId + ',' + paramPassword);
 
     if(pool) {
-        user.authUser(paramId , paramPassword , function(err, result) {
+        user.authUser(paramId , paramPassword , (err, result) => {
             if(err) {
                 console.error('사용자 로그인 중 오류발생 : ' + err.stack);
 
@@ -126,7 +118,7 @@ router.route('/process/login').post(function(req,res) {
 
 app.use('/', router);
 
-var errorHandler = expressErrorHandler({
+const errorHandler = expressErrorHandler({
     static: {
         '404': './public/404.html'
     }
