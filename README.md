@@ -5,4 +5,5 @@
 view폴더 수정 / config폴더 생성 db폴더 수정예정  
 var 삭제 let과 const로 대체 18.01.28 by 종화
 
-#태경
+# 태경 
+commit 
