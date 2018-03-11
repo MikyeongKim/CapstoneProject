@@ -1,31 +1,26 @@
 {
-  "name": "capstoneproject",
+  "name": "guide",
   "version": "1.0.0",
-  "description": "#종화 짱짱맨 ㅋ.ㅋ",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/MikyeongKim/CapstoneProject.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/MikyeongKim/CapstoneProject/issues"
-  },
-  "homepage": "https://github.com/MikyeongKim/CapstoneProject#readme",
+  "description": "",
+  "main": "BasicUsage.js",
   "dependencies": {
     "body-parser": "^1.18.2",
+    "cookie-parser": "^1.4.3",
+    "css": "^2.2.1",
     "ejs": "^2.5.7",
     "express": "^4.16.2",
-    "express-error-handler": "^1.1.0",
-    "http": "0.0.0",
-    "mysql": "^2.15.0",
+    "express-session": "^1.15.6",
     "mysql2": "^1.5.1",
     "path": "^0.12.7",
     "sequelize": "^4.32.2",
-    "serve-static": "^1.13.1"
-  }
+    "serve-static": "^1.13.1",
+    "session": "^0.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "echo \"Server Start\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
 }
