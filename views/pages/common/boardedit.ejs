@@ -9,10 +9,11 @@
 </head>
 
 <body>
-    <form method="post" action="/community/insert">
+    <form method="post" action="/community/edit/<%= data.board_no %>">
         <table>
             <label>게시판 </label>
-            <select name="board_department">
+            <!-- TODO : SELECT값 data.board_department 로 지정하기 -->
+            <select name="board_department" >
                 <option value="999">전체학과</option>
                 <option value="1">기계공학과</option>
                 <option value="2">기계설계공학과</option>
@@ -29,11 +30,12 @@
             </select>
             <br>
             <label>제목 </label>
-            <input type="text" name="title" placeholder="제목을 입력하세요" maxlength="255" required >
+            <input type="text" name="title" placeholder="제목을 입력하세요" 
+                value="<%= data.board_title %>" maxlength="255" required >
             <br>
             <br>
-            <textarea name="content" placeholder="내용을 입력하세요. " required rows=30 autofocus cols="130"></textarea>
-            <input type="text" name="category" value="3">
+            <textarea name="content" placeholder="내용을 입력하세요."
+                required rows=30 autofocus cols="130"><%= data.board_content %></textarea>
         </table>
         <hr align="left" width="70%">
         <button onclick="location.href='javascript:history.back()'">뒤로가기</button>
