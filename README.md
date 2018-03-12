@@ -8,3 +8,7 @@ view폴더 수정 / config폴더 생성 db폴더 수정예정 var 삭제 let과 
 java compile batch 완성 18.02.11 by 종화
 
 ORM  : Sequelize / 폴더구조 기본틀 완성 / 게시판 CR 기능 / 로그인기능 /  My info 제공  18.03.12 by 종화
+
+Front(mk) : html로 구성한 기본 view 틀 우선 업로드
+	위치 : MKworkingDir 브랜치 선택 > codit_1 디렉토리에 업로드
+	18.03.12 by 미경 
