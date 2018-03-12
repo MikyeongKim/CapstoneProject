@@ -63,7 +63,7 @@ router.route('/insert')
 
 
 router.route('/edit/:id')
-  .get((req, res) => { })
+  .get((req, res) => { res.render('common/boardedit')})
   .post((req, res) => { });
 
 
