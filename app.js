@@ -11,7 +11,8 @@ const index = require("./routes/index");
 const editor = require("./routes/editor");
 const user = require("./routes/user");
 const community = require("./routes/community");
-
+//미경추가
+//var path=require('path');
 
 app.use(session({
   key: 'codit',
@@ -23,9 +24,15 @@ app.use(session({
   }
 }));
 
+//미경추가
+//app.use(express.static(path.join(__dirname,'public')));
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(static('public'));
+//미경추가
+//app.use(express.static('public'));
+
 
 app.set('port', process.env.PORT || '3000');
 app.set('views', path.join(__dirname, 'views/pages'));

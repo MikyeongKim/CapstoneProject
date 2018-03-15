@@ -2,43 +2,77 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>summernote</title>
+
+  <!-- include jquery -->
+  <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+  <!-- include libraries BS -->
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.css" />
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.js"></script>
+
+  <!-- include summernote -->
+  <link rel="stylesheet" href="/summernote/summernote-bs4.css">
+  <script type="text/javascript" src="/summernote/summernote-bs4.js"></script>
+
+
+  <script type="text/javascript">
+    $(function() {
+      $('.summernote').summernote({
+        height: 200
+      });
+
+      $('form').on('submit', function(e) {
+        e.preventDefault();
+        //document.write('asdasd')
+        alert($('.summernote').summernote('code'));
+        //????먼차이얌
+      });
+    });
+  </script>
+
+  </head>
 
 <body>
-    <form method="post" action="/community/insert">
-        <table>
-            <label>게시판 </label>
-            <select name="board_department">
-                <option value="999">전체학과</option>
-                <option value="1">기계공학과</option>
-                <option value="2">기계설계공학과</option>
-                <option value="3">메카트로닉스공학과</option>
-                <option value="4">전자공학부</option>
-                <option value="5">컴퓨터공학부</option>
-                <option value="6">게임공학부</option>
-                <option value="7">신소재공학과</option>
-                <option value="8">생명화학공학과</option>
-                <option value="9">디자인학부</option>
-                <option value="10">경영학부</option>
-                <option value="11">나노광공학과</option>
-                <option value="12">에너지전기공학과</option>
-            </select>
-            <br>
-            <label>제목 </label>
-            <input type="text" name="title" placeholder="제목을 입력하세요" maxlength="255" required >
-            <br>
-            <br>
-            <textarea name="content" placeholder="내용을 입력하세요. " required rows=30 autofocus cols="130"></textarea>
-            <input type="text" name="category" value="3">
-        </table>
-        <hr align="left" width="70%">
-        <button onclick="location.href="javascript:history.back()" ">뒤로가기</button>
-        <input type="submit" value="글작성" />
-    </form>
+
+  <form action="/community/insert" method="post">
+
+  <table>
+  <label>게시판 </label>
+  <select name="board_department">
+      <option value="999">전체학과</option>
+      <option value="1">기계공학과</option>
+      <option value="2">기계설계공학과</option>
+      <option value="3">메카트로닉스공학과</option>
+      <option value="4">전자공학부</option>
+      <option value="5">컴퓨터공학부</option>
+      <option value="6">게임공학부</option>
+      <option value="7">신소재공학과</option>
+      <option value="8">생명화학공학과</option>
+      <option value="9">디자인학부</option>
+      <option value="10">경영학부</option>
+      <option value="11">나노광공학과</option>
+      <option value="12">에너지전기공학과</option>
+  </select>
+  
+    <div class="form-group">
+      <label for="input" placeholder="제목을 입력하세요" maxlength="255" required>제목</label>
+      <input type="text" class="form-input" name="title" >
+    </div>
+
+    <div class="form-group">
+      <label for="content">내용</label>
+      <textarea name="text" class="summernote" name="content"  placeholder="내용을 입력하세요. " required rows=30 autofocus cols="130"></textarea>
+    </div>
+
+    <hr align="left" width="70%">
+    <button onclick="location.href='javascript:history.back()'">뒤로가기</button>
+    <input type="submit" value="글작성" />
+  </form>
+
 </body>
 
 </html>

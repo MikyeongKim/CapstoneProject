@@ -1,21 +1,193 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Codit class</title>
-</head>
-<body>
-    
+<!DOCTYPE HTML>
+<!--로그인 전 기본 스타일sheet-->
+<html>
 
-    <button onclick="location.href='/'">Codit Class</button>
-<!--   <button onclick="location.href='/Editor'">Editor</button>
-    <button onclick="location.href='/Community'">Community</button>
--->
-    <button onclick="location.href='/Login'">Login</button>
-    
-    <h2>Welcome to Codit class </h2>
+		<head>
+			<!--헤드내용 include -->
+			<% include ../../partials/head.ejs %>  
+			
+		</head>
+			
+<body class="homepage">
+	<div id="page-wrapper">
+
+		<!-- Header
+		 헤더에서 로고 연결되는 주소 맞게 됐는지 확인하기  -->
+
+
+		<% include ./header.ejs %>  
+		<!-- Nav include -->
+		<% include ./nav.ejs %> 
+
+
+		<!-- Main -->
+		<div id="main-wrapper">
+			<div id="main" class="container">
+
+
+		<div class="row 200%">
+			<div class="12u">
+
+				<!-- Blog -->
+				<section class="box blog">
+											
+					<div>
+						<div class="row">
+				
+							<div class="6u 12u(mobile)">
+
+									<div class="content content-left">
+										
+										<!--섹션 내부에서 구성되는 소내용 1개-->
+										<!--
+											section class= box feature 중간정렬
+											section class= box features 왼쪽정렬
+										 -->
+										<section class="box feature">
+											<h2 class="major"><span>공지사항</span></h2>
+											
+											<ul>
+												<li>
+													<a href="#">코딧클래스 기본 사용방법</a>
+												</li>
+												<li>
+													<a href="#">코딧클래스 세부기능</a>
+												</li>
+												<li>
+													<a href="#">에디터 사용방법</a>
+												</li>
+												<li>
+													<a href="#">교수 포트폴리오 기능 사용법</a>
+												</li>
+											</ul>
+										</section>
+									</div>
+							</div>
+
+							<div class="6u 12u(mobile)">
+									<div class="content content-right">
+									
+										<section class="box feature">
+											<h2 class="major"><span>FAQ</span></h2>
+											
+											<ul>
+												<li>
+													<a href="#">게시글 저장이 안되는데 어떡하나요?</a>
+												</li>
+												<li>
+													<a href="#">에디터에 작성 중인 코드를 파일로 저장할 수 있나요?</a>
+												</li>
+												<li>
+													<a href="#">과제 제출 기한을 연장할 수 있나요?</a>
+												</li>
+											</ul>
+										</section>
+									</div>
+							</div>
+
+						</div>
+					</div>
+				</section>
+
+			</div>
+		</div>
+
+
+		<div class="row 200%">
+				<div class="12u">
+	
+					<!-- Blog -->
+					<section class="box blog">
+						<h2 class="major">
+							<span></span>
+						</h2>
+						<div>
+							<div class="row">
+								<div class="8u 12u(mobile)">
+									<div class="content content-left">
+	
+										<!-- Featured Post -->
+										<article class="box post">
+											<header>
+												<h3>
+													<a href="#">#코딧_Community</a>
+												</h3>
+												<p>궁금한 건 산기인들에게 물어봐~ #궁금해#알려죠</p>
+	
+												<a style="float:right;" href="#" class="button">go!</a>
+									
+											   
+												<ul class="meta">
+													<li class="icon fa-clock-o">최신글 15분 전</li>
+													<li class="icon fa-comments">
+														<a href="#">8</a>
+													</li>
+												</ul>
+											</header>
+											
+											
+											<table class="type06">
+												<tr>
+													<th scope="row">1</th>
+													<td>알고리즘 함께 공부하실 분..</td>
+												</tr>
+												<tr>
+													<th scope="row" class="even">2</th>
+													<td class="even">여러분 자바 어려워여?.?</td>
+												</tr>
+												<tr>
+														<th scope="row">3</th>
+														<td>수강신청 화이팅~~</td>
+												</tr>
+												<tr>
+														<th scope="row" class="even">4</th>
+														<td class="even">졸작 어떡하지ㅠㅠ</td>
+												</tr>
+												<tr>
+														<th scope="row">5</th>
+														<td>영어 스터디 구합니닷!!</td>
+												</tr>
+							
+											</table>
+										
+										</article>
+	
+									</div>
+								</div>
+								<div class="4u 12u(mobile)">
+									<div class="sidebar">
+										
+										<p>
+											태경아 여기에 달력이 들어가면 좋겠다 ^^
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</section>
+	
+				</div>
+			</div>
+
+	</div>
+	</div>
+
+	<!-- Footer include  -->
+	<% include ../../partials/footer.ejs %>
+
+	</div>
+
+    <!-- Scripts -->
+    <script src="../../../public/javascripts/jquery.min.js"></script>
+
+
+	<script src="../../../public/javascripts/jquery.dropotron.min.js"></script>
+	<script src="../../../public/javascripts/skel.min.js"></script>
+	<script src="../../../public/javascripts/skel-viewport.min.js"></script>
+	<script src="../../../public/javascripts/util.js"></script>
+	<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+	<script src="../../../public/javascripts/main.js"></script>
 
 </body>
-</html>
+
+</html>..

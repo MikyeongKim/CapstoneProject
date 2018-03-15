@@ -1,21 +1,234 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Codit class</title>
-</head>
-<body>
-    
+<!DOCTYPE HTML>
 
-    <button onclick="location.href='/'">Codit Class</button>
-    <button onclick="location.href='/Editor'">Editor</button>
-    <button onclick="location.href='/Community'">Community</button>
-    <button onclick="location.href='/User'">MyInfo</button>
-    <button onclick="location.href='/Logout'">Logout</button>
+<html>
+
+<head>
+	<!--헤드내용 include -->
+	<% include ../../partials/head.ejs %>
+</head>
+
+<body class="homepage">
+	<div id="page-wrapper">
+
+		<!-- Header -->
+		<!-- 헤더에서 로고 연결되는 주소 맞게 됐는지 확인하기 -->
+		<% include ./header.ejs %>
+
+		
+		<!-- Nav include -->
+		<% include ./nav.ejs %>
+
+		<!-- Main -->
+		<div id="main-wrapper">
+			<div id="main" class="container">
+
+				<div class="row 200%">
+					<div class="12u">
+
+						<section class="box features">
+						
+							<div>
+
+								<div class="row">
+									
+									<div class="4u 12u(mobile)">
+
+										<div class="content content-right">
+											<!--섹션 내부에서 구성되는 소내용 1개-->
+											<section class="box feature">
+												<h2 class="major"><span>강의과목</span></h2>
+                                                
+                                                <ul>
+                                                        <li>
+                                                                <a href="#">전산학기초</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#">선형대수학</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#">프로그래밍</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#">객체지향분석설계</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#">강의과목1</a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="#">강의과목2</a>
+                                                            </li>
+                                                </ul>
+											</section>
+										</div>
+
+									</div>
+
+                                    <div class="5u 12u(mobile)">
+
+                                            <div class="content content-left">
+                                                
+                                                <!--섹션 내부에서 구성되는 소내용 1개-->
+                                                <!--
+                                                    section class= box feature 중간정렬
+                                                    section class= box features 왼쪽정렬
+                                                 -->
+                                                <section class="box feature">
+                                                    <h2 class="major">
+															<span>
+																<!-- 바로아래 div 2개 각각에 클릭 이벤트 걸어주세요~~ -->
+																<div class="icono-caretLeftSquare"></div>
+																  강의자료 업로드
+																<div class="icono-caretRightSquare"></div>
+																
+																<p style="margin:10px 0 0 0; font-size:18px;">
+																	
+																	자료구조
+																	
+																</p>
+															</span>
+														</h2>
+														
+                                                    <ul>
+                                                        <li>
+															<a href="#">chap01.자료구조란?</a>
+														</li>
+                                                        <li>
+															<a href="#">첨부자료1 (한번씩 읽고 오세요)</a>
+														</li>
+                                                    </ul>
+                                                </section>
+                                            </div>
+                                    </div>
+
+                                    <div class="3u 12u(mobile)">
+
+                                            <div class="content content-left">
+                                                
+                                                <!--섹션 내부에서 구성되는 소내용 1개-->
+                                                <!--
+                                                    section class= box feature 중간정렬
+                                                    section class= box features 왼쪽정렬
+                                                 -->
+                                                <section class="box feature">
+                                                    <h2 class="major"><span>알림</span></h2>
+                                                    
+                                                    <ul>
+                                                        <li>
+															<a href="#">프로그래밍>질의응답 1건</a>
+														</li>
+                                                        <li>
+															<a href="#">전산학기초>과제마감 1일 전</a>
+														</li>
+                                                    </ul>
+                                                </section>
+                                            </div>
+                                        </div>
     
-    <h2>Welcome to Professor </h2>
+    
+								</div>
+
+							</div>
+						</section>
+					</div>
+				</div>
+
+
+
+		<div class="row 200%">
+			<div class="12u">
+
+				<!-- Blog -->
+				<section class="box blog" style="margin:0 0 0 30px;">
+					<h2 class="major">
+						<span></span>
+					</h2>
+					<div>
+						<div class="row">
+							<div class="8u 12u(mobile)">
+								<div class="content content-left">
+
+									<!-- Featured Post -->
+									<article class="box post">
+										<header>
+											<h3>
+												<!--누르면 커뮤니티 사이트로 이동-->
+                                                <a href="#">#코딧_Community</a>
+											</h3>
+                                            <p>궁금한 건 산기인들에게 물어봐~ #궁금해#알려죠</p>
+
+											<a style="float:right;" href="#" class="button">go!</a>
+								
+                                           
+                                            <ul class="meta">
+												<li class="icon fa-clock-o">최신글 15분 전</li>
+												<li class="icon fa-comments">
+													<a href="#">8</a>
+												</li>
+											</ul>
+                                        </header>
+										
+										
+										<!-- table 안에 각 <td> 마다 커뮤니티에서 인기글 상위 5개 긁어와야함-->
+										<table class="type06">
+											<tr>
+												<th scope="row">1</th>
+												<td><a href="#">알고리즘 함께 공부하실 분..</a></td>
+											</tr>
+											<tr>
+												<th scope="row" class="even">2</th>
+												<td class="even"><a href="#">여러분 자바 어려워여?.?</a></td>
+											</tr>
+											<tr>
+													<th scope="row">3</th>
+													<td><a href="#">수강신청 화이팅~~</a></td>
+											</tr>
+											<tr>
+													<th scope="row" class="even">4</th>
+													<td class="even"><a href="#">휴학하는거 어떻게 생각하세요ㅠㅜ?</a></td>
+											</tr>
+											<tr>
+													<th scope="row">5</th>
+													<td><a href="#">영어 스터디 구해요ㅎㅅㅎ</a></td>
+											</tr>
+						
+										</table>
+									
+									</article>
+
+								</div>
+							</div>
+							<div class="4u 12u(mobile)">
+								<div class="sidebar">
+									
+									<p>
+										태경아~~ 여기에 달력이 들어가면 좋겠다 ^^
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+
+			</div>
+		</div>
+	</div>
+	</div>
+
+	<!-- Footer include -->
+	<% include ../../partials/footer.ejs %>
+
+
+	</div>
+
+	<!-- Scripts -->
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/jquery.dropotron.min.js"></script>
+	<script src="assets/js/skel.min.js"></script>
+	<script src="assets/js/skel-viewport.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+	<script src="assets/js/main.js"></script>
 
 </body>
+
 </html>

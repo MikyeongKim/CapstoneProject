@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
   var Professor = sequelize.define('Professor', {
     professor_num : { type : DataTypes.INTEGER, primaryKey : true 
                 , allowNull : false, autoIncrement: true },
-    professor_id: { type : DataTypes.STRING
+    professor_id: { type : DataTypes.STRING , unique: true, allowNull: false
                 , references : {model: 'tbl_user', key: 'user_id'}},
     professor_name: { type : DataTypes.STRING, allowNull: false,},
     professor_email: { type : DataTypes.STRING , unique: true},

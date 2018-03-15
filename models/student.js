@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
   var Student = sequelize.define('Student', {
     student_num : { type : DataTypes.INTEGER, primaryKey : true 
                 , allowNull : false, autoIncrement: true },
-    student_id: { type : DataTypes.STRING
+    student_id: { type : DataTypes.STRING , unique: true, allowNull: false
                 , references : {model: 'tbl_user', key: 'user_id'}},
     student_name: { type : DataTypes.STRING, allowNull: false,},
     student_email: { type : DataTypes.STRING , unique: true},
