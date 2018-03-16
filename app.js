@@ -11,7 +11,7 @@ const index = require("./routes/index");
 const editor = require("./routes/editor");
 const user = require("./routes/user");
 const community = require("./routes/community");
-
+//const myclass = require("./routes/myclass");
 
 app.use(session({
   key: 'codit',
@@ -23,9 +23,11 @@ app.use(session({
   }
 }));
 
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(static('public'));
+
 
 app.set('port', process.env.PORT || '3000');
 app.set('views', path.join(__dirname, 'views/pages'));
@@ -35,6 +37,7 @@ app.use('/',index);
 app.use('/editor', editor);
 app.use('/user', user);
 app.use('/community', community);
+//app.use('/myclass', myclass);
 
 models.sequelize.sync().then(() => {
   console.log(" DB 연결 성공")

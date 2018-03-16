@@ -14,17 +14,16 @@ router.route('/').get((req, res) => {
     } else {
         return res.render('professor/index');
     }
-
 });
 
 router.route('/login')
     .get((req, res) =>
-        res.render('common/login'))
+        res.render('common/login', {message : ""}))
     .post((req, res) => {
         const body = req.body;
 
         if (!(body.id && body.password)) {
-            return res.send("<html><body><script>alert('아이디나 비밀번호를 확인해주세요');</script></body>");
+            return res.render('common/login', {message : "아이디/패스워드를 입력해주세요."});
         }
 
         models.User.find({
@@ -34,12 +33,11 @@ router.route('/login')
             req.session.userinfo = [body.id, grade];
 
             res.redirect('/');
-
         }).catch(err => {
-            res.redirect('/login');
-            //res.send("<html><body><script>alert('아이디나 비밀번호를 확인해주세요');</script></body>");
+            res.render('common/login',{message : '아이디/패스워드가 잘못되었습니다.'});
         });
     });
+
 
 router.route('/logout').get((req, res) => {
 

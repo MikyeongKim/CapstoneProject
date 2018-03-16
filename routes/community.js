@@ -13,7 +13,7 @@ router.route('/').get((req, res) => {
   models.Board.findAll({
     where: { board_category: category_num }
   }).then(function (result) {
-    res.render('common/community', { data: result });
+    return res.render('common/community', { data: result });
   });
 });
 
@@ -51,7 +51,7 @@ router.route('/insert')
     const today = new Date();
 
     models.Board.create({
-      board_category: req.body.category,
+      board_category: category_num,
       board_title: req.body.title,
       board_content: req.body.content,
       board_department: req.body.board_department,
@@ -61,7 +61,7 @@ router.route('/insert')
       res.redirect('/community');
     }).catch((err) => {
       //TODO : 글작성 실패시 작성내용 쿠키에 저장
-      console.dir(err);
+      console.log(err);
       res.send("<html><body><script>alert('글 작성 실패');</script></body>");
     });
   })
