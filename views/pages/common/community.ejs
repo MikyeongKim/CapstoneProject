@@ -1,46 +1,116 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
-    
-    <title>Document</title>
+   <!--헤드내용 include -->
+   <% include ../../partials/head.ejs %>  
 </head>
 
-<body>
-    <button onclick="location.href='/'">Codit Class</button>
-    <button onclick="location.href='/Editor'">Editor</button>
-    <button onclick="location.href='/Community'">Community</button>
-    <button onclick="location.href='/User'">MyInfo</button>
-    <button onclick="location.href='/Logout'">Logout</button>
+<body class="homepage">
+    <div id="page-wrapper">
 
-    <h2>Welcome Community</h2>
+       	<% include ./header.ejs %>
+		<% include ./nav.ejs %>
 
-    <table width=70% border="1">
-        <tr>
-            <th>번호</th>
-            <th>제목</th>
-            <th>작성자</th>
-            <th>등록일</th>
-            <th>조회수</th>
-        </tr>
-        <% data.forEach((item,index) => { %>
-        <tr>
-            <td><%= index+1 %></td>
-            <td><a href="/community/read/<%=item.board_no%>"><%= item.board_title %></td>
-            <td><%= item.user_id %></td>
-            <td><%= item.created_at %></td>
-            <td><%= item.board_count %></td>
-        </tr>
-        <% }); %>
-    </table>
+        <!--main-->
+        <div id="main-wrapper">
+            <div id="main" class="container">
 
+                <div class="row 200%">
+                    <div class="12u">
+                        <div class="content content-left">
+                            <article class="box post">
+                                <header>
+                                    <h3>
+                                        <a href="/community">#웰컴_코딧커뮤니티!!</a>
+                                    </h3>
+                                    <p>공부 중 궁금한게 생길 때, 스터디를 구하고 싶을 때, 강의후기가 궁금할 때 등 이유불문 무엇이든 산기인들에게 물어보세요 :)</p>
+	
+                                </header>
+                                <a onclick="location.href='/Community/insert'" style="float:right; margin:2% 0; font-weight:inherit; font-size:1.1em;" href="#" class="button">글쓰기</a>
+                                    
+                                <form method="POST">
+                                <table class="type06" style="vertical-align:middle; text-align:center;">
+                                    <colgroup>
+                                        <col width="10%">
+                                        <col width="40%">
+                                        <col width="20%">
+                                        <col width="20%">
+                                        <col width="10%">
+                                    </colgroup>
 
-    <hr  align="left" width="70%">
-    <button onclick="location.href='/Community/insert'">글쓰기</button>
+                                    <thead scope="row" class="even">
+                                        <tr>
+                                            <th>번호</th>
+                                            <th>제목</th>
+                                            <th>작성자</th>
+                                            <th>등록일</th>
+                                            <th>조회수</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody scope="row" style="text-align:center;">
+
+                                        <!--td갯수는 최대15개로 fix해야함, 16번글부터는 2번째 페이지로 아웃-->
+                                            <% data.forEach((item,index) => { %>
+                                                <tr>
+                                                    <td><%= index+1 %></td>
+                                                    <td style="text-align:left;">
+                                                        <a href="/community/read/<%=item.board_no%>"><%= item.board_title %>
+                                                        </td>
+                                                    <td><%= item.user_id %></td>
+                                                    <td><%= item.created_at %></td>
+                                                    <td><%= item.board_count %></td>
+                                                </tr>
+                                                <% }); %>
+                                    </tbody>
+
+                                    <tfoot>
+                                        <tr>
+                                            <td scope="row" class="even" colspan="5">
+
+                                                <!--이전,다음 페이지로 넘어가는 값 구하기-->
+                                                <!--현재페이지 값도-->
+                                                <a href="#" class="icono-caretLeft"></a>
+                                                <a href="/community">1</a>
+                                                <a href="#" class="icono-caretRight"></a>
+                                                
+                                            </td>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td scope="row" class="even" colspan="5">
+                                                    <select id="category" style="width:60px; display:inline-block;">
+                                                        <option selected="selected">제목</option>
+                                                        <option>내용</option>
+                                                        <option>작성자</option>
+                                                        <option>등록일</option>
+                                                    </select>
+                                                    <input type="search" id="search"/>
+                                                    <!--검색버튼 눌렀을때 목록중에서 쏘팅해주는거 코드짜야함-->
+                                                    <input type="submit" value="검색" style="padding:0.4em 1.5em; font-weight:initial; font-size:1em;" />
+
+                                                    <!--안되면 table바로 밖으로 form태그 추가-->
+                                            </td>
+                                            
+                                        </tr>
+                                        
+                                    </tfoot>
+                                </table>
+                                </form>
+                  
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!-- Footer include  -->
+	<% include ../../partials/footer.ejs %>
+
+    </div>
+    
+    <!-- Scripts -->
+	<% include ../../partials/scripts.ejs %>
 </body>
 
 </html>

@@ -13,7 +13,7 @@ router.route('/').get((req, res) => {
   models.Board.findAll({
     where: { board_category: category_num }
   }).then(function (result) {
-    res.render('common/community', { data: result });
+    return res.render('common/community', { data: result });
   });
 });
 

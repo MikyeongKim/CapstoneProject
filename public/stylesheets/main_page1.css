@@ -1390,12 +1390,30 @@ copyright
 			padding-top: 1em;
 			margin-top: 1em;
 	}
-	
+
+	ul.left-side > li:last-child {
+		border-bottom: solid 2px #e7e0ea;
+		padding-bottom: 1em;
+		margin-bottom: 1em;
+	}
+
+	/* 맨 첫번째 리스트의 보더 삭제하는 부분
 		ul.left-side > li:first-child {
 				border-top: 0;
 				padding-top: 0;
 				margin-top: 0;
 		}
+*/
+
+	ul.mobile-sidebar li {
+		display: inline;
+		border-left: 1px solid #b4b6b7;
+		padding: 0 10px;
+	}
+	ul.mobile-sidebar > li:last-child {
+		border-right: 1px solid #b4b6b7;
+		padding: 0 10px;
+	}
 
 	ul.actions li {
 		display: inline-block;
@@ -1576,7 +1594,7 @@ copyright
 /* Forms */
 
 	form label {
-		display: block;
+		/*display: block;*/
 		margin: 1em 0 0 0;
 		font-family: 'Nanum Barun Gothic', sans-serif;
 		font-weight: 700;
@@ -1608,7 +1626,7 @@ copyright
 	form input[type="email"],
 	form input[type="password"],
 	form select {
-		line-height: 3em;
+		line-height: 2em;
 		padding: 0 1em;
 	}
 
@@ -1688,6 +1706,7 @@ copyright
 
 			table.default td {
 				padding: 0.5em 1em 0.5em 1em;
+				vertical-align: middle;
 			}
 
 			table.default th {
@@ -1699,6 +1718,7 @@ copyright
 				font-weight: 700;
 				text-transform: uppercase;
 				color: #6b7277;
+				vertical-align: middle;
 			}
 
 			table.default thead {
@@ -1720,12 +1740,13 @@ copyright
 				text-align: center;
 				padding: 10px;
 				font-weight: bold;
-				vertical-align: top;
+				vertical-align: middle;
+				line-height: 2em;
 			}
 			table.type06 td {
 				
 				padding: 10px;
-				vertical-align: top;
+				vertical-align: middle;
 			}
 			table.type06 .even {
 				background: #efefef;
@@ -1894,7 +1915,7 @@ copyright
 			button,
 			.button {
 				font-size: 1.25em;
-				padding: 0.85em 1.85em;
+				padding: 0.5em 1.5em;
 			}
 
 				input[type="button"].big,
@@ -1912,6 +1933,8 @@ copyright
 				text-align: center;
 				margin: 2em 0 0 0;
 			}
+
+			
 
 		/* Box */
 
@@ -2004,6 +2027,10 @@ copyright
 
 			.content-right {
 				padding-left: 2em;
+			}
+
+			.mobile-sidebar {
+				display: none;
 			}
 
 		/* Wrappers */
@@ -2218,11 +2245,10 @@ copyright
 					margin: 0 0 1em 0;
 				}
 
-		/* Copyright */
-
+		/* Copyright 
 			#copyright {
-			/*	margin: 1em 0 0 0;	*/
 			}
+	*/
 
 	}
 
@@ -2486,6 +2512,7 @@ copyright
 		/* Sidebar + Content */
 
 			.sidebar {
+				display: none;
 				border-top: solid 2px #e7e8ea;
 				padding-top: 5em;
 				margin-top: 5em;

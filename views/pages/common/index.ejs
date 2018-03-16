@@ -2,7 +2,7 @@
 <!--로그인 전 기본 스타일sheet-->
 <html>
 
-		<head>
+		<head class="">
 			<!--헤드내용 include -->
 			<% include ../../partials/head.ejs %>  
 			
@@ -11,12 +11,8 @@
 <body class="homepage">
 	<div id="page-wrapper">
 
-		<!-- Header
-		 헤더에서 로고 연결되는 주소 맞게 됐는지 확인하기  -->
-		<% include ./header.ejs %>  
-		
-		<!-- Nav include -->
-		<% include ./nav.ejs %> 
+		<% include ./header.ejs %>
+		<% include ./nav.ejs %>
 
 
 		<!-- Main -->
@@ -177,16 +173,7 @@
 	</div>
 
     <!-- Scripts -->
-    <script src="../../../public/javascripts/jquery.min.js"></script>
-
-
-	<script src="../../../public/javascripts/jquery.dropotron.min.js"></script>
-	<script src="../../../public/javascripts/skel.min.js"></script>
-	<script src="../../../public/javascripts/skel-viewport.min.js"></script>
-	<script src="../../../public/javascripts/util.js"></script>
-	<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-	<script src="../../../public/javascripts/main.js"></script>
-
+	<% include ../../partials/scripts.ejs %>
 </body>
 
-</html>..
+</html>
