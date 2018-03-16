@@ -2,17 +2,16 @@
 <!--로그인 전 기본 스타일sheet-->
 <html>
 
-		<head class="">
-			<!--헤드내용 include -->
-			<% include ../../partials/head.ejs %>  
-			
+		<head>
+			<% include ../../partials/head.ejs %>  			
 		</head>
 			
 <body class="homepage">
 	<div id="page-wrapper">
 
-		<% include ./header.ejs %>
-		<% include ./nav.ejs %>
+		<% include ./header.ejs %>  
+		
+		<% include ./nav.ejs %> 
 
 
 		<!-- Main -->
@@ -25,14 +24,10 @@
 
 				<!-- Blog -->
 				<section class="box blog">
-											
 					<div>
 						<div class="row">
-				
 							<div class="6u 12u(mobile)">
-
 									<div class="content content-left">
-										
 										<!--섹션 내부에서 구성되는 소내용 1개-->
 										<!--
 											section class= box feature 중간정렬
@@ -40,20 +35,10 @@
 										 -->
 										<section class="box feature">
 											<h2 class="major"><span>공지사항</span></h2>
-											
 											<ul>
-												<li>
-													<a href="#">코딧클래스 기본 사용방법</a>
-												</li>
-												<li>
-													<a href="#">코딧클래스 세부기능</a>
-												</li>
-												<li>
-													<a href="#">에디터 사용방법</a>
-												</li>
-												<li>
-													<a href="#">교수 포트폴리오 기능 사용법</a>
-												</li>
+											<% notice.forEach((item,index) => { %>
+											<li><a href="/community/read/<%=item.board_no%>"><%= item.board_title %></li>
+											<% }); %>
 											</ul>
 										</section>
 									</div>
@@ -66,15 +51,9 @@
 											<h2 class="major"><span>FAQ</span></h2>
 											
 											<ul>
-												<li>
-													<a href="#">게시글 저장이 안되는데 어떡하나요?</a>
-												</li>
-												<li>
-													<a href="#">에디터에 작성 중인 코드를 파일로 저장할 수 있나요?</a>
-												</li>
-												<li>
-													<a href="#">과제 제출 기한을 연장할 수 있나요?</a>
-												</li>
+											<% faq.forEach((item,index) => { %>
+											<li><a href="/community/read/<%=item.board_no%>"><%= item.board_title %></li>
+											<% }); %>
 											</ul>
 										</section>
 									</div>
@@ -105,11 +84,11 @@
 										<article class="box post">
 											<header>
 												<h3>
-													<a href="#">#코딧_Community</a>
+													<a href="/login">#코딧_Community</a>
 												</h3>
 												<p>궁금한 건 산기인들에게 물어봐~ #궁금해#알려죠</p>
 	
-												<a style="float:right;" href="#" class="button">go!</a>
+												<a style="float:right;" href="/login" class="button">go!</a>
 									
 											   
 												<ul class="meta">
@@ -120,29 +99,19 @@
 												</ul>
 											</header>
 											
-											
 											<table class="type06">
+
+											<% community.forEach((item,index) => { 
+												if((index+1)%2) { %>
 												<tr>
-													<th scope="row">1</th>
-													<td>알고리즘 함께 공부하실 분..</td>
+													<th scope="row"><%= index+1 %></th>
+													<td><a href="/community/read/<%=item.board_no%>"><%= item.board_title %></td>
+												<% } else {  %>
+													<th scope="row" class="even"><%= index+1 %></th>
+													<td class="even"><a href="/community/read/<%=item.board_no%>"><%= item.board_title %></td>
+												<% } %>
 												</tr>
-												<tr>
-													<th scope="row" class="even">2</th>
-													<td class="even">여러분 자바 어려워여?.?</td>
-												</tr>
-												<tr>
-														<th scope="row">3</th>
-														<td>수강신청 화이팅~~</td>
-												</tr>
-												<tr>
-														<th scope="row" class="even">4</th>
-														<td class="even">졸작 어떡하지ㅠㅠ</td>
-												</tr>
-												<tr>
-														<th scope="row">5</th>
-														<td>영어 스터디 구합니닷!!</td>
-												</tr>
-							
+												<% }); %>
 											</table>
 										
 										</article>
@@ -173,7 +142,16 @@
 	</div>
 
     <!-- Scripts -->
-	<% include ../../partials/scripts.ejs %>
+    <script src="../../../public/javascripts/jquery.min.js"></script>
+
+
+	<script src="../../../public/javascripts/jquery.dropotron.min.js"></script>
+	<script src="../../../public/javascripts/skel.min.js"></script>
+	<script src="../../../public/javascripts/skel-viewport.min.js"></script>
+	<script src="../../../public/javascripts/util.js"></script>
+	<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+	<script src="../../../public/javascripts/main.js"></script>
+
 </body>
 
-</html>
+</html>..

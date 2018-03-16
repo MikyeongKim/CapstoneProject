@@ -7,7 +7,7 @@ const category_num = 3;
 router.route('/').get((req, res) => {
 
   if (!req.session.userinfo) {
-    res.redirect('/');
+    return res.redirect('/login');
   }
 
   models.Board.findAll({
@@ -23,6 +23,11 @@ router.route('/read/:id').get((req, res) => {
   models.Board.find({
     where: { board_no: req.params.id }
   }).then(function (result) {
+
+    if(! req.session.userinfo) {
+      return res.render('common/boardread', { data: result, writer: false });  
+    }
+
     if (result.user_id == req.session.userinfo[0]) {
       return res.render('common/boardread', { data: result, writer: true });
     }

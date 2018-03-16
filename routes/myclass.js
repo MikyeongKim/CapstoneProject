@@ -2,6 +2,13 @@ const express = require('express')
   , router = express.Router()
   , models = require('../models');
 
-  router.route('/').get((req, res) => {
-      res.render('common/myclass');
-  })
+router.route('/').get((req,res)=> {
+  
+  if(!req.session.userinfo) {
+    return res.redirect('/login');
+  }
+
+  res.render('common/myclass')
+})
+
+module.exports = router;

@@ -6,24 +6,49 @@ const express = require('express')
 router.route('/').get((req, res) => {
 
     if (!req.session.userinfo) {
-        return res.render('common/index');
+        models.sequelize.Promise.all([ 
+            models.Board.findAll({
+                where: { board_category: 1 },
+                limit: 5,
+                order: [['created_at', 'DESC']]
+            }),
+            models.Board.findAll({
+                where: { board_category: 2 },
+                limit: 5,
+                order: [['created_at', 'DESC']]
+            }),
+            models.Board.findAll({
+                where: { board_category: 3 },
+                limit: 5,
+                order: [['created_at', 'DESC']]
+            }),
+        ])
+            .spread(function (returnNotice, returnFAQ, returnCommunity) { 
+                return res.render('common/index', { notice: returnNotice, faq: returnFAQ, community: returnCommunity })
+            }).catch(function (err) { 
+                console.log(err);
+            });
+
+
+    } else {
+
+        if (req.session.userinfo[1] === 1) {
+            return res.render('student/index');
+        } else {
+            return res.render('professor/index');
+        }
     }
 
-    if (req.session.userinfo[1] === 1) {
-        return res.render('student/index');
-    } else {
-        return res.render('professor/index');
-    }
 });
 
 router.route('/login')
     .get((req, res) =>
-        res.render('common/login', {message : ""}))
+        res.render('common/login', { message: "" }))
     .post((req, res) => {
         const body = req.body;
 
         if (!(body.id && body.password)) {
-            return res.render('common/login', {message : "아이디/패스워드를 입력해주세요."});
+            return res.render('common/login', { message: "아이디/패스워드를 입력해주세요." });
         }
 
         models.User.find({
@@ -34,7 +59,7 @@ router.route('/login')
 
             res.redirect('/');
         }).catch(err => {
-            res.render('common/login',{message : '아이디/패스워드가 잘못되었습니다.'});
+            res.render('common/login', { message: '아이디/패스워드가 잘못되었습니다.' });
         });
     });
 
