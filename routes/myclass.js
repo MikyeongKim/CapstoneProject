@@ -8,7 +8,7 @@ router.route('/').get((req,res)=> {
     return res.redirect('/login');
   }
 
-  res.render('common/myclass')
+  res.render('student/myclass')
 })
 
 module.exports = router;

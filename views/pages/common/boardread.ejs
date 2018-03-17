@@ -7,18 +7,18 @@
     <title>Document</title>
 </head>
 <body>
-    제목: <%=data.board_title %> <BR>
-    작성일 : <%=data.created_at %> <BR> 
-    작성자 : <%=data.user_id %> <BR>
-    조회수 : <!-- TODO : 조회수 --><BR>
-    본문 : <%=data.board_content %> <BR>
+    제목: <%= readBoard.board_title %> <BR>
+    작성일 : <%= readBoard.created_at %> <BR> 
+    작성자 : <%= readBoard.board_user_no %> <BR>
+    조회수 : <%= readBoard.board_count %><BR>
+    본문 : <%= readBoard.board_content %> <BR>
     <button onclick="location.href='javascript:history.back()'">뒤로가기</button>
     <button onclick="location.href='/Community'">목록보기</button>
 
     <% 
     if ( writer ) { %>
-        <button onclick="location.href='/community/edit/<%=data.board_no%>'">수정하기</button>
-        <button onclick="location.href='/community/delete/<%=data.board_no%>'">삭제하기</button>
+        <button onclick="location.href='/community/edit/<%=readBoard.board_no%>'">수정하기</button>
+        <button onclick="location.href='/community/delete/<%=readBoard.board_no%>'">삭제하기</button>
     <% } %>
 
 </body>

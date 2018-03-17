@@ -11,39 +11,40 @@ router.route('/').get((req, res) => {
         return res.redirect('/');
     }
 
-    const userid = req.session.userinfo[0];
-    const usergrade = req.session.userinfo[1];
+    const user_no = req.session.userinfo[0];
+    const user_grade = req.session.userinfo[1];
 
-    if (usergrade === 1) {
+    if (user_grade == 1) {
         models.Student.find({
-            where: { student_id: userid }
+            where: { student_no: user_no }
         }).then(result => {
             res.render('common/myinfo', {
                 name: result.student_name,
                 phone: result.student_phone,
                 email: result.student_email
             });
-        }).catch(err => {
-            res.send(`${err}`);
-            //res.redirect('/login');
-            //res.send("<html><body><script>alert('아이디나 비밀번호를 확인해주세요');</script></body>");
-        });
-    } else {
+        })
+    } else if (user_grade == 2) {
         models.Professor.find({
-            where: { professor_id: userid }
+            where: { professor_no: user_no }
         }).then(result => {
             res.render('common/myinfo', {
                 name: result.professor_name,
                 phone: result.professor_phone,
                 email: result.professor_email
             });
-        }).catch(err => {
-            res.send(`${err}`);
-            //res.redirect('/login');
-            //res.send("<html><body><script>alert('아이디나 비밀번호를 확인해주세요');</script></body>");
-        });
+        })
+    } else {
+        models.Manager.find({
+            where: { manager_no: user_no }
+        }).then(result => {
+            res.render('common/myinfo', {
+                name: result.manager_name,
+                phone: result.manager_phone,
+                email: result.manager_email
+            });
+        })
     }
-
 });
 
 

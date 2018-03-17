@@ -6,7 +6,7 @@ const express = require('express')
 router.route('/').get((req, res) => {
 
     if (!req.session.userinfo) {
-        models.sequelize.Promise.all([ 
+        models.sequelize.Promise.all([
             models.Board.findAll({
                 where: { board_category: 1 },
                 limit: 5,
@@ -23,9 +23,9 @@ router.route('/').get((req, res) => {
                 order: [['created_at', 'DESC']]
             }),
         ])
-            .spread(function (returnNotice, returnFAQ, returnCommunity) { 
+            .spread(function (returnNotice, returnFAQ, returnCommunity) {
                 return res.render('common/index', { notice: returnNotice, faq: returnFAQ, community: returnCommunity })
-            }).catch(function (err) { 
+            }).catch(function (err) {
                 console.log(err);
             });
 
@@ -54,8 +54,7 @@ router.route('/login')
         models.User.find({
             where: { user_id: body.id, user_password: body.password }
         }).then(result => {
-            const grade = result.user_grade;
-            req.session.userinfo = [body.id, grade];
+            req.session.userinfo = [result.user_no, result.usergrade_no];
 
             res.redirect('/');
         }).catch(err => {
@@ -81,6 +80,8 @@ router.route('/logout').get((req, res) => {
     });
 });
 
+
+
 router.route('/signup')
     .get((req, res) => res.render('common/signup'))
     .post((req, res) => {
@@ -90,34 +91,43 @@ router.route('/signup')
             return models.User.create({
                 user_id: body.id,
                 user_password: body.password,
-                user_grade: body.grade
+                usergrade_no: body.grade
             }, { transaction: t })
-                .then(function (user) {
+                .then(function (result) {
                     if (body.grade == 1) {
 
                         return models.Student.create({
-                            student_id: body.id,
+                            student_no: result.user_no,
                             student_name: body.name,
                             student_email: body.email,
                             student_phone: body.phone,
-                            department_id: body.department
+                            department_no: body.department
                         }, { transaction: t });
-                    } else {
+                    } else if (body.grade == 2) {
+
                         return models.Professor.create({
-                            professor_id: body.id,
+                            professor_no: result.user_no,
                             professor_name: body.name,
                             professor_email: body.email,
                             professor_phone: body.phone,
-                            department_id: body.department
+                            department_no: body.department
+                        }, { transaction: t });
+                    } else {
+
+                        return models.Manager.create({
+                            manager_no: result.user_no,
+                            manager_name: body.name,
+                            manager_email: body.email,
+                            manager_phone: body.phone,
+                            department_no: body.department
                         }, { transaction: t });
                     }
+                }).then(function (result) {
+                    console.log("데이터 추가 완료");
+                    res.redirect('login');
+                }).catch(function (err) {
+                    console.log("데이터 추가 실패");
                 });
-        }).then(function (result) {
-            console.log("데이터 추가 완료");
-            res.redirect('login');
-        }).catch(function (err) {
-            console.log("데이터 추가 실패");
-        });
+        })
     })
-
 module.exports = router;

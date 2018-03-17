@@ -6,15 +6,18 @@ const category_num = 3;
 
 router.route('/').get((req, res) => {
 
-  if (!req.session.userinfo) {
-    return res.redirect('/login');
-  }
 
   models.Board.findAll({
     where: { board_category: category_num }
   }).then(function (result) {
-    return res.render('common/community', { data: result });
+    if (!req.session.userinfo) {
+      return res.render('common/community', { board_list: result });
+    }
+    return res.render('student/community', { board_list: result });
   });
+
+
+
 });
 
 router.route('/read/:id').get((req, res) => {
@@ -24,15 +27,15 @@ router.route('/read/:id').get((req, res) => {
     where: { board_no: req.params.id }
   }).then(function (result) {
 
-    if(! req.session.userinfo) {
-      return res.render('common/boardread', { data: result, writer: false });  
+    if (!req.session.userinfo) {
+      return res.render('common/boardread', { readBoard: result, writer: false });
     }
 
-    if (result.user_id == req.session.userinfo[0]) {
-      return res.render('common/boardread', { data: result, writer: true });
+    if (result.board_user_id == req.session.userinfo[0]) {
+      return res.render('common/boardread', { readBoard: result, writer: true });
     }
 
-    res.render('common/boardread', { data: result, writer: false });
+    res.render('common/boardread', { readBoard: result, writer: false });
   });
 });
 
@@ -60,7 +63,7 @@ router.route('/insert')
       board_title: req.body.title,
       board_content: req.body.content,
       board_department: req.body.board_department,
-      user_id: req.session.userinfo[0],
+      board_user_no: req.session.userinfo[0],
     }).then(function (result) {
       console.dir(result);
       res.redirect('/community');
@@ -84,7 +87,7 @@ router.route('/edit/:id')
         return res.redirect('/community');
       }
 
-      if (result.user_id != req.session.userinfo[0]) {
+      if (result.board_user_no != req.session.userinfo[0]) {
         //todo : 잘못된 경로로 접근했습니다. 오류메세지 출력
         return res.redirect('/community');
       }
@@ -119,7 +122,7 @@ router.route('/delete/:id').get((req, res) => {
   models.Board.find({
     where: { board_no: req.params.id }
   }).then(function (result) {
-    if (result.user_id != req.session.userinfo[0]) {
+    if (result.board_user_id != req.session.userinfo[0]) {
       //TODO : 잘못된 접근.. 
       return render('/');
     }
