@@ -7,9 +7,8 @@ router.route('/')
 .get((req, res) => {
   
   if(!req.session.userinfo) {
-    return res.redirect('/login');
+    return res.status(401).redirect('/login')
   }
-  
   res.render('common/editor')
 })
 .post((req,res) => {

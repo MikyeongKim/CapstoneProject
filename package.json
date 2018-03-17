@@ -9,6 +9,7 @@
     "css": "^2.2.1",
     "ejs": "^2.5.7",
     "express": "^4.16.2",
+    "express-error-handler": "^1.1.0",
     "express-session": "^1.15.6",
     "html": "^1.0.0",
     "mysql2": "^1.5.1",

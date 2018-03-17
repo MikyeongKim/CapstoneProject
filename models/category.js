@@ -1,7 +1,7 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
     var Category = sequelize.define('Category', {
-        category_id: {
+        category_no: {
             type: DataTypes.INTEGER, primaryKey: true
             , allowNull: false, autoIncrement: true },
         category_name: {
@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
             timestamps: false
         });
     Category.associate = function (models) {
-        Category.hasMany(models.Board, { foreignKey: 'board_category', sourceKey: 'category_id' });
+        Category.hasMany(models.Board, { foreignKey: 'board_category', sourceKey: 'category_no' });
         
     };
     return Category;

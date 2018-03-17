@@ -23,7 +23,7 @@ router.route('/').get((req, res) => {
                 order: [['created_at', 'DESC']]
             }),
         ])
-            .spread(function (returnNotice, returnFAQ, returnCommunity) {
+            .spread( (returnNotice, returnFAQ, returnCommunity) => {
                 return res.render('common/index', { notice: returnNotice, faq: returnFAQ, community: returnCommunity })
             }).catch(function (err) {
                 console.log(err);
@@ -42,8 +42,13 @@ router.route('/').get((req, res) => {
 });
 
 router.route('/login')
-    .get((req, res) =>
-        res.render('common/login', { message: "" }))
+    .get((req, res) => {
+
+        console.log(req.status);
+
+        res.render('common/login', { message: "" });
+        
+    })
     .post((req, res) => {
         const body = req.body;
 
@@ -85,7 +90,7 @@ router.route('/logout').get((req, res) => {
 router.route('/signup')
     .get((req, res) => res.render('common/signup'))
     .post((req, res) => {
-        return models.sequelize.transaction(function (t) {
+        return models.sequelize.transaction((t) => {
             const body = req.body;
 
             return models.User.create({
@@ -93,7 +98,7 @@ router.route('/signup')
                 user_password: body.password,
                 usergrade_no: body.grade
             }, { transaction: t })
-                .then(function (result) {
+                .then((result) => {
                     if (body.grade == 1) {
 
                         return models.Student.create({
@@ -122,10 +127,10 @@ router.route('/signup')
                             department_no: body.department
                         }, { transaction: t });
                     }
-                }).then(function (result) {
+                }).then((result) => {
                     console.log("데이터 추가 완료");
                     res.redirect('login');
-                }).catch(function (err) {
+                }).catch((err) => {
                     console.log("데이터 추가 실패");
                 });
         })

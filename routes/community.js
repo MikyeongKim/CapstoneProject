@@ -9,8 +9,8 @@ router.route('/').get((req, res) => {
 
   models.Board.findAll({
     where: { board_category: category_num }
-  }).then(function (result) {
-    if (!req.session.userinfo) {
+  }).then((result) => {
+    if (! req.session.userinfo) {
       return res.render('common/community', { board_list: result });
     }
     return res.render('student/community', { board_list: result });
@@ -25,7 +25,11 @@ router.route('/read/:id').get((req, res) => {
 
   models.Board.find({
     where: { board_no: req.params.id }
-  }).then(function (result) {
+  }).then((result) => {
+
+    if (!result ) {
+      return res.status(400).send("잘못된 경로로 접근했습니다.")
+    }
 
     if (!req.session.userinfo) {
       return res.render('common/boardread', { readBoard: result, writer: false });
@@ -36,7 +40,9 @@ router.route('/read/:id').get((req, res) => {
     }
 
     res.render('common/boardread', { readBoard: result, writer: false });
-  });
+  }).catch((err)=> {
+    res.send("테스트")
+  })
 });
 
 
@@ -64,8 +70,7 @@ router.route('/insert')
       board_content: req.body.content,
       board_department: req.body.board_department,
       board_user_no: req.session.userinfo[0],
-    }).then(function (result) {
-      console.dir(result);
+    }).then((result) => {
       res.redirect('/community');
     }).catch((err) => {
       //TODO : 글작성 실패시 작성내용 쿠키에 저장
@@ -82,14 +87,18 @@ router.route('/edit/:id')
       where: { board_no: req.params.id }
     }).then(function (result) {
 
+      if (!result ) {
+        return res.status(400).send("잘못된 경로로 접근했습니다.")
+      }
+
       if (!req.session.userinfo) {
         //todo : 잘못된 경로로 접근했습니다. 오류메세지 출력
-        return res.redirect('/community');
+        return res.status(401).redirect('/community');
       }
 
       if (result.board_user_no != req.session.userinfo[0]) {
         //todo : 잘못된 경로로 접근했습니다. 오류메세지 출력
-        return res.redirect('/community');
+        return res.status(401).redirect('/community');
       }
 
       res.render('common/boardedit', { data: result });
@@ -110,9 +119,9 @@ router.route('/edit/:id')
     }
       , {
         where: { board_no: paramId }
-      }).then(function (result) {
+      }).then((result) => {
         res.redirect('/community/read/' + paramId);
-      }).catch(function (err) {
+      }).catch((err) => {
         //TODO: error handling
       });
   });
@@ -121,7 +130,12 @@ router.route('/delete/:id').get((req, res) => {
 
   models.Board.find({
     where: { board_no: req.params.id }
-  }).then(function (result) {
+  }).then((result) => {
+
+    if (!result ) {
+      return res.status(400).send("잘못된 경로로 접근했습니다.")
+    }
+
     if (result.board_user_id != req.session.userinfo[0]) {
       //TODO : 잘못된 접근.. 
       return render('/');
@@ -129,9 +143,9 @@ router.route('/delete/:id').get((req, res) => {
 
     models.Board.destroy({
       where: { board_no: req.params.id }
-    }).then(function (result) {
+    }).then((result) => {
       res.redirect('/community/');
-    }).catch(function (err) {
+    }).catch((err) => {
       //TODO: error handling
     });
 
