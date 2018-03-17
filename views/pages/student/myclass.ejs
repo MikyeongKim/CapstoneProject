@@ -1,21 +1,16 @@
-<!DOCTYPE HTML>
-<!--st_community_page1.html 에서 main div 긁어오기-->
+<!DOCTYPE html>
 <html>
 
 <head>
-    <!--헤드내용 include -->
-    <% include ../../partials/head.ejs %>
+   <!--헤드내용 include -->
+   <% include ../../partials/head.ejs %>  
 </head>
 
 <body class="homepage">
-	<div id="page-wrapper">
+    <div id="page-wrapper">
 
-	    <!-- Header -->
-		<% include ./header.ejs %>
-
-		<!-- Nav include -->
+       	<% include ./header.ejs %>
 		<% include ./nav.ejs %>
-
 
 		<!-- Main -->
 		<div id="main-wrapper">
@@ -23,7 +18,7 @@
 				<div class="row">
 					<div class="2u">
                     
-                        <% include ./sidebar.ejs %>
+                        <% include blog_sidebar.ejs %>
 					</div>
 
 					<div class="10u 12u(mobile) important(mobile)">
@@ -52,14 +47,13 @@
 
 
 	
-	<!-- Footer include -->
+    <!-- Footer include  -->
 	<% include ../../partials/footer.ejs %>
 
-	</div>
-
-	<!-- Scripts -->
+    </div>
+    
+    <!-- Scripts -->
 	<% include ../../partials/scripts.ejs %>
-
 </body>
 
 </html>

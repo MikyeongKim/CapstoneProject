@@ -1,28 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+   <!--헤드내용 include -->
+   <% include ../../partials/head.ejs %>  
 </head>
-<body>
-    <button onclick="location.href='/'">Codit Class</button>
-    <button onclick="location.href='/Editor'">Editor</button>
-    <button onclick="location.href='/Community'">Community</button>
-    <button onclick="location.href='/User'">MyInfo</button>
-    <button onclick="location.href='/Logout'">Logout</button>
+
+<body class="homepage">
+    <div id="page-wrapper">
+
+        <% include ./nav.ejs %>
+        
+
+            <!--main-->
+        <div id="main-wrapper">
+            <div id="main" class="container">
+
+                   
+               
+                <div class="row 200%">
+                    <div class="12u" style="width:100%;">
+                        <section class="box blog">
+                            <div>
+                                <form>
+
+                
+
+                                        <div>
+                                                <br>
+                                                <input type="submit" value="debug" style="float: right;"/>
+                                        </div>
+                                
+                                        <div class="row">
+                                
+                                            <div class="6u 12u(mobile)" style="float: left;">
+                                
+                                                <textarea name="area_edit" placeholder="내용을 입력하세요." required rows="20" autofocus></textarea>
+                                
+                                            </div>
+                                
+                                            <div class="6u 12u(mobile)" style="float: right;">
+                                
+                                                 <textarea name="area_result" placeholder="결과창 " required rows=20 autofocus ></textarea>
+                                
+                                            </div>
+
+                                    
+                                    
+                                              
+                                       </div>
+
+                                
+                            </form>
+                            </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!-- Footer include  -->
+	<% include ../../partials/footer.ejs %>
+
+    </div>
     
-    <br><br><br>
-
-    <form method="post" action="/editor/">
-    <textarea name="area_edit" placeholder="내용을 입력하세요. " required rows=30 autofocus cols="100"></textarea>
-    <textarea name="area_result" placeholder="결과창 " required rows=30 autofocus cols="100"></textarea>
-    <br>
-    <input type="submit" value="debug" />
-    </form>
+    <!-- Scripts -->
+	<% include ../../partials/scripts.ejs %>
 </body>
-
-
 
 </html>
