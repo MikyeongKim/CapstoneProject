@@ -9,9 +9,9 @@ const models = require("./models");
 
 const index = require("./routes/index");
 const editor = require("./routes/editor");
-const user = require("./routes/user");
+const myinfo = require("./routes/myinfo");
 const community = require("./routes/community");
-//const myclass = require("./routes/myclass");
+const myclass = require("./routes/myclass");
 
 app.use(session({
   key: 'codit',
@@ -35,9 +35,9 @@ app.set('view engine', 'ejs');
 
 app.use('/',index);
 app.use('/editor', editor);
-app.use('/user', user);
+app.use('/myinfo', myinfo);
 app.use('/community', community);
-//app.use('/myclass', myclass);
+app.use('/myclass', myclass);
 
 models.sequelize.sync().then(() => {
   console.log(" DB 연결 성공")

@@ -4,7 +4,14 @@ const express = require('express')
 const exec = require('child_process');
 
 router.route('/')
-.get((req, res) => res.render('common/editor'))
+.get((req, res) => {
+  
+  if(!req.session.userinfo) {
+    return res.redirect('/login');
+  }
+  
+  res.render('common/editor')
+})
 .post((req,res) => {
   const body = req.body;
   

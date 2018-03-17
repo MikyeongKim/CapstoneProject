@@ -7,13 +7,18 @@ const category_num = 3;
 router.route('/').get((req, res) => {
 
   if (!req.session.userinfo) {
-    res.redirect('/');
+    return res.redirect('/login');
   }
 
   models.Board.findAll({
     where: { board_category: category_num }
   }).then(function (result) {
-    return res.render('common/community', { data: result });
+
+    if (req.session.userinfo[1] === 1) {
+            return res.render('student/community', { data: result });
+        } else {
+            return res.render('professor/community', { data: result });
+        }
   });
 });
 
@@ -23,6 +28,11 @@ router.route('/read/:id').get((req, res) => {
   models.Board.find({
     where: { board_no: req.params.id }
   }).then(function (result) {
+
+    if(! req.session.userinfo) {
+      return res.render('common/boardread', { data: result, writer: false });  
+    }
+
     if (result.user_id == req.session.userinfo[0]) {
       return res.render('common/boardread', { data: result, writer: true });
     }
