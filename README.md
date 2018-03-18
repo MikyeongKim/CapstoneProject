@@ -1,7 +1,9 @@
 # CapstoneProject
 
 #종화 기록일지
-18.01.27 by 종화   : 폴더정리랑 DB폴더 따로 만들 예정 view폴더 수정 / config폴더 생성 db폴더 수정예정 var 삭제 let과 18.01.28 by 종화   : const로 대체 
+18.01.27 by 종화   : 폴더정리랑 DB폴더 따로 만들 예정 view폴더 수정 / config폴더 생성 db폴더 수정예정 
+
+18.01.28 by 종화   : var 삭제  let과  const로 대체  // arrow function 적용
 
 18.02.08 by 종화   : 서버랑 연동시킬 bat파일 
 

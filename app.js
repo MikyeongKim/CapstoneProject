@@ -38,7 +38,7 @@ app.use('/myinfo', myinfo)
 app.use('/community', community)
 app.use('/myclass', myclass)
 
-app.use((req, res, next) => {
+app.use((req, res) => {
   res.status(404).send('<h2>Codit class 404 Page Not Found</h2>')
 })
 
