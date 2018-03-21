@@ -20,3 +20,5 @@
 18.03.18 by 미경 커뮤니티, 에디터 뷰 완성 (에디터에서 아이콘 깨지는건 ionicons.zip으로 해결가능) / 과제~성적페이지 아직X
 
 18.03.19 by 미경 : 과제, 성적 뷰 추가함
+
+18.03.21 by 태경 public 폴더내 섬머노트 추가 / board(insert,edit,read) 섬머노트 추가 / community.js 수정 / head,scripts 파일 수정
