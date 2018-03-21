@@ -2,100 +2,126 @@
 <html>
 
 <head>
-   <!--헤드내용 include -->
-   <% include ../../partials/head.ejs %>  
+  <!--헤드내용 include -->
+  <% include ../../partials/head.ejs %>
+    <% include ../../partials/scripts.ejs %>
+
 </head>
 
 <body class="homepage">
-    <div id="page-wrapper">
+  <div id="page-wrapper">
 
-       	<% include ./header.ejs %>
-		<% include ./nav.ejs %>
+    <% include ./header.ejs %>
+      <% include ./nav.ejs %>
 
         <!--main-->
         <div id="main-wrapper">
-            <div id="main" class="container">
+          <div id="main" class="container">
 
-                <div class="row 200%">
-                    <div class="12u">
-                        <div class="content content-left">
-                            <article class="box post">
-                                <header>
-                                    <h3>
+            <div class="row 200%">
+              <div class="12u">
+                <div class="content content-left">
+                  <article class="box post">
+                    <header>
+                      <h3>
                                         <a href="/community">#웰컴_코딧커뮤니티!!</a>
                                         <a onclick="location.href='/Community/insert'" style="float:right; margin:2% 0; font-weight:inherit; font-size:0.4em;" href="/community" class="button">목록보기</a>
-                                
+
                                     </h3>
-                                   
-                                    <p>공부 중 궁금한게 생길 때, 스터디를 구하고 싶을 때, 강의후기가 궁금할 때 등 이유불문 무엇이든 산기인들에게 물어보세요 :)</p>
-                                    
-                                    
-                                    <h2 class="major"></h2>
-                                    
-                                </header>
-                  
-                                <div>
-                                  
-                  
-                                    <table class="type06" style="margin:0;vertical-align:middle; text-align:center;">
-                                        <colgroup>
-                                            <col width="15%">
-                                            <col width="35%">
-                                            <col width="15%">
-                                            <col width="35%">
-                                            
-                                        </colgroup>
-                                  
-                                        <tr>
-                                            <th scope="row" class="even">제목</th>
-                                            <td> <%= readBoard.board_title %> </td>
-                                            <th scope="row" class="even">작성자</th>
-                                            <td><%= readBoard.board_user_no %></td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row" class="even">등록일</th>
-                                            <td><%= readBoard.created_at %></td>
-                                            <th scope="row" class="even">조회수</th>
-                                            <td><%= readBoard.board_count %></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="4" style="padding:40px 20px;">
-                                                <%= readBoard.board_content %>
-                                            </td>
-                                        </tr>
 
-                                        <tr>
-                                            <td colspan="4" scope="row" class="even">
-                                        <button onclick="location.href='javascript:history.back()'">뒤로가기</button>
-                                    
-                                        <% 
+                      <p>공부 중 궁금한게 생길 때, 스터디를 구하고 싶을 때, 강의후기가 궁금할 때 등 이유불문 무엇이든 산기인들에게 물어보세요 :)</p>
+
+
+                      <h2 class="major"></h2>
+
+                    </header>
+
+                    <div>
+
+
+                      <table class="type06" style="margin:0;vertical-align:middle; text-align:center;">
+                        <colgroup>
+                          <col width="15%">
+                          <col width="35%">
+                          <col width="15%">
+                          <col width="35%">
+
+                        </colgroup>
+
+                        <tr>
+                          <th scope="row" class="even">제목</th>
+                          <td>
+                            <%= readBoard.board_title %>
+                          </td>
+                          <th scope="row" class="even">작성자</th>
+                          <td>
+                            <%= readBoard.board_user_no %>
+                          </td>
+                        </tr>
+                        <tr>
+                          <th scope="row" class="even">등록일</th>
+                          <td>
+                            <%= readBoard.created_at %>
+                          </td>
+                          <th scope="row" class="even">조회수</th>
+                          <td>
+                            <%= readBoard.board_count %>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td colspan="4" style="padding:40px 20px;">
+                            <textarea class="summernote"><%= readBoard.board_content %></textarea>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td colspan="4" scope="row" class="even">
+                            <button onclick="location.href='javascript:history.back()'">뒤로가기</button>
+
+                            <%
                                         if ( writer ) { %>
-                                            <button onclick="location.href='/community/edit/<%=readBoard.board_no%>'">수정하기</button>
-                                            <button onclick="location.href='/community/delete/<%=readBoard.board_no%>'">삭제하기</button>
-                                        <% } %>
-                                            </td>
-                                        </tr>
-                                    </table>
-                            
-                               
-                                     </div>
+                              <button onclick="location.href='/community/edit/<%=readBoard.board_no%>'">수정하기</button>
+                              <button onclick="location.href='/community/delete/<%=readBoard.board_no%>'">삭제하기</button>
+                              <% } %>
+                          </td>
+                        </tr>
+                      </table>
 
-                                <div style="margin-top:5%;">
-                                    <h2 class="major" ></h2>
-                                </div>
-                            </article>
-                        </div>
+
                     </div>
-                </div>
-            </div>
-        </div>
-    <!-- Footer include  -->
-	<% include ../../partials/footer.ejs %>
 
-    </div>
-    
-    <!-- Scripts -->
-	<% include ../../partials/scripts.ejs %>
+                    <div style="margin-top:5%;">
+                      <h2 class="major"></h2>
+                    </div>
+                  </article>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Footer include  -->
+        <% include ../../partials/footer.ejs %>
+
+  </div>
+
+  <!-- Scripts -->
+  <!-- summernote 에딧창 추가 -->
+  <script>
+    $(document).ready(function() {
+      $('.summernote').summernote({
+        height: 300,
+        tabsize: 2,
+        focus: true,
+        airMode: true,
+        disableDragAndDrop: true,
+        popover: {
+          air: []
+        }
+      });
+      $('.summernote').summernote('disable');
+    });
+  </script>
+
 </body>
 
 </html>

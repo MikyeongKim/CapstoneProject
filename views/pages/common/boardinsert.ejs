@@ -2,67 +2,53 @@
 <html>
 
 <head>
-   <!--헤드내용 include -->
-   <% include ../../partials/head.ejs %>  
-   
- 
-  <!-- include summernote -->
-  <link rel="stylesheet" href="/summernote/summernote-bs4.css">
-  <script type="text/javascript" src="/summernote/summernote-bs4.js"></script>
-
-  <!-- 종화가 추가했던 include jquery, libraries BS
-  <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.css" />
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.js"></script>
-
-  -->
-
+  <!--헤드내용 include -->
+  <% include ../../partials/head.ejs %>
+    <% include ../../partials/scripts.ejs %>
 
 </head>
 
 <body class="homepage">
-    <div id="page-wrapper">
+  <div id="page-wrapper">
 
-       	<% include ./header.ejs %>
-		<% include ./nav.ejs %>
+    <% include ./header.ejs %>
+      <% include ./nav.ejs %>
 
         <!--main-->
         <div id="main-wrapper">
-            <div id="main" class="container">
+          <div id="main" class="container">
 
-                <div class="row 200%">
-                    <div class="12u">
-                        <div class="content content-left">
-                            <article class="box post">
-                                <header>
-                                    <h3>
+            <div class="row 200%">
+              <div class="12u">
+                <div class="content content-left">
+                  <article class="box post">
+                    <header>
+                      <h3>
                                         <a href="/community">#웰컴_코딧커뮤니티!!</a>
                                         <a onclick="location.href='/Community/insert'" style="float:right; margin:2% 0; font-weight:inherit; font-size:0.4em;" href="/community" class="button">목록보기</a>
                                     </h3>
-                                    <p>공부 중 궁금한게 생길 때, 스터디를 구하고 싶을 때, 강의후기가 궁금할 때 등 이유불문 무엇이든 산기인들에게 물어보세요 :)</p>
-                                    
-                                    <h2 class="major"></h2>
-                                    
-                                </header>
-                  
-                                <div>
-                                    <form action="/community/insert" method="post">
-                                    <table class="type06" style="margin:0;vertical-align:middle; text-align:center;">
-                                        <colgroup>
-                                            <col width="14%">
-                                            <col width="52%">
-                                            <col width="14%">
-                                            <col width="20%">
-                                          </colgroup>
-                                        
-                                        <tr>
-                                            <th scope="row" class="even">제목</th>
-                                            <td>  <input type="text" class="form-input" name="title" ></td>
-                                            <th scope="row" class="even"><label>게시판 </label></th>
-                                            <td>
-                                                <select name="board_department">
+                      <p>공부 중 궁금한게 생길 때, 스터디를 구하고 싶을 때, 강의후기가 궁금할 때 등 이유불문 무엇이든 산기인들에게 물어보세요 :)</p>
+
+                      <h2 class="major"></h2>
+
+                    </header>
+
+                    <div>
+                      <form action="/community/insert" method="post">
+                        <table class="type06" style="margin:0;vertical-align:middle; text-align:center;">
+                          <colgroup>
+                            <col width="14%">
+                            <col width="52%">
+                            <col width="14%">
+                            <col width="20%">
+                          </colgroup>
+
+                          <tr>
+                            <th scope="row" class="even">제목</th>
+                            <td> <input type="text" class="form-input" name="title"></td>
+                            <th scope="row" class="even"><label>게시판 </label></th>
+                            <td>
+                              <select name="board_department">
                                                     <option value="999">전체학과</option>
                                                     <option value="1">기계공학과</option>
                                                     <option value="2">기계설계공학과</option>
@@ -77,42 +63,56 @@
                                                     <option value="11">나노광공학과</option>
                                                     <option value="12">에너지전기공학과</option>
                                                 </select>
-                                            </td>
+                            </td>
 
-                                        </tr>
-                                        <tr>
-                                            <td colspan="4">
-                                                <textarea name="content" placeholder="내용을 입력하세요. " required rows="10" autofocus cols="130"></textarea>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="4">
-                                                <input type="submit" value="글작성" />
-                                                <button class="button" onclick="location.href='javascript:history.back()'">뒤로가기</button>
-                                            </td>
-                                        </tr>
+                          </tr>
+                          <tr>
+                            <td colspan="4">
+                              <!-- summernote class 및 id 추가 -->
+                              <textarea name="content" class="summernote" id="content" required rows="30" autofocus cols="130"></textarea>
+                              <!-- <div ></div> -->
+                            </td>
+                          </tr>
+                          <tr>
+                            <td colspan="4">
+                              <input type="button" id="subbtn" value="글작성">
+                              <button class="button" onclick="location.href='javascript:history.back()'">뒤로가기</button>
+                            </td>
+                          </tr>
 
-                                    </table>
-                                    </form>
-                               
-                                     </div>
+                        </table>
+                      </form>
 
-                                <div style="margin-top:5%;">
-                                    <h2 class="major" ></h2>
-                                </div>
-                            </article>
-                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    <!-- Footer include  -->
-	<% include ../../partials/footer.ejs %>
 
-    </div>
-    
-    <!-- Scripts -->
-	<% include ../../partials/scripts.ejs %>
+                    <div style="margin-top:5%;">
+                      <h2 class="major"></h2>
+                    </div>
+                  </article>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Footer include  -->
+        <% include ../../partials/footer.ejs %>
+
+  </div>
+
+  <!-- summernote 에딧창 추가 -->
+  <script>
+    $(document).ready(function() {
+      $('.summernote').summernote({
+        height: 300,
+        tabsize: 2,
+        focus: true
+      });
+      $('#subbtn').on('click', function() {
+        $('textarea[name="content"]').val($('.summernote').summernote('code'));
+        $('form').submit();
+      });
+    });
+  </script>
 </body>
 
 </html>
