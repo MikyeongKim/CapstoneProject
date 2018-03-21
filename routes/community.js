@@ -1,6 +1,8 @@
 const express = require('express')
   , router = express.Router()
-  , models = require('../models');
+  , models = require('../models')
+  , multer = require('multer')
+  , upload = multer({dest : 'uploads/'})
 
 const community_category = 3;
 
@@ -10,7 +12,7 @@ router.route('/').get((req, res) => {
     where: { board_category: community_category }
   }).then((result) => {
 
-    if (! req.session.userinfo) {
+    if (!req.session.userinfo) {
       return res.render('common/community', { board_list: result });
     }
 
@@ -19,29 +21,42 @@ router.route('/').get((req, res) => {
 });
 
 router.route('/read/:id').get((req, res) => {
-  //TODO : 세션 검사 및 조회수 및 게시판 카테고리 출력
+  //게시판 학과 카테고리 만들기
 
-  models.Board.find({
-    where: { board_no: req.params.id }
-  }).then((result) => {
+  const req_board_no = req.params.id
 
-    if (!result) {
-      return res.status(400).send("잘못된 경로로 접근했습니다.")
-    }
+  models.sequelize.Promise.all([
+    models.Board.find({
+      where: { board_no: req_board_no }
+    }),
 
-    if (!req.session.userinfo) {
-      return res.render('common/boardread', { readBoard: result, writer: false });
-    }
+    models.Board.update({
+      board_count: models.sequelize.literal('board_count+1')
+    }, { where: { board_no: req_board_no } })
+  ])
+    .spread((findResult, updateResult) => {
 
-    if (result.board_user_no == req.session.userinfo[0]) {
-      return res.render('common/boardread', { readBoard: result, writer: true });
-    }
+      if (!findResult) {
+        return res.status(400).send("잘못된 경로로 접근했습니다.")
+      }
+      
+      if (!req.session.userinfo) {
+        return res.render('common/boardread', { readBoard: findResult });
+      }
 
-    res.render('common/boardread', { readBoard: result, writer: false });
-  }).catch((err)=> {
-    //TODO : 오류처리
-    res.send("테스트")
-  })
+      
+
+      if (findResult.board_user_no == req.session.userinfo[0]) {
+        return res.render('student/boardread', { readBoard: findResult, writer: true });
+      }
+
+      return res.render('student/boardread', { readBoard: findResult, writer: false });
+
+    }).catch(function (err) {
+      return res.status(400).send(err)
+    });
+
+
 });
 
 router.route('/insert')
@@ -54,7 +69,7 @@ router.route('/insert')
 
     res.render('common/boardinsert')
   })
-  .post((req, res) => {
+  .post(upload.array('upfile',12),(req, res) => {
 
     if (!req.session.userinfo) {
       //TODO : 비정상 경로로 접근 오류처리
@@ -62,11 +77,11 @@ router.route('/insert')
     }
 
     models.Board.create({
-      board_category: category_num,
+      board_category: community_category,
       board_title: req.body.title,
       board_content: req.body.content,
       board_department: req.body.board_department,
-      board_user_no: req.session.userinfo[0],
+      board_user_no: req.session.userinfo[0]
     }).then((result) => {
       res.redirect('/community');
     }).catch((err) => {
@@ -82,7 +97,7 @@ router.route('/edit/:id')
       where: { board_no: req.params.id }
     }).then(function (result) {
 
-      if (!result ) {
+      if (!result) {
         return res.status(400).send("잘못된 경로로 접근했습니다.")
       }
 
@@ -109,8 +124,8 @@ router.route('/edit/:id')
     const body = req.body;
 
     models.Board.update({
-      board_title: body.title, 
-      board_content: body.content, 
+      board_title: body.title,
+      board_content: body.content,
       board_department: body.board_department
     }
       , {
@@ -128,7 +143,7 @@ router.route('/delete/:id').get((req, res) => {
     where: { board_no: req.params.id }
   }).then((result) => {
 
-    if (!result ) {
+    if (!result) {
       return res.status(400).send("잘못된 경로로 접근했습니다.")
     }
 

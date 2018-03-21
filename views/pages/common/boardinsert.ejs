@@ -48,7 +48,7 @@
                                 </header>
                   
                                 <div>
-                                    <form action="/community/insert" method="post">
+                                    <form action="/community/insert" method="post" enctype="multipart/form-data">
                                     <table class="type06" style="margin:0;vertical-align:middle; text-align:center;">
                                         <colgroup>
                                             <col width="14%">
@@ -79,6 +79,11 @@
                                                 </select>
                                             </td>
 
+                                        </tr>
+                                        <tr>
+                                        <th scope="row" class="even">파일</th>
+                                        <td> test</td>
+                                        <td> <input type="file" name="upfile"></td>
                                         </tr>
                                         <tr>
                                             <td colspan="4">

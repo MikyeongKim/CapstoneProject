@@ -10,14 +10,9 @@
     <div id="page-wrapper">
 
         <% include ./nav.ejs %>
-        
-
             <!--main-->
         <div id="main-wrapper">
             <div id="main" class="container">
-
-                   
-               
                 <div class="row 200%">
                     <div class="12u" style="width:100%;">
                         <section class="box blog">
@@ -36,12 +31,9 @@
                                         <col width="1%">
                                     </colgroup>
                                         <tr>
+                                        <!-- 코드미러 옵션 바꾸는 버튼임-->
+                                            <td><a href="#" class="fas fa-cog fa-2x"></a></td>
                                             <td>
-                                                <!-- 코드미러 옵션 바꾸는 버튼임-->
-                                                <a href="#" class="fas fa-cog fa-2x"></a>
-                                            </td>
-                                            <td>
-                                                <!--언어선택할수 있는 옵션바-->
                                                 <select name="editor_lang">
                                                     <!--value값은 디비 맞춰서 수정해주세요-->
                                                     <option value="1">JAVA</option>
@@ -50,21 +42,14 @@
                                                 </select>
                                             </td>
                                             
-                                            
-                                            <td>
                                                 <!--임시저장 버튼-->
-                                                <a href="#" class="fas fa-save fa-2x"></a>
-                                            </td>
+                                            <td><a href="#" class="fas fa-save fa-2x"></a></td>
                                             
-                                            <td>
                                                 <!--코드 파일로 다운로드 버튼-->
-                                                <a href="#" class="fas fa-download fa-2x"></a>
-                                            </td>
+                                            <td><a href="#" class="fas fa-download fa-2x"></a></td>
                                             
-                                            <td  style="text-align:right;">    
-                                                <!--run버튼-->
-                                                <a href="#" class="fas fa-play fa-2x"></a>
-                                            </td>
+                                            <!--run버튼-->
+                                            <td  style="text-align:right;"><button value><a href="#" class="fas fa-play fa-2x"></a></td>
                                             <td>
                                                 <!--과제제출 버튼-->
                                                 <!--이거누르면 어떤 과제로 제출할건지 물어보는 팝업창 떠야할것같음..
@@ -79,18 +64,13 @@
                                     <div class="row">
                                 
                                             <div class="6u 12u(mobile)" style="float: left;">
-                                
                                                 <textarea name="area_edit" placeholder="내용을 입력하세요." required rows="20" autofocus></textarea>
-                                
                                             </div>
                                 
                                             <div class="6u 12u(mobile)" style="float: right;">
-                                
                                                  <textarea name="area_result" placeholder="결과창 " required rows=20 autofocus ></textarea>
-                                
                                             </div>
                                        </div>
-                               
                             </form>
                             </div>
                             </section>

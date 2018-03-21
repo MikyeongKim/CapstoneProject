@@ -169,26 +169,30 @@
 										
 										<!-- table 안에 각 <td> 마다 커뮤니티에서 인기글 상위 5개 긁어와야함-->
 												<table class="type06">
+												<% community.forEach((item,index) => { 
+													if((index+1)%2) { %>
 														<tr>
-															<th scope="row">1</th>
-															<td><a href="#">알고리즘 함께 공부하실 분..</a></td>
-														</tr>
-														<tr>
-															<th scope="row" class="even">2</th>
-															<td class="even"><a href="#">여러분 자바 어려워여?.?</a></td>
-														</tr>
-														<tr>
-																<th scope="row">3</th>
-																<td><a href="#">수강신청 화이팅~~</a></td>
-														</tr>
-														<tr>
-																<th scope="row" class="even">4</th>
-																<td class="even"><a href="#">휴학하는거 어떻게 생각하세요ㅠㅜ?</a></td>
-														</tr>
-														<tr>
-																<th scope="row">5</th>
-																<td><a href="#">영어 스터디 구해요ㅎㅅㅎ</a></td>
-														</tr>
+															<th scope="row">
+																<%= index+1 %>
+															</th>
+															<td>
+																<a href="/community/read/<%=item.board_no%>">
+																	<%= item.board_title %>
+																</a>
+															</td>
+															
+															<% } else {  %>
+															<th scope="row" class="even">
+																<%= index+1 %>
+															</th>
+															<td class="even">
+																<a href="/community/read/<%=item.board_no%>">
+																	<%= item.board_title %>
+																</a>
+																</td>
+													<% } %>
+													</tr>
+													<% }); %>
 									
 													</table>
 									

@@ -39,11 +39,27 @@ router.route('/').get((req, res) => {
 
     } else {
         // 위에 조기리턴인데..!! else 지워면 왜 오류나는지 모르겠음.. ㅠ_ㅠ
-        if (req.session.userinfo[1] === student ) {
-            return res.render('student/index');
-        } else {
-            return res.render('professor/index');
-        }
+
+        models.sequelize.Promise.all([
+            models.Board.findAll({
+                where: { board_category: board_community },
+                limit: 5,
+                order: [['created_at', 'DESC']]
+            })
+        ])
+            .spread((returnCommunity) => {
+                if (req.session.userinfo[1] === student) {
+                    return res.render('student/index' 
+                    , { community: returnCommunity });
+                } else {
+                    return res.render('professor/index' 
+                    , { community: returnCommunity });
+                }
+            }).catch(function (err) {
+                //TODO : status 오류코드 보내기
+                return res.redirect('/')
+            });
+
     }
 
 });
