@@ -21,6 +21,9 @@
 
 18.03.19 by 미경 : 과제, 성적 뷰 추가함
 
+
 18.03.19 by 종화 : editor 권한 설정 및 render / 게시판 조회수 기능 추가 
 
-18.03.22 by 종화 : ajax사용 / 컴파일 c (오류처리 OK) 자바 (오류처리 X ) / 
+18.03.21 by 태경 public 폴더내 섬머노트 추가 / board(insert,edit,read) 섬머노트 추가 / community.js 수정 / head,scripts 파일 수정
+
+18.03.22 by 종화 : ajax사용 / 컴파일 c (오류처리 OK) 자바 (오류처리 X ) 
