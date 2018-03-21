@@ -62,7 +62,7 @@ router.route('/insert')
     }
 
     models.Board.create({
-      board_category: category_num,
+      board_category: community_category,
       board_title: req.body.title,
       board_content: req.body.content,
       board_department: req.body.board_department,
