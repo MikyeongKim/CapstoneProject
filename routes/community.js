@@ -2,14 +2,14 @@ const express = require('express')
   , router = express.Router()
   , models = require('../models')
   , multer = require('multer')
-  , upload = multer({dest : 'uploads/'})
+  , upload = multer({ dest: 'uploads/' })
 
 const community_category = 3
 
 router.route('/').get((req, res) => {
 
   models.Board.findAll({
-    where: { board_category: community_category } ,
+    where: { board_category: community_category },
     order: [['created_at', 'DESC']]
   }).then((result) => {
 
@@ -35,7 +35,7 @@ router.route('/read/:id').get((req, res) => {
     }, { where: { board_no: req_board_no } }),
 
     models.Reply.findAll({
-      where: { board_no: req_board_no } 
+      where: { board_no: req_board_no }
     })
   ])
     .spread((findResult, updateResult, replyResult) => {
@@ -43,16 +43,16 @@ router.route('/read/:id').get((req, res) => {
       if (!findResult) {
         return res.status(400).send('잘못된 경로로 접근했습니다.')
       }
-      
+
       if (!req.session.userinfo) {
-        return res.render('common/boardread', { readBoard: findResult , reply : replyResult})
+        return res.render('common/boardread', { readBoard: findResult, reply: replyResult })
       }
 
       if (findResult.board_user_no == req.session.userinfo[0]) {
-        return res.render('student/boardread', { readBoard: findResult, writer: true , reply: replyResult })
+        return res.render('student/boardread', { readBoard: findResult , writer: true , reply: replyResult })
       }
 
-      return res.render('student/boardread', { readBoard: findResult, writer: false })
+      return res.render('student/boardread', { readBoard: findResult , writer: false , reply: replyResult })
 
     }).catch(function (err) {
       return res.status(400).send(err)
@@ -71,19 +71,30 @@ router.route('/insert')
 
     res.render('common/boardinsert')
   })
-  .post(upload.array('upfile',12),(req, res) => {
+  .post(upload.array('upfile', 12), (req, res) => {
 
     if (!req.session.userinfo) {
       //TODO : 비정상 경로로 접근 오류처리
       res.redirect('/')
     }
 
-    models.Board.create({
-      board_category: community_category,
-      board_title: req.body.title,
-      board_content: req.body.content,
-      board_department: req.body.board_department,
-      board_user_no: req.session.userinfo[0]
+    return models.sequelize.transaction(function (t) {
+      const body = req.body;
+
+      return models.User.find({
+        user_id: req.session.userinfo[0]
+      }, { transaction: t })
+        .then(user_result => {
+
+          return models.Board.create({
+            board_category: community_category,
+            board_title: req.body.title,
+            board_content: req.body.content,
+            board_department: req.body.board_department,
+            board_user_no: user_result.user_no,
+            board_writer: user_result.user_name
+          }, { transaction: t })
+        })
     }).then((result) => {
       res.redirect('/community')
     }).catch((err) => {
@@ -165,12 +176,12 @@ router.route('/delete/:id').get((req, res) => {
   })
 })
 
-router.route('/upload').get((req,res) => {
+router.route('/upload').get((req, res) => {
   return res.render('common/file')
 
 
 })
-.post((req,res) => {
-})
+  .post((req, res) => {
+  })
 
 module.exports = router

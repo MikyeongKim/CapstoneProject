@@ -11,6 +11,7 @@ const index = require("./routes/index")
   , myinfo = require("./routes/myinfo")
   , community = require("./routes/community")
   , myclass = require("./routes/myclass")
+  , reply = require("./routes/reply")
 
 app.use(session({
   key: 'codit',
@@ -37,12 +38,13 @@ app.use('/editor', editor)
 app.use('/myinfo', myinfo)
 app.use('/community', community)
 app.use('/myclass', myclass)
+app.use('/reply', reply)
 
 app.use((req, res) => {
   res.status(404).send('<h2>Codit class 404 Page Not Found</h2>')
 })
 
-models.sequelize.sync().then(() => {
+models.sequelize.sync({force:true}).then(() => {
   console.log(" DB 연결 성공")
 }).catch(err => {
   console.log("연결 실패")

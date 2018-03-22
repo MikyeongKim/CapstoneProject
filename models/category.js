@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
             timestamps: false
         });
     Category.associate = function (models) {
-        Category.hasMany(models.Board, { foreignKey: 'board_category', sourceKey: 'category_no' });
+        //Category.hasMany(models.Board, { foreignKey: 'board_category', sourceKey: 'category_no' });
         
     };
     return Category;

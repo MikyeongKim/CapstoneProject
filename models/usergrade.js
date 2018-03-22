@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
             timestamps: false
         });
     UserGrade.associate = function (models) {
-        UserGrade.hasMany(models.User, { foreignKey: 'usergrade_no', sourceKey: 'usergrade_no' });
+        UserGrade.hasMany(models.Userlogin, { foreignKey: 'usergrade_no', sourceKey: 'usergrade_no' });
     };
     return UserGrade;
 };

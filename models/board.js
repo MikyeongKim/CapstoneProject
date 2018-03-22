@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
         board_title: { type: DataTypes.STRING, allowNull: false },
         board_content: { type: DataTypes.TEXT, allowNull: false },
         board_count: { type: DataTypes.INTEGER, allowNull: false, defaultValue: '0' },
+        board_writer: { type: DataTypes.STRING, allowNull: false }
     }, {
             freezeTableName: true,
             tableName: "tbl_board",

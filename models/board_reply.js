@@ -5,6 +5,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER, primaryKey: true
             , allowNull: false, autoIncrement: true },
         reply_content: { type: DataTypes.STRING, allowNull: false },
+        reply_writer: { type: DataTypes.STRING, allowNull: false }
     }, {
             freezeTableName: true,
             tableName: "tbl_reply",

@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
         });
     Signupsubject.associate = function (models) {
         Signupsubject.belongsTo(models.Subject, { foreignKey: 'signup_subject_no' });
-        Signupsubject.belongsTo(models.User, { foreignKey: 'signup_user_no' });
+        Signupsubject.belongsTo(models.Student, { foreignKey: 'signup_user_no' });
     };
     return Signupsubject;
 };

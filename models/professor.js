@@ -5,8 +5,6 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER, primaryKey: true
             , allowNull: false, autoIncrement: true },
         professor_name: { type: DataTypes.STRING, allowNull: false, },
-        professor_email: { type: DataTypes.STRING, unique: true },
-        professor_phone: { type: DataTypes.STRING },
     }, {
             freezeTableName: true,
             tableName: "tbl_Professor",
@@ -15,7 +13,6 @@ module.exports = (sequelize, DataTypes) => {
         })
     Professor.associate = function (models) {
         Professor.belongsTo(models.User, { foreignKey: 'professor_no' });
-        Professor.belongsTo(models.Department, { foreignKey: 'department_no' });
     };
     return Professor;
 };
