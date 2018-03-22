@@ -82,7 +82,7 @@ router.route('/insert')
       const body = req.body;
 
       return models.User.find({
-        user_id: req.session.userinfo[0]
+        where: { user_no: req.session.userinfo[0] }
       }, { transaction: t })
         .then(user_result => {
 

@@ -44,7 +44,7 @@ app.use((req, res) => {
   res.status(404).send('<h2>Codit class 404 Page Not Found</h2>')
 })
 
-models.sequelize.sync({force:true}).then(() => {
+models.sequelize.sync().then(() => {
   console.log(" DB 연결 성공")
 }).catch(err => {
   console.log("연결 실패")
