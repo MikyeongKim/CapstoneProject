@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
         Board.belongsTo(models.User, { foreignKey: 'board_user_no' });
         Board.belongsTo(models.Category, { foreignKey: 'board_category' });
         Board.belongsTo(models.Department, { foreignKey: 'board_department' });
+        Board.hasMany(models.Reply, { foreignKey: 'board_no', sourceKey: 'board_no' });
     };
     return Board;
 };
