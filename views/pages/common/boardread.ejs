@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="/stylesheets/summernote.css">
   
   <% include ../../partials/head.ejs %>
-    <% include ../../partials/scripts.ejs %>
+  <% include ../../partials/scripts.ejs %>
 
 </head>
 
@@ -32,17 +32,11 @@
                                         <a onclick="location.href='/Community/insert'" style="float:right; margin:2% 0; font-weight:inherit; font-size:0.4em;" href="/community" class="button">목록보기</a>
 
                                     </h3>
-
                       <p>공부 중 궁금한게 생길 때, 스터디를 구하고 싶을 때, 강의후기가 궁금할 때 등 이유불문 무엇이든 산기인들에게 물어보세요 :)</p>
-
-
                       <h2 class="major"></h2>
-
                     </header>
 
                     <div>
-
-
                       <table class="type06" style="margin:0;vertical-align:middle; text-align:center;">
                         <colgroup>
                           <col width="15%">
@@ -77,6 +71,17 @@
                             <textarea class="summernote"><%= readBoard.board_content %></textarea>
                           </td>
                         </tr>
+                        <tr>
+                          <td colspan="4" scope="row" class="even"></td>
+                        </tr>
+                        
+                        <% reply.forEach((item,index) => { %>
+                          <tr>
+                            <th scope="row" class="even"><%= item.board_user_no %></th>
+                            <td><%= item.reply_content %></td>
+                          </tr>
+                            <% }); %>
+                        
 
                         <tr>
                           <td colspan="4" scope="row" class="even">

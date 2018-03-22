@@ -23,7 +23,6 @@ router.route('/').get((req, res) => {
 
 router.route('/read/:id').get((req, res) => {
   //게시판 학과 카테고리 만들기
-
   const req_board_no = req.params.id
 
   models.sequelize.Promise.all([
@@ -36,20 +35,18 @@ router.route('/read/:id').get((req, res) => {
     }, { where: { board_no: req_board_no } }),
 
     models.Reply.findAll({
-      board_count: models.sequelize.literal('board_count+1')
-    }, {where: { board_no: req_board_no } })
+      where: { board_no: req_board_no } 
+    })
   ])
     .spread((findResult, updateResult, replyResult) => {
 
       if (!findResult) {
-        return res.status(400).send("잘못된 경로로 접근했습니다.")
+        return res.status(400).send('잘못된 경로로 접근했습니다.')
       }
       
       if (!req.session.userinfo) {
-        return res.render('common/boardread', { readBoard: findResult })
+        return res.render('common/boardread', { readBoard: findResult , reply : replyResult})
       }
-
-      
 
       if (findResult.board_user_no == req.session.userinfo[0]) {
         return res.render('student/boardread', { readBoard: findResult, writer: true , reply: replyResult })
@@ -104,7 +101,7 @@ router.route('/edit/:id')
     }).then(function (result) {
 
       if (!result) {
-        return res.status(400).send("잘못된 경로로 접근했습니다.")
+        return res.status(400).send('잘못된 경로로 접근했습니다.')
       }
 
       if (!req.session.userinfo) {
@@ -150,7 +147,7 @@ router.route('/delete/:id').get((req, res) => {
   }).then((result) => {
 
     if (!result) {
-      return res.status(400).send("잘못된 경로로 접근했습니다.")
+      return res.status(400).send('잘못된 경로로 접근했습니다.')
     }
 
     if (result.board_user_no != req.session.userinfo[0]) {

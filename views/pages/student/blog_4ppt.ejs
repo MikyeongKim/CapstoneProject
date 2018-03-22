@@ -23,7 +23,7 @@
 				<div class="row">
 					<div class="2u">
                     
-                        <% include ./sidebar.ejs %>
+                        <% include ./blog_sidebar.ejs %>
 					</div>
 
 					<div class="10u 12u(mobile) important(mobile)">
@@ -64,30 +64,21 @@
                                             </thead>
                                             <tbody scope="row" style="text-align:center; ">
                                                 <!--바로 아래는 뷰짜려고 임시로 만든 <td>목록임-->
+                                                        <% blog_list.forEach((item,index) => { %>
+                                                            <tr>
+                                                                <td><%= index+1 %></td>
+                                                                <td style="text-align:left;">
+                                                                    <a href="/myclass/ppt/read/<%=item.blog_no%>"><%= item.blog_title %>
+                                                                    </td>
+                                                                <td><%= item.blog_user_no %></td>
+                                                                <td><%= item.created_at %></td>
+                                                                <td><%= item.blog_count %></td>
+                                                            </tr>
+                                                            <% }); %>
 
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>mysql설치 방법 입니다.</td>
-                                                        <td><a href="#" style="margin:0;" class="icono-bookmarkEmpty" ></a></td>
-                                                        <td>교수1</td>
-                                                        <td>2018-03-03</td>
-                                                        <td>35</td>
-                                                    </tr>
+    
         
-                                                <!--td갯수는 최대15개로 fix해야함, 16번글부터는 2번째 페이지로 아웃
-                                                    아래 코드는 /community.ejs 긁어온거라서 DB에 맞게 수정해야함!
-                                                    <% data.forEach((item,index) => { %>
-                                                        <tr>
-                                                            <td><%= index+1 %></td>
-                                                            <td style="text-align:left;">
-                                                                <a href="/community/read/<%=item.board_no%>"><%= item.board_title %>
-                                                                </td>
-                                                            <td><%= item.user_id %></td>
-                                                            <td><%= item.created_at %></td>
-                                                            <td><%= item.board_count %></td>
-                                                        </tr>
-                                                        <% }); %>
-                                                        -->
+                                                
                                             </tbody>
         
                                             <tfoot>
