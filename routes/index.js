@@ -3,60 +3,85 @@ const express = require('express')
     , models = require('../models');
 
 
-router.route('/').get((req, res) => {
+const board_notice = 1
+    , board_faq = 2
+    , board_community = 3
 
+const student = 1
+    , professor = 2
+    , manager = 3
+
+router.route('/').get((req, res) => {
+    
     if (!req.session.userinfo) {
-        models.sequelize.Promise.all([ 
+        models.sequelize.Promise.all([
             models.Board.findAll({
-                where: { board_category: 1 },
+                where: { board_category: board_notice },
                 limit: 5,
                 order: [['created_at', 'DESC']]
             }),
             models.Board.findAll({
-                where: { board_category: 2 },
+                where: { board_category: board_faq },
                 limit: 5,
                 order: [['created_at', 'DESC']]
             }),
             models.Board.findAll({
-                where: { board_category: 3 },
+                where: { board_category: board_community },
                 limit: 5,
                 order: [['created_at', 'DESC']]
             }),
         ])
-            .spread(function (returnNotice, returnFAQ, returnCommunity) { 
+            .spread((returnNotice, returnFAQ, returnCommunity) => {
                 return res.render('common/index', { notice: returnNotice, faq: returnFAQ, community: returnCommunity })
-            }).catch(function (err) { 
-                console.log(err);
+            }).catch(function (err) {
+                //TODO : status 오류코드 보내기
+                return res.redirect('/')
             });
 
-
     } else {
+        // 위에 조기리턴인데..!! else 지워면 왜 오류나는지 모르겠음.. ㅠ_ㅠ
 
-        if (req.session.userinfo[1] === 1) {
-            return res.render('student/index');
-        } else {
-            return res.render('professor/index');
-        }
+        models.sequelize.Promise.all([
+            models.Board.findAll({
+                where: { board_category: board_community },
+                limit: 5,
+                order: [['created_at', 'DESC']]
+            })
+        ])
+            .spread((returnCommunity) => {
+                if (req.session.userinfo[1] === student) {
+                    return res.render('student/index' 
+                    , { community: returnCommunity });
+                } else {
+                    return res.render('professor/index' 
+                    , { community: returnCommunity });
+                }
+            }).catch(function (err) {
+                //TODO : status 오류코드 보내기
+                return res.redirect('/')
+            });
+
     }
 
 });
 
 router.route('/login')
-    .get((req, res) =>
-        res.render('common/login', { message: "" }))
+    .get((req, res) => {
+
+        res.render('common/login', { message: "" });
+    })
     .post((req, res) => {
+
         const body = req.body;
 
         if (!(body.id && body.password)) {
             return res.render('common/login', { message: "아이디/패스워드를 입력해주세요." });
         }
 
-        models.User.find({
+        models.Userlogin.find({
             where: { user_id: body.id, user_password: body.password }
         }).then(result => {
-            const grade = result.user_grade;
-            req.session.userinfo = [body.id, grade];
-
+            req.session.userinfo = [result.user_no, result.usergrade_no];
             res.redirect('/');
         }).catch(err => {
             res.render('common/login', { message: '아이디/패스워드가 잘못되었습니다.' });
@@ -67,7 +92,7 @@ router.route('/login')
 router.route('/logout').get((req, res) => {
 
     if (!req.session.userinfo) {
-        //잘못된 경로로 접근하였습니다. 메세지 출력후 인덱스로 이동
+        //TODO : 잘못된 경로로 접근하였습니다. 메세지 출력후 인덱스로 이동
         return res.redirect('/');
     }
 
@@ -81,37 +106,54 @@ router.route('/logout').get((req, res) => {
     });
 });
 
+
 router.route('/signup')
-    .get((req, res) => res.render('common/signup'))
+    .get((req, res) => {
+
+        res.render('common/signup')
+    })
     .post((req, res) => {
+
         return models.sequelize.transaction(function (t) {
             const body = req.body;
 
-            return models.User.create({
+            return models.Userlogin.create({
                 user_id: body.id,
                 user_password: body.password,
-                user_grade: body.grade
+                usergrade_no: body.grade
             }, { transaction: t })
-                .then(function (user) {
-                    if (body.grade == 1) {
+                .then(login_result => {
 
-                        return models.Student.create({
-                            student_id: body.id,
-                            student_name: body.name,
-                            student_email: body.email,
-                            student_phone: body.phone,
-                            department_id: body.department
-                        }, { transaction: t });
-                    } else {
-                        return models.Professor.create({
-                            professor_id: body.id,
-                            professor_name: body.name,
-                            professor_email: body.email,
-                            professor_phone: body.phone,
-                            department_id: body.department
-                        }, { transaction: t });
-                    }
-                });
+                    return models.User.create({
+                        user_no: login_result.user_no,
+                        user_name: body.name,
+                        user_email: body.email,
+                        user_phone: body.phone,
+                        department_no: body.department
+                    }, { transaction: t })
+                        .then(user_result => {
+
+                            if (body.grade == student) {
+                                return models.Student.create({
+                                    student_no: user_result.user_no,
+                                    student_name: body.name,
+                                }, { transaction: t })
+                            } else if (body.grade == professor) {
+                                return models.Professor.create({
+                                    professor_no: login_result.user_no,
+                                    professor_name: body.name,
+                                }, { transaction: t })
+                            } else {
+                                return models.Manager.create({
+                                    manager_no: login_result.user_no,
+                                    manager_name: body.name,
+                                }, { transaction: t })
+                            }
+
+
+                        })
+                })
+
         }).then(function (result) {
             console.log("데이터 추가 완료");
             res.redirect('login');
@@ -119,5 +161,7 @@ router.route('/signup')
             console.log("데이터 추가 실패");
         });
     })
+
+
 
 module.exports = router;

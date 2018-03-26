@@ -1,23 +1,20 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var category = sequelize.define('Category', {
-    category_id: { type : DataTypes.INTEGER 
-                          , primaryKey : true 
-                          , allowNull: false 
-                          , autoIncrement: true },
-    category_name: { type : DataTypes.STRING 
-                          , allowNull : false 
-                          , unique: true},
-  }, {
-    classMethods: {
-      associate: function(models) {
- 
-      }
-    }, 
-    freezeTableName: true,
-    tableName: "tbl_category",
-    underscored: true,
-    timestamps: false
-  });
-  return category;
+    var Category = sequelize.define('Category', {
+        category_no: {
+            type: DataTypes.INTEGER, primaryKey: true
+            , allowNull: false, autoIncrement: true },
+        category_name: {
+            type: DataTypes.STRING, allowNull: false, unique: true },
+    }, {
+            freezeTableName: true,
+            tableName: "tbl_category",
+            underscored: true,
+            timestamps: false
+        });
+    Category.associate = function (models) {
+        //Category.hasMany(models.Board, { foreignKey: 'board_category', sourceKey: 'category_no' });
+        
+    };
+    return Category;
 };

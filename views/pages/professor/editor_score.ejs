@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+
+
+<!--학생들이 제출한 코드를 돌려보고 점수를 줄 수 있는 페이지임-->
+
+
+<html>
+
+<head>
+   <!--헤드내용 include -->
+   <% include ../../partials/head.ejs %>  
+</head>
+
+<body class="homepage">
+    <div id="page-wrapper">
+
+        <% include ./nav.ejs %>
+        
+
+            <!--main-->
+        <div id="main-wrapper">
+            <div id="main" class="container">
+
+                   
+               
+                <div class="row 200%">
+                    <div class="12u" style="width:100%;">
+                        <section class="box blog">
+                            <div>
+                                <form>
+                                     <!-- 학생 :: 언어선택 / 저장버튼/ 제출버튼/ 다운로드버튼 / debug버튼 / run버튼 / 코드미러옵션선택(체크박스)-->                              
+                                      <!-- 교수 :: 언어선택 / 저장버튼/ 성적입력/ 다운로드버튼 / debug버튼 / run버튼 / 코드미러옵션선택(체크박스)-->                              
+                                    <div>
+                                        <div>
+                                    <table class="type06" style="border:none;" >
+                                        <colgroup>
+                                            <col width="1%">
+                                            <col width="7%">
+                                            <col width="7%">
+                                            <col width="7%">
+                                            <col width="7%">
+                                            <col width="37%">
+                                            <col width="7%">
+                                            <col width="1%">
+                                            <col width="26%">
+                                        </colgroup>
+                                          
+                                        <tr>
+                                           <!--여기 아래 전부, 학생정보 긁어와주세요-->
+                                           <td>
+                                                <i class="fas fa-user-circle fa-2x"></i>
+                                           </td>
+                                           
+                                            <th>학번</th>
+                                            <td>2012150001</td>
+
+
+                                            <th>이름</th>
+                                            <td style="text-align:left;">학생1</td>
+                                            
+                                            <th style="text-align:right;"><label id="score">평가점수입력</label></th>
+                                            <td style="text-align:left;">
+                                                <input type="number" id="score" />
+                                            </td>
+                                            <td style="text-align:left;">
+                                                <!--학생과제 평가점수 저장 버튼 / DB에 들어가는거 처리해주세요-->
+                                                <a href="#" class="fas fa-save fa-2x"></a>
+                                            </td>
+                                            
+                                            <td style="text-align:right;">
+                                                <button class="button"  >뒤로가기</button>
+                                                <!--버튼 누르면 과제 제출한 학생들 리스트로 감-->
+                                            </td>
+                                        </tr>
+                                           
+                                    </table>
+                                    </div>
+                                    <div>
+                                    <table class="type06"  style="text-align:left; border:none; margin-bottom:0;">
+                                    <colgroup>
+                                        <col width="1%">
+                                        <col width="10%">
+                                        <col width="1%">
+                                        <col width="88%">
+                                       
+                                    </colgroup>
+                                    
+                                        <tr>
+                                            <td>
+                                                <!-- 코드미러 옵션 바꾸는 버튼임-->
+                                                <a href="#" class="fas fa-cog fa-2x"></a>
+                                            </td>
+                                            <td>
+                                                <!--언어선택할수 있는 옵션바-->
+                                                <select name="editor_lang">
+                                                    <!--value값은 디비 맞춰서 수정해주세요-->
+                                                    <option value="1">JAVA</option>
+                                                    <option value="2">C</option>
+                                                    <option value="3">Python</option>
+                                                </select>
+                                            </td>
+                                            
+                                            
+                                            
+                                            
+                                            <td>
+                                                <!--코드 파일로 다운로드 버튼-->
+                                                <a href="#" class="fas fa-download fa-2x"></a>
+                                            </td>
+                                            
+                                            <td  style="text-align:right;">    
+                                                <!--run버튼-->
+                                                <a href="#" class="fas fa-play fa-2x"></a>
+                                            </td>
+                                        </tr>
+                                        
+                                    </table>
+                                    </div>
+                                    </div>
+                                    <h2 class="major" style="margin-bottom: 3%;"></h2>
+                                       
+                                    <div class="row">
+                                
+                                            <div class="6u 12u(mobile)" style="float: left;">
+                                
+                                                <textarea name="area_edit" placeholder="내용을 입력하세요." required rows="20" autofocus></textarea>
+                                
+                                            </div>
+                                
+                                            <div class="6u 12u(mobile)" style="float: right;">
+                                
+                                                 <textarea name="area_result" placeholder="결과창 " required rows=20 autofocus ></textarea>
+                                
+                                            </div>
+
+                                       </div>
+
+                                
+                            </form>
+                            </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!-- Footer include  -->
+	<% include ../../partials/footer.ejs %>
+
+    </div>
+    
+    <!-- Scripts -->
+	<% include ../../partials/scripts.ejs %>
+</body>
+
+</html>

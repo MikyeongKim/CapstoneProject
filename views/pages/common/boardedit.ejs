@@ -2,18 +2,20 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+  <!--헤드내용 include -->
+  <% include ../../partials/head.ejs %>
+    <% include ../../partials/scripts.ejs %>
+
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css"> 
+    <link rel="stylesheet" href="/stylesheets/summernote.css">
 </head>
 
 <body>
-    <form method="post" action="/community/edit/<%= data.board_no %>">
-        <table>
-            <label>게시판 </label>
-            <!-- TODO : SELECT값 data.board_department 로 지정하기 -->
-            <select name="board_department" >
+  <form method="post" action="/community/edit/<%= data.board_no %>">
+    <table>
+      <label>게시판 </label>
+      <!-- TODO : SELECT값 data.board_department 로 지정하기 -->
+      <select name="board_department">
                 <option value="999">전체학과</option>
                 <option value="1">기계공학과</option>
                 <option value="2">기계설계공학과</option>
@@ -28,19 +30,31 @@
                 <option value="11">나노광공학과</option>
                 <option value="12">에너지전기공학과</option>
             </select>
-            <br>
-            <label>제목 </label>
-            <input type="text" name="title" placeholder="제목을 입력하세요" 
-                value="<%= data.board_title %>" maxlength="255" required >
-            <br>
-            <br>
-            <textarea name="content" placeholder="내용을 입력하세요."
-                required rows=30 autofocus cols="130"><%= data.board_content %></textarea>
-        </table>
-        <hr align="left" width="70%">
-        <button onclick="location.href='javascript:history.back()'">뒤로가기</button>
-        <input type="submit" value="수정"/>
-    </form>
+      <br>
+      <label>제목 </label>
+      <input type="text" name="title" placeholder="제목을 입력하세요" value="<%= data.board_title %>" maxlength="255" required>
+      <br>
+      <br>
+      <textarea name="content" class="summernote" id="content" required rows="30" autofocus cols="130"><%= data.board_content %></textarea>
+    </table>
+    <hr align="left" width="70%">
+    <button onclick="location.href='javascript:history.back()'">뒤로가기</button>
+    <input type="submit" id="subbtn" value="수정">
+  </form>
+
+  <script>
+    $(document).ready(function() {
+      $('.summernote').summernote({
+        height: 300,
+        tabsize: 2,
+        focus: true
+      });
+      $('#subbtn').on('click', function() {
+        $('textarea[name="content"]').val($('.summernote').summernote('code'));
+        $('form').submit();
+      });
+    });
+  </script>
 </body>
 
 </html>

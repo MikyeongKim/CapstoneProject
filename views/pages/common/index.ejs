@@ -23,7 +23,7 @@
 			<div class="12u">
 
 				<!-- Blog -->
-				<section class="box blog">
+				<section class="box blog" style="margin-bottom:10%;">
 					<div>
 						<div class="row">
 							<div class="6u 12u(mobile)">
@@ -36,9 +36,12 @@
 										<section class="box feature">
 											<h2 class="major"><span>공지사항</span></h2>
 											<ul>
-											<% notice.forEach((item,index) => { %>
-											<li><a href="/community/read/<%=item.board_no%>"><%= item.board_title %></li>
-											<% }); %>
+												<% notice.forEach((item,index) => { %>
+												<li>
+													<a href="/community/read/<%=item.board_no%>">
+														<%= item.board_title %></a>
+												</li>
+												<% }); %>
 											</ul>
 										</section>
 									</div>
@@ -51,9 +54,12 @@
 											<h2 class="major"><span>FAQ</span></h2>
 											
 											<ul>
-											<% faq.forEach((item,index) => { %>
-											<li><a href="/community/read/<%=item.board_no%>"><%= item.board_title %></li>
-											<% }); %>
+												<% faq.forEach((item,index) => { %>
+												<li>
+													<a href="/community/read/<%=item.board_no%>">
+													<%= item.board_title %></a>
+												</li>
+												<% }); %>
 											</ul>
 										</section>
 									</div>
@@ -84,11 +90,11 @@
 										<article class="box post">
 											<header>
 												<h3>
-													<a href="/login">#코딧_Community</a>
+													<a href="/community">#코딧_Community</a>
 												</h3>
 												<p>궁금한 건 산기인들에게 물어봐~ #궁금해#알려죠</p>
 	
-												<a style="float:right;" href="/login" class="button">go!</a>
+												<a style="float:right;" href="/community" class="button">go!</a>
 									
 											   
 												<ul class="meta">
@@ -101,17 +107,31 @@
 											
 											<table class="type06">
 
-											<% community.forEach((item,index) => { 
-												if((index+1)%2) { %>
-												<tr>
-													<th scope="row"><%= index+1 %></th>
-													<td><a href="/community/read/<%=item.board_no%>"><%= item.board_title %></td>
-												<% } else {  %>
-													<th scope="row" class="even"><%= index+1 %></th>
-													<td class="even"><a href="/community/read/<%=item.board_no%>"><%= item.board_title %></td>
-												<% } %>
-												</tr>
-												<% }); %>
+												<% community.forEach((item,index) => { 
+													if((index+1)%2) { %>
+												
+														<tr>
+															<th scope="row">
+																<%= index+1 %>
+															</th>
+															<td>
+																<a href="/community/read/<%=item.board_no%>">
+																	<%= item.board_title %>
+																</a>
+															</td>
+															
+															<% } else {  %>
+															<th scope="row" class="even">
+																<%= index+1 %>
+															</th>
+															<td class="even">
+																<a href="/community/read/<%=item.board_no%>">
+																	<%= item.board_title %>
+																</a>
+																</td>
+													<% } %>
+													</tr>
+													<% }); %>
 											</table>
 										
 										</article>
@@ -142,15 +162,8 @@
 	</div>
 
     <!-- Scripts -->
-    <script src="../../../public/javascripts/jquery.min.js"></script>
-
-
-	<script src="../../../public/javascripts/jquery.dropotron.min.js"></script>
-	<script src="../../../public/javascripts/skel.min.js"></script>
-	<script src="../../../public/javascripts/skel-viewport.min.js"></script>
-	<script src="../../../public/javascripts/util.js"></script>
-	<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-	<script src="../../../public/javascripts/main.js"></script>
+ 
+	<% include ../../partials/scripts.ejs %>
 
 </body>
 

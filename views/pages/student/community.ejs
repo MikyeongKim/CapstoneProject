@@ -51,13 +51,13 @@
                                     <tbody scope="row" style="text-align:center;">
 
                                         <!--td갯수는 최대15개로 fix해야함, 16번글부터는 2번째 페이지로 아웃-->
-                                            <% data.forEach((item,index) => { %>
+                                            <% board_list.forEach((item,index) => { %>
                                                 <tr>
                                                     <td><%= index+1 %></td>
                                                     <td style="text-align:left;">
                                                         <a href="/community/read/<%=item.board_no%>"><%= item.board_title %>
                                                         </td>
-                                                    <td><%= item.user_id %></td>
+                                                    <td><%= item.board_writer %></td>
                                                     <td><%= item.created_at %></td>
                                                     <td><%= item.board_count %></td>
                                                 </tr>
