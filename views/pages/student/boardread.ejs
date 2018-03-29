@@ -4,11 +4,11 @@
 <head>
   <!--헤드내용 include -->
 
-  <link rel="stylesheet" href="/stylesheets/bootstrap.min.css"> 
+  <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
   <link rel="stylesheet" href="/stylesheets/summernote.css">
-  
+
   <% include ../../partials/head.ejs %>
-  <% include ../../partials/scripts.ejs %>
+    <% include ../../partials/scripts.ejs %>
 
 </head>
 
@@ -28,10 +28,11 @@
                   <article class="box post">
                     <header>
                       <h3>
-                                        <a href="/community">#웰컴_코딧커뮤니티!!</a>
-                                        <a onclick="location.href='/Community/insert'" style="float:right; margin:2% 0; font-weight:inherit; font-size:0.4em;" href="/community" class="button">목록보기</a>
+                        <a href="/community">#웰컴_코딧커뮤니티!!</a>
+                        <a onclick="location.href='/Community/insert'" style="float:right; margin:2% 0; font-weight:inherit; font-size:0.4em;" href="/community"
+                          class="button">목록보기</a>
 
-                                    </h3>
+                      </h3>
                       <p>공부 중 궁금한게 생길 때, 스터디를 구하고 싶을 때, 강의후기가 궁금할 때 등 이유불문 무엇이든 산기인들에게 물어보세요 :)</p>
                       <h2 class="major"></h2>
                     </header>
@@ -71,65 +72,102 @@
                             <textarea class="summernote"><%= readBoard.board_content %></textarea>
                           </td>
                         </tr>
-                        
-                        <tr>
-                          <td colspan="4" scope="row" class="even"></td>
-                        </tr>
-                        
-                        <% reply.forEach((item,index) => { %>
-                          <tr>
-                            <th scope="row" class="even"><%= item.board_user_no %></th>
-                            <td><%= item.reply_content %></td>
-                          </tr>
-                            <% }); %>
-                        
-
-                        <tr>
-                          <td colspan="4" scope="row" class="even">
-                            <button onclick="location.href='javascript:history.back()'">뒤로가기</button>
-                            <% 
-                            if (writer) { %>
-                                <button onclick="location.href='/community/edit/<%=readBoard.board_no%>'">수정하기</button>
-                                <button onclick="location.href='/community/delete/<%=readBoard.board_no%>'">삭제하기</button>
-                            <% } %>
-                          </td>
-                        </tr>
                       </table>
 
+                      <div class="reply_area">
+                        <table>
+                          <tr>
+                            <th class="even">댓글작성</th>
+                            <td colspan="2">
+                              <input type="input" id='reply_content' />
+                            </td>
+                            <td colspan="1">
+                              <button id="reply_btn">작성</button>
+                          </tr>
+                          <tr>
+                            <th><h1 id="hahaha">hhhhhhhh</th>
+                          </tr>
 
-                    </div>
+                        </table>
+                        <div>
 
-                    <div style="margin-top:5%;">
-                      <h2 class="major"></h2>
-                    </div>
+
+
+                          <% reply.forEach((item,index) => { %>
+                            <tr>
+                              <th scope="row" class="even">
+                                <%= item.board_user_no %>
+                              </th>
+                              <td>
+                                <%= item.reply_content %>
+                              </td>
+                            </tr>
+                            <% }); %>
+
+                              <tr>
+                                <td colspan="4" scope="row" class="even">
+                                  <button onclick="location.href='javascript:history.back()'">뒤로가기</button>
+                                  <% 
+                            if (writer) { %>
+                                    <button onclick="location.href='/community/edit/<%=readBoard.board_no%>'">수정하기</button>
+                                    <button onclick="location.href='/community/delete/<%=readBoard.board_no%>'">삭제하기</button>
+                                    <% } %>
+                                </td>
+                              </tr>
+
+
+
+                        </div>
+
+                        <div style="margin-top:5%;">
+                          <h2 class="major"></h2>
+                        </div>
                   </article>
+                  </div>
+                  </div>
                 </div>
               </div>
             </div>
+            <!-- Footer include  -->
+            <% include ../../partials/footer.ejs %>
+
           </div>
-        </div>
-        <!-- Footer include  -->
-        <% include ../../partials/footer.ejs %>
 
-  </div>
+          <!-- Scripts -->
+          <!-- summernote 에딧창 추가 -->
+          <script>
+            $(() => {
+              $('.summernote').summernote({
+                height: 300,
+                tabsize: 2,
+                focus: true,
+                airMode: true,
+                disableDragAndDrop: true,
+                popover: {
+                  air: []
+                }
+              });
+              $('.summernote').summernote('disable');
+            });
 
-  <!-- Scripts -->
-  <!-- summernote 에딧창 추가 -->
-  <script>
-    $(document).ready(function() {
-      $('.summernote').summernote({
-        height: 300,
-        tabsize: 2,
-        focus: true,
-        airMode: true,
-        disableDragAndDrop: true,
-        popover: {
-          air: []
-        }
-      });
-      $('.summernote').summernote('disable');
-    });
-  </script>
+            $('#reply_btn').click(() => {
+              const board_no = <%= readBoard.board_no %>
+              const content = $('#reply_content').val()
+                $.ajax({
+                  url: '/reply',
+                  dataType: 'json',
+                  type: 'POST',
+                  data: {
+                    'content': content
+                    , 'board_no': board_no
+                  },
+                  success: function (result) {
+                    $('#hahaha').append(content)
+                  }
+                })
+              $('#reply_content').html('')
+            })
+          </script>
 
 </body>
 

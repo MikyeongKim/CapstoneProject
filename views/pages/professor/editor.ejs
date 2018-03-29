@@ -37,7 +37,7 @@
     <script>
          $('#run').click(function () {
             const target = document.getElementById("lang")
-            const uri = "http://localhost:3000/editor/"+target.options[target.selectedIndex].value
+            const uri = "/editor/"+target.options[target.selectedIndex].value
             $('#result').html('');
             $.ajax({
                 url: uri,

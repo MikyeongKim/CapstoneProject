@@ -3,8 +3,28 @@ const express = require('express')
   , models = require('../models')
 
 
-router.route("/insert/:board_no").post((req, res) => {
+router.route('/')
+  .post((req, res) => {
+    
+    
+    console.log('하하하')
+    /*
+    if (!req.session.userinfo) {
+      return res.status(403).redirect('/login')
+    }
 
+    const reply_content = req.param.content
+    const board_no = req.param.board_no
+    const id = req.session.userinfo[0]
+*/
+
+    return res.send({ result: true});
+
+
+})
+
+
+router.route("/insert/:board_no").post((req, res) => {
   console.log(`컨텐트 ${req.body.content} 보드넘버 ${req.params.board_no}`)
   return res.send({ result: true })
   /*

@@ -8,13 +8,27 @@
                 <tr scope="row" class="even" >
                         <td>
                             <!--학생이 수강중인 강의명 읽어오기-->
-                                <select id="category" style="width:120px; display:inline-block; ">
-                                    <option selected="selected">자료구조</option>
-                                    <option>수학1</option>
-                                    <option>글로벌잉글리시</option>
-                                    <option>전산학기초</option>
+
+                            
+                                <select id="category" name="sidebar_subject" onchange="chageSubject()" style="width:120px; display:inline-block; ">
+                                    <% subject_no.forEach((item1,index) => { %>
+                                        <% subject_list.forEach((item2,index) => { %>
+                                            <% if(item1.signup_subject_no == item2.subject_no){ %>
+                                                <option value = <%= item2.subject_no %> selected="selected" > <%= item2.subject_title %> </option>
+                                            <%}%>
+                                        <% }); %>
+                                    <% }); %>
                                 </select>
                               </td>
+
+                                <script>
+                                    function chageSubject(){
+                                        const target = document.getElementById("category")
+                                        const uri = "http://localhost:3000/myclass/"+target.options[target.selectedIndex].value
+                                       
+                                        if(uri) location.href = uri;
+                                    }
+                                </script>
                         
                     </tr>
             </table>

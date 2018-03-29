@@ -10,7 +10,7 @@
     <div id="page-wrapper">
 
        	<% include ./header.ejs %>
-		<% include ./nav.ejs %>
+		<%- include ./nav.ejs ,{subject_no:subject_no},{subject_list : subject_list} %>
 
 		<!-- Main -->
 		<div id="main-wrapper">
@@ -18,7 +18,7 @@
 				<div class="row">
 					<div class="2u">
                     
-                        <% include blog_sidebar.ejs %>
+						<%- include ./blog_sidebar.ejs ,{subject_no:subject_no},{subject_list : subject_list} %>
 					</div>
 
 					<div class="10u 12u(mobile) important(mobile)">
