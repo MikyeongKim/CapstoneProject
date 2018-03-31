@@ -1,0 +1,123 @@
+<!DOCTYPE HTML>
+<html>
+<!-- 마이페이지>수강내역 페이지 (여기서 수강강의리스트 출력) -->
+<head>
+    <!--헤드내용 include -->
+    <% include ../../partials/head.ejs %>
+</head>
+
+<body class="homepage">
+	<div id="page-wrapper">
+
+	    <!-- Header -->
+		<% include ./header.ejs %>
+
+		<!-- Nav include -->
+		<% include ./nav.ejs %>
+
+
+		<!-- Main -->
+		<div id="main-wrapper">
+			<div id="main" class="container">
+				<div class="row">
+					<div class="2u">
+                    
+                        <% include ./myinfo_sidebar.ejs %>
+					</div>
+
+					<div class="10u 12u(mobile) important(mobile)">
+
+						<!--
+							
+							section class= box feature 중간정렬
+							section class= box features 왼쪽정렬
+						 -->
+						 <div class="content content-right">
+							<article class="box page-content">
+								<header>
+									<h2 style="font-size:2.5em;"><a href="#">수강내역</a></h2>
+									<h2 class="major"></h2>
+								</header>
+
+								<div>
+                                  
+                                    <form method="POST">
+                                        <table class="type06" style="vertical-align:middle; text-align:center;">
+											<colgroup>
+												<!--학기/강의명/강의정보-->
+                                                <col width="20%">
+                                                <col width="40%">
+                                                <col width="40%">
+                                            </colgroup>
+											<thead scope="row" class="even">
+												<th colspan="3">
+													<!--검색전 뜨는 학기는 현재 진행중인학기-->
+													<select id="year" style="width:80px; display:inline-block;">
+                                                        <option selected="selected">2018</option>
+                                                        <option>2017</option>
+                                                        <option>2016</option>
+                                                        <option>2015</option>
+													</select>
+													년도
+
+													<select id="semester" style="width:70px; display:inline-block;">
+                                                        <option selected="selected">1</option>
+                                                        <option>하계</option>
+                                                        <option>2</option>
+                                                        <option>동계</option>
+													</select>
+													학기
+
+													<input type="submit" value="찾기" style="padding:0.4em 1.5em; font-weight:initial; font-size:1em;" />
+        
+												</th>
+												
+											</thead>
+
+                                            <tbody scope="row" style="text-align:center; ">
+												<tr>
+													<th class="even">
+														<!--학기불러오기-->
+														<label>2017-2학기</label>
+													</th>
+													<td>
+														<!--강의명불러오기-->
+														HCI개론
+													</td>
+													<td>
+														노영주 / 수4 12:30-14:30
+													</td>
+												</tr>
+												
+                                            </tbody>
+        
+                                            
+                                        </table>
+                                        </form>
+                                    
+                                       
+                                </div>
+
+							</article>
+						 </div>			
+					</div>
+
+				</div>
+
+
+			</div>
+		</div>
+
+
+	
+	<!-- Footer include -->
+	<% include ../../partials/footer.ejs %>
+
+	</div>
+
+	<!-- Scripts -->
+	<% include ../../partials/scripts.ejs %>
+
+</body>
+
+</html>

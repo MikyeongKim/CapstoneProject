@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <!--헤드내용 include -->
+    <% include ../../partials/head.ejs %>
+</head>
+
+<body class="homepage">
+	<div id="page-wrapper">
+
+	    <!-- Header -->
+		<% include ./header.ejs %>
+
+		<!-- Nav include -->
+		<% include ./nav.ejs %>
+
+
+		<!-- Main -->
+		<div id="main-wrapper">
+			<div id="main" class="container">
+				<div class="row">
+					<div class="2u">
+                    
+                        <% include ./myinfo_sidebar.ejs %>
+					</div>
+
+					<div class="10u 12u(mobile) important(mobile)">
+
+						<!--
+							
+							section class= box feature 중간정렬
+							section class= box features 왼쪽정렬
+						 -->
+						 <div class="content content-right">
+							<article class="box page-content">
+								<header>
+									<h2 style="font-size:2.5em;"><a href="#">개인정보</a></h2>
+									<h2 class="major"></h2>
+								</header>
+
+								<div>
+                                  
+                                    <form method="POST">
+                                        <table class="type06" style="vertical-align:middle; text-align:center;">
+                                            <colgroup>
+                                                <col width="15%">
+                                                <col width="35%">
+                                                <col width="15%">
+                                                <col width="35%">
+                                            </colgroup>
+        
+                                            <tbody scope="row" style="text-align:center; ">
+												<tr>
+													<td class="even">
+														<label>이름</label>
+													</td>
+													<td>
+														<%=name%>
+													</td>
+													<td class="even">
+														<label>연락처</label>
+													</td>
+													<td>
+														<%=phone%>
+													</td>
+												</tr>
+												<tr>
+													<td class="even">
+														<label>이메일</label>
+													</td>
+													<td>
+														<%=email%>
+													</td>
+													<td class="even">
+														<label></label>
+													</td>
+													<td>
+														<%= %>
+													</td>
+												</tr>
+                                            </tbody>
+        
+                                            
+                                        </table>
+                                        </form>
+                                    
+                                       
+                                </div>
+
+							</article>
+						 </div>			
+					</div>
+
+				</div>
+
+
+			</div>
+		</div>
+
+
+	
+	<!-- Footer include -->
+	<% include ../../partials/footer.ejs %>
+
+	</div>
+
+	<!-- Scripts -->
+	<% include ../../partials/scripts.ejs %>
+
+</body>
+
+</html>

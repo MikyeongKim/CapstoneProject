@@ -72,57 +72,93 @@
                             <textarea class="summernote"><%= readBoard.board_content %></textarea>
                           </td>
                         </tr>
-                      </table>
 
-                      <div class="reply_area">
-                        <table>
-                          <tr>
-                            <th class="even">댓글작성</th>
-                            <td colspan="2">
-                              <input type="input" id='reply_content' />
-                            </td>
-                            <td colspan="1">
-                              <button id="reply_btn">작성</button>
+                        <tr>
+                            <td colspan="4" scope="row" class="even"></td>
                           </tr>
-                          <tr>
-                            <th><h1 id="hahaha">hhhhhhhh</th>
-                          </tr>
-
-                        </table>
-                        <div>
-
-
-
+                          
                           <% reply.forEach((item,index) => { %>
                             <tr>
-                              <th scope="row" class="even">
-                                <%= item.board_user_no %>
+                              <th scope="row" class="even"><%= item.board_user_no %></th>
+                              <td><%= item.reply_content %></td>
+                            </tr>
+                              <% }); %>
+                          
+  
+                          <tr>
+                            <td colspan="4" scope="row" class="even">
+                              <button onclick="location.href='javascript:history.back()'">뒤로가기</button>
+                              <% 
+                              if (writer) { %>
+                                  <button onclick="location.href='/community/<%=readBoard.board_no%>/edit/'">수정하기</button>
+                                  <button id="btn_delete">삭제하기</button>
+                              <% } %>
+                            </td>
+                          </tr>
+
+                      </table>
+                     </div>
+
+
+                      <h2 class="major" style="margin:3% 0;"></h2>
+                      
+                      <!--달린 댓글 보이는 테이블-->
+                      <div style="padding:0 10%;">
+                        <table class="type06">
+                          <colgroup>
+                            <col width="35%">
+                            <col widty="65%">
+                          </colgroup>
+
+                          <thead scope="row" class="even">
+                            <tr>
+                              <!--댓글총갯수 읽어와주삼-->
+                              <th colspan="2" style="text-align:left; padding-left:3%;" >댓글 n개</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+
+                            <tr>
+                              <th>
+                                김미경 (2017-03-31 11:40)
                               </th>
                               <td>
-                                <%= item.reply_content %>
+                                후후
+
+                                <!--댓글쓴 사람일때 보이는 버튼임 (연필=수정하기/엑스=삭제하기버튼)-->
+                                <a href="#" class="fas fa-pencil-alt" style="margin-left:5%;"></a>
+                                <a href="#" class="fas fa-times" style="margin-left:2%;"></a>
                               </td>
                             </tr>
-                            <% }); %>
+                        
+                          </tbody>
 
-                              <tr>
-                                <td colspan="4" scope="row" class="even">
-                                  <button onclick="location.href='javascript:history.back()'">뒤로가기</button>
-                                  <% 
-                            if (writer) { %>
-                                    <button onclick="location.href='/community/edit/<%=readBoard.board_no%>'">수정하기</button>
-                                    <button onclick="location.href='/community/delete/<%=readBoard.board_no%>'">삭제하기</button>
-                                    <% } %>
-                                </td>
-                              </tr>
+                        </table>
+                      </div>
 
 
+                       <!--댓글다는 테이블-->
+                       <div style="padding:0 10%;">
+                          <table class="type06">
+                            <colgroup>
+                              <col width="85%">
+                              <col widty="15%">
+                            </colgroup>
+                            
+                            <tr>
+                              <td >
+                                <textarea style="width:100%;"></textarea>
+                              </td>
+                              <td>
+                                <button onclick="" style="width:100%;">등록</button>
+                              </td>
+                            </tr>
 
+                          </table>
                         </div>
-
-                        <div style="margin-top:5%;">
-                          <h2 class="major"></h2>
-                        </div>
-                  </article>
+                    
+               
+                      </article>
                   </div>
                   </div>
                 </div>
@@ -151,22 +187,35 @@
             });
 
             $('#reply_btn').click(() => {
-              const board_no = <%= readBoard.board_no %>
+              const board_no =  <%= readBoard.board_no  %>
               const content = $('#reply_content').val()
-                $.ajax({
-                  url: '/reply',
-                  dataType: 'json',
-                  type: 'POST',
-                  data: {
-                    'content': content
-                    , 'board_no': board_no
-                  },
-                  success: function (result) {
-                    $('#hahaha').append(content)
-                  }
-                })
+              $.ajax({
+                url: '/reply',
+                dataType: 'json',
+                type: 'POST',
+                data: {
+                  'content': content
+                  , 'board_no': board_no
+                },
+                success: function (result) {
+                  $('#hahaha').append(content)
+                }
+              })
               $('#reply_content').html('')
             })
+
+            $('#btn_delete').click(function () {
+              $.ajax({
+                type: 'DELETE',
+                url: '/community/<%= readBoard.board_no %>',
+                success: (result) => {
+                  if (result['result']) {
+                    window.location.href = '/community';
+                  }
+                }
+              })
+            })
+
           </script>
 
 </body>

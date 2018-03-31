@@ -6,30 +6,30 @@
   <% include ../../partials/head.ejs %>
     <% include ../../partials/scripts.ejs %>
 
-    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css"> 
-    <link rel="stylesheet" href="/stylesheets/summernote.css">
+      <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+      <link rel="stylesheet" href="/stylesheets/summernote.css">
 </head>
 
 <body>
-  <form method="post" action="/community/edit/<%= data.board_no %>">
+  <form method="post" action="/community/<%= data.board_no %>" id="form_edit">
     <table>
       <label>게시판 </label>
       <!-- TODO : SELECT값 data.board_department 로 지정하기 -->
-      <select name="board_department">
-                <option value="999">전체학과</option>
-                <option value="1">기계공학과</option>
-                <option value="2">기계설계공학과</option>
-                <option value="3">메카트로닉스공학과</option>
-                <option value="4">전자공학부</option>
-                <option value="5">컴퓨터공학부</option>
-                <option value="6">게임공학부</option>
-                <option value="7">신소재공학과</option>
-                <option value="8">생명화학공학과</option>
-                <option value="9">디자인학부</option>
-                <option value="10">경영학부</option>
-                <option value="11">나노광공학과</option>
-                <option value="12">에너지전기공학과</option>
-            </select>
+      <select name="board_department" , id="board_department">
+        <option value="999">전체학과</option>
+        <option value="1">기계공학과</option>
+        <option value="2">기계설계공학과</option>
+        <option value="3">메카트로닉스공학과</option>
+        <option value="4">전자공학부</option>
+        <option value="5">컴퓨터공학부</option>
+        <option value="6">게임공학부</option>
+        <option value="7">신소재공학과</option>
+        <option value="8">생명화학공학과</option>
+        <option value="9">디자인학부</option>
+        <option value="10">경영학부</option>
+        <option value="11">나노광공학과</option>
+        <option value="12">에너지전기공학과</option>
+      </select>
       <br>
       <label>제목 </label>
       <input type="text" name="title" placeholder="제목을 입력하세요" value="<%= data.board_title %>" maxlength="255" required>
@@ -43,17 +43,33 @@
   </form>
 
   <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
       $('.summernote').summernote({
         height: 300,
         tabsize: 2,
         focus: true
       });
-      $('#subbtn').on('click', function() {
+      $('#subbtn').on('click', function () {
         $('textarea[name="content"]').val($('.summernote').summernote('code'));
         $('form').submit();
       });
-    });
+    })
+
+
+    $('#form_edit').submit(() => {
+      $.ajax({
+        type: 'PUT',
+        url: "/community/<%= data.board_no %>",
+        data: $('#form_edit').serialize(),
+        success: (result) => {
+          if (result['result']) {
+            window.location.href = "/community/<%= data.board_no %>";
+          }
+        }
+      })
+    })
+
+
   </script>
 </body>
 

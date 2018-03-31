@@ -16,7 +16,7 @@ router.route('/').get((req, res) => {
     models.User.find({
         where: { user_no: user_no }
     }).then(result => {
-        res.render('common/myinfo', {
+        res.render('student/myinfo', {
             name: result.user_name,
             phone: result.user_phone,
             email: result.user_email

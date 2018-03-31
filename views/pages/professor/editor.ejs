@@ -45,12 +45,11 @@
                 type: 'POST',
                 data: { 'content': $('#content').val() },
                 success: function (result) {
-                     if (result['result'] == true) {
+                     if (result['result']) {
                          $('#result').html(result['content']);
                      }
                 }
             });
-
         })
     </script>
 

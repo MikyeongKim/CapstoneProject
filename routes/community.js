@@ -1,77 +1,26 @@
 const express = require('express')
   , router = express.Router()
   , models = require('../models')
-  , multer = require('multer')
-  , upload = multer({ dest: 'uploads/' })
+
 
 const community_category = 3
 
-router.route('/').get((req, res) => {
-
-  models.Board.findAll({
-    where: { board_category: community_category },
-    order: [['created_at', 'DESC']]
-  }).then((result) => {
-
-    if (!req.session.userinfo) {
-      return res.render('common/community', { board_list: result })
-    }
-
-    return res.render('student/community', { board_list: result })
-  })
-})
-
-router.route('/read/:id').get((req, res) => {
-  //게시판 학과 카테고리 만들기
-  const req_board_no = req.params.id
-
-  models.sequelize.Promise.all([
-    models.Board.find({
-      where: { board_no: req_board_no }
-    }),
-
-    models.Board.update({
-      board_count: models.sequelize.literal('board_count+1')
-    }, { where: { board_no: req_board_no } }),
-
-    models.Reply.findAll({
-      where: { board_no: req_board_no }
-    })
-  ])
-    .spread((findResult, updateResult, replyResult) => {
-
-      if (!findResult) {
-        return res.status(400).send('잘못된 경로로 접근했습니다.')
-      }
-
-      if (!req.session.userinfo) {
-        return res.render('common/boardread', { readBoard: findResult, reply: replyResult })
-      }
-
-      if (findResult.board_user_no == req.session.userinfo[0]) {
-        return res.render('student/boardread', { readBoard: findResult , writer: true , reply: replyResult })
-      }
-
-      return res.render('student/boardread', { readBoard: findResult , writer: false , reply: replyResult })
-
-    }).catch(function (err) {
-      return res.status(400).send(err)
-    })
-
-
-})
-
-router.route('/insert')
+router.route('/')
   .get((req, res) => {
 
-    if (!req.session.userinfo) {
-      //TODO : 비정상 경로로 접근 오류처리
-      res.redirect('/')
-    }
+    models.Board.findAll({
+      where: { board_category: community_category },
+      order: [['created_at', 'DESC']]
+    }).then((result) => {
 
-    res.render('common/boardinsert')
+      if (!req.session.userinfo) {
+        return res.render('common/community', { board_list: result })
+      }
+
+      return res.render('student/community', { board_list: result })
+    })
   })
-  .post(upload.array('upfile', 12), (req, res) => {
+  .post((req, res) => {
 
     if (!req.session.userinfo) {
       //TODO : 비정상 경로로 접근 오류처리
@@ -104,7 +53,101 @@ router.route('/insert')
     })
   })
 
-router.route('/edit/:id')
+
+
+router.route('/:id')
+  .get((req, res) => {
+    //게시판 학과 카테고리 만들기
+    const req_board_no = req.params.id
+
+    models.sequelize.Promise.all([
+      models.Board.find({
+        where: { board_no: req_board_no }
+      }),
+
+      models.Board.update({
+        board_count: models.sequelize.literal('board_count+1')
+      }, { where: { board_no: req_board_no } }),
+
+      models.Reply.findAll({
+        where: { board_no: req_board_no }
+      })
+    ])
+      .spread((findResult, updateResult, replyResult) => {
+
+        if (!findResult) {
+          return res.status(400).send('잘못된 경로로 접근했습니다.')
+        }
+
+        if (!req.session.userinfo) {
+          return res.render('common/boardread', { readBoard: findResult, reply: replyResult })
+        }
+
+        if (findResult.board_user_no == req.session.userinfo[0]) {
+          return res.render('student/boardread', { readBoard: findResult, writer: true, reply: replyResult })
+        }
+
+        return res.render('student/boardread', { readBoard: findResult, writer: false, reply: replyResult })
+
+      }).catch(function (err) {
+        return res.status(400).send(err)
+      })
+  })
+  .put((req, res) => {
+
+    const paramId = req.params.id
+    const body = req.body
+
+    models.Board.update({
+      board_title: req.body.title,
+      board_content: req.body.content,
+      board_department: req.body.board_department
+    }
+      , {
+        where: { board_no: paramId }
+      }).then((result) => {
+        res.send({result : true})
+      }).catch((err) => {
+        console.log("에러러러러")
+        console.dir(err)
+      })
+  })
+  .delete((req, res) => {
+
+    models.Board.find({
+      where: { board_no: req.params.id }
+    }).then((result) => {
+
+      if (!result) {
+        return res.status(400).send('잘못된 경로로 접근했습니다.')
+      }
+
+      if (result.board_user_no != req.session.userinfo[0]) {
+        return res.render('/')
+      }
+
+      models.Board.destroy({
+        where: { board_no: result.board_no }
+      }).then((result) => {
+        res.status(200).send({ result: true })
+      }).catch((err) => {
+      })
+    })
+  })
+
+
+router.route('/:id/new')
+  .get((req, res) => {
+
+    if (!req.session.userinfo) {
+      //TODO : 비정상 경로로 접근 오류처리
+      res.redirect('/')
+    }
+
+    res.render('common/boardinsert')
+  })
+
+router.route('/:id/edit')
   .get((req, res) => {
 
     models.Board.find({
@@ -132,56 +175,8 @@ router.route('/edit/:id')
     })
 
   })
-  .post((req, res) => {
-
-    const paramId = req.params.id
-    const body = req.body
-
-    models.Board.update({
-      board_title: body.title,
-      board_content: body.content,
-      board_department: body.board_department
-    }
-      , {
-        where: { board_no: paramId }
-      }).then((result) => {
-        res.redirect('/community/read/' + paramId)
-      }).catch((err) => {
-        //TODO : 오류처리
-      })
-  })
-
-router.route('/delete/:id').get((req, res) => {
-
-  models.Board.find({
-    where: { board_no: req.params.id }
-  }).then((result) => {
-
-    if (!result) {
-      return res.status(400).send('잘못된 경로로 접근했습니다.')
-    }
-
-    if (result.board_user_no != req.session.userinfo[0]) {
-      //TODO : 비정상 접근
-      return res.render('/')
-    }
-
-    models.Board.destroy({
-      where: { board_no: result.board_no }
-    }).then((result) => {
-      res.redirect('/community/')
-    }).catch((err) => {
-      //TODO: 오류처리
-    })
-  })
-})
-
-router.route('/upload').get((req, res) => {
-  return res.render('common/file')
 
 
-})
-  .post((req, res) => {
-  })
+
 
 module.exports = router
