@@ -27,7 +27,7 @@ router.route('/')
       res.redirect('/')
     }
 
-    return models.sequelize.transaction(function (t) {
+    return models.sequelize.transaction((t) => {
       const body = req.body;
 
       return models.User.find({
@@ -57,7 +57,6 @@ router.route('/')
 
 router.route('/:id')
   .get((req, res) => {
-    //게시판 학과 카테고리 만들기
     const req_board_no = req.params.id
 
     models.sequelize.Promise.all([
@@ -73,24 +72,27 @@ router.route('/:id')
         where: { board_no: req_board_no }
       })
     ])
-      .spread((findResult, updateResult, replyResult) => {
+      .spread((boardResult, updateResult, replyResult) => {
 
-        if (!findResult) {
-          return res.status(400).send('잘못된 경로로 접근했습니다.')
+        if (!boardResult) {
+          return res.status(400).send('400 Bad Request')
         }
 
         if (!req.session.userinfo) {
-          return res.render('common/boardread', { readBoard: findResult, reply: replyResult })
+          return res.render('common/boardread', { readBoard: boardResult, reply: replyResult })
         }
 
-        if (findResult.board_user_no == req.session.userinfo[0]) {
-          return res.render('student/boardread', { readBoard: findResult, writer: true, reply: replyResult })
+        IsWriter(replyResult, req.session.userinfo[0])
+
+        if (boardResult.board_user_no == req.session.userinfo[0]) {
+          return res.render('student/boardread', { readBoard: boardResult, writer: true, reply: replyResult })
         }
 
-        return res.render('student/boardread', { readBoard: findResult, writer: false, reply: replyResult })
+        return res.render('student/boardread', { readBoard: boardResult, writer: false, reply: replyResult })
 
-      }).catch(function (err) {
-        return res.status(400).send(err)
+      }).catch((err) => {
+        //TODO :: 에러처리 
+        return res.status(503).send("503 Service Unavailable")
       })
   })
   .put((req, res) => {
@@ -106,10 +108,10 @@ router.route('/:id')
       , {
         where: { board_no: paramId }
       }).then((result) => {
-        res.send({result : true})
+        res.send({ result: true })
       }).catch((err) => {
         console.log("에러러러러")
-        console.dir(err)
+        return res.status(503).send("503 Service Unavailable")
       })
   })
   .delete((req, res) => {
@@ -119,7 +121,7 @@ router.route('/:id')
     }).then((result) => {
 
       if (!result) {
-        return res.status(400).send('잘못된 경로로 접근했습니다.')
+        return res.status(400).send('400 Bad Request')
       }
 
       if (result.board_user_no != req.session.userinfo[0]) {
@@ -129,8 +131,9 @@ router.route('/:id')
       models.Board.destroy({
         where: { board_no: result.board_no }
       }).then((result) => {
-        res.status(200).send({ result: true })
+        res.send({ result: true })
       }).catch((err) => {
+        return res.status(503).send("503 Service Unavailable")
       })
     })
   })
@@ -140,8 +143,7 @@ router.route('/:id/new')
   .get((req, res) => {
 
     if (!req.session.userinfo) {
-      //TODO : 비정상 경로로 접근 오류처리
-      res.redirect('/')
+      res.status(401).redirect('/')
     }
 
     res.render('common/boardinsert')
@@ -152,31 +154,34 @@ router.route('/:id/edit')
 
     models.Board.find({
       where: { board_no: req.params.id }
-    }).then(function (result) {
+    }).then((result) => {
 
       if (!result) {
-        return res.status(400).send('잘못된 경로로 접근했습니다.')
+        return res.status(400).send('400 Bad Request')
       }
 
       if (!req.session.userinfo) {
-        //todo : 비정상 경로로 접근했습니다. 오류메세지 출력
         return res.status(401).redirect('/community')
       }
 
       if (result.board_user_no != req.session.userinfo[0]) {
-        //todo : 비정상 경로로 접근했습니다. 오류메세지 출력
         return res.status(401).redirect('/community')
       }
 
       res.render('common/boardedit', { data: result })
     }).catch((err) => {
-      //TODO : 글이존재하지않을경우.. 잘못된 경로접근!!
-      return res.redirect('/community')
+      return res.status(400).redirect('/community')
     })
 
   })
 
-
-
+function IsWriter(data, id) {
+  const length = data.length
+  for (let i = 0; i < length; i++) {
+    if (data[i].board_user_no === id) {
+      data[i].isWriter = true
+    }
+  }
+}
 
 module.exports = router

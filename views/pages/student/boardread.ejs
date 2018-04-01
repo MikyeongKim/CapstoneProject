@@ -77,21 +77,14 @@
                             <td colspan="4" scope="row" class="even"></td>
                           </tr>
                           
-                          <% reply.forEach((item,index) => { %>
-                            <tr>
-                              <th scope="row" class="even"><%= item.board_user_no %></th>
-                              <td><%= item.reply_content %></td>
-                            </tr>
-                              <% }); %>
-                          
   
                           <tr>
                             <td colspan="4" scope="row" class="even">
                               <button onclick="location.href='javascript:history.back()'">뒤로가기</button>
                               <% 
                               if (writer) { %>
-                                  <button onclick="location.href='/community/<%=readBoard.board_no%>/edit/'">수정하기</button>
-                                  <button id="btn_delete">삭제하기</button>
+                                <button onclick="location.href='/community/<%=readBoard.board_no%>/edit/'">수정하기</button>
+                                <button id="btn_delete">삭제하기</button>
                               <% } %>
                             </td>
                           </tr>
@@ -112,25 +105,25 @@
 
                           <thead scope="row" class="even">
                             <tr>
-                              <!--댓글총갯수 읽어와주삼-->
-                              <th colspan="2" style="text-align:left; padding-left:3%;" >댓글 n개</th>
+                              <th colspan="2" style="text-align:left; padding-left:3%;" >댓글 <%= reply.length %>개</th>
                             </tr>
                           </thead>
                           <tbody>
-
+                            <% reply.forEach((item , index) => { %>
                             <tr>
                               <th>
-                                김미경 (2017-03-31 11:40)
+                                <%= item.reply_writer %> (2017-03-31 11:40)
                               </th>
                               <td>
-                                후후
+                                <%= item.reply_content %>
 
-                                <!--댓글쓴 사람일때 보이는 버튼임 (연필=수정하기/엑스=삭제하기버튼)-->
-                                <a href="#" class="fas fa-pencil-alt" style="margin-left:5%;"></a>
-                                <a href="#" class="fas fa-times" style="margin-left:2%;"></a>
+                                <% if(item.isWriter) { %> 
+                                <a href="#edit" class="fas fa-pencil-alt" id="<%= item.reply_content %>" style="margin-left:5%;"></a>
+                                <a href="#delete" class="fas fa-times" id="<%= item.reply_no %>" style="margin-left:2%;"></a>
+                                <% }  %>
                               </td>
                             </tr>
-                        
+                            <% })  %>
                           </tbody>
 
                         </table>
@@ -147,17 +140,16 @@
                             
                             <tr>
                               <td >
-                                <textarea style="width:100%;"></textarea>
+                                <textarea id="reply_content" style="width:100%;"></textarea>
                               </td>
                               <td>
-                                <button onclick="" style="width:100%;">등록</button>
+                                <button id="reply_btn" style="width:100%;">등록</button>
                               </td>
                             </tr>
 
                           </table>
                         </div>
-                    
-               
+
                       </article>
                   </div>
                   </div>
@@ -192,19 +184,16 @@
               $.ajax({
                 url: '/reply',
                 dataType: 'json',
-                type: 'POST',
-                data: {
-                  'content': content
-                  , 'board_no': board_no
-                },
-                success: function (result) {
-                  $('#hahaha').append(content)
+                type: 'post',
+                data: { 'content': content , 'board_no': board_no },
+                success: (result) => {
+                    location.reload();  
                 }
               })
               $('#reply_content').html('')
             })
 
-            $('#btn_delete').click(function () {
+            $('#btn_delete').click(() => {
               $.ajax({
                 type: 'DELETE',
                 url: '/community/<%= readBoard.board_no %>',
@@ -215,7 +204,25 @@
                 }
               })
             })
+           
+            $('a[href="#delete"]').on('click', (event) => {
+              const uri = '/reply/' + $(event.currentTarget).attr("id")
+              $.ajax({
+                type: 'DELETE',
+                url: uri , 
+                success: (result) => {
+                  if (result['result']) {
+                    location.reload();
+                  }
+                }
+              })
+              event.preventDefault();
+           })
 
+           $('a[href="#edit"]').on('click', (event) => {
+             alert('아직...ㅠ')
+            event.preventDefault();
+         })
           </script>
 
 </body>

@@ -60,7 +60,6 @@ router.route('/plan').get((req,res)=> {
         //TODO : status 오류코드 보내기
         return res.redirect('/')
     });
-
 })
 
 //공지사항

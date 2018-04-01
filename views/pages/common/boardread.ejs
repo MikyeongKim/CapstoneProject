@@ -75,14 +75,6 @@
                         <tr>
                           <td colspan="4" scope="row" class="even"></td>
                         </tr>
-                        
-                        <% reply.forEach((item,index) => { %>
-                          <tr>
-                            <th scope="row" class="even"><%= item.board_user_no %></th>
-                            <td><%= item.reply_content %></td>
-                          </tr>
-                            <% }); %>
-                        
 
                         <tr>
                           <td colspan="4" scope="row" class="even">
@@ -94,8 +86,35 @@
 
                     </div>
 
-                    <div style="margin-top:5%;">
-                      <h2 class="major"></h2>
+                    <h2 class="major" style="margin:3% 0;"></h2>
+                      
+                    <!--달린 댓글 보이는 테이블-->
+                    <div style="padding:0 10%;">
+                      <table class="type06">
+                        <colgroup>
+                          <col width="35%">
+                          <col widty="65%">
+                        </colgroup>
+
+                        <thead scope="row" class="even">
+                          <tr>
+                            <th colspan="2" style="text-align:left; padding-left:3%;" >댓글 <%= reply.length %>개</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <% reply.forEach((item , index) => { %>
+                          <tr>
+                            <th>
+                              <%= item.reply_writer %> (2017-03-31 11:40)
+                            </th>
+                            <td>
+                              <%= item.reply_content %>
+                            </td>
+                          </tr>
+                          <% })  %>
+                        </tbody>
+
+                      </table>
                     </div>
                   </article>
                 </div>
