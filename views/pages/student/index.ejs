@@ -15,9 +15,8 @@
 		<% include ./header.ejs %>
 
 		<!-- Nav include -->
-		<% include ./nav.ejs %>
-
-
+		<%- include ./nav.ejs ,{subject_no:subject_no},{subject_list : subject_list} %>
+		
 		<!-- Main -->
 		<div id="main-wrapper">
 			<div id="main" class="container">
@@ -39,24 +38,15 @@
 												<h2 class="major"><span>수강과목</span></h2>
                                                 
                                                 <ul>
-                                                        <li>
-                                                                <a href="#">자료구조</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">알고리즘</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">영상처리</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">객체지향분석설계</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">실용영어</a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#">수학2</a>
-                                                            </li>
+													<% subject_no.forEach((item1,index) => { %>
+														<% subject_list.forEach((item2,index) => { %>
+															<% if(item1.signup_subject_no == item2.subject_no){ %>
+																<li>
+																	<a href="/myclass/<%= item2.subject_no %>"><%= item2.subject_title %></a>
+																</li>
+															<%}%>
+														<% }); %>
+													<% }); %>
                                                 </ul>
 											</section>
 										</div>
@@ -77,12 +67,14 @@
 														<span>
 															<!-- 바로아래 div 2개 각각에 클릭 이벤트 걸어주세요~~ -->
 															<a href="#" class="icono-caretLeft"></a>
+															
 															 강의자료 
+
 															 <a href="#" class="icono-caretRight"></a>
 															<p style="margin:10px 0 0 0; font-size:18px;">
 																<!--이부분이 위에 버튼에서 클릭할때마다 다른 과목의 강의자료 업로드 되야함-->
-																
 																자료구조
+																
 																
 															</p>
 														</span>

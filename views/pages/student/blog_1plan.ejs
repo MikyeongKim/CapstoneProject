@@ -13,7 +13,7 @@
 		<!-- Header -->
 		<% include ./header.ejs %>
 		<!-- Nav -->
-		<% include ./nav.ejs %>
+		<%- include ./nav.ejs ,{subject_no:subject_no},{subject_list : subject_list} %>
 
 
 		<!-- Main -->

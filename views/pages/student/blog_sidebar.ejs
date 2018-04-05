@@ -10,50 +10,46 @@
                             <!--학생이 수강중인 강의명 읽어오기-->
 
                             
-                                <select id="category" name="sidebar_subject" onchange="chageSubject()" style="width:120px; display:inline-block; ">
+                                <select id="category" name="sidebar_subject" onchange="location = '/myclass/' + this.options[this.selectedIndex].value;" style="width:120px; display:inline-block; ">
+                                    <option>수강과목</option>
                                     <% subject_no.forEach((item1,index) => { %>
                                         <% subject_list.forEach((item2,index) => { %>
                                             <% if(item1.signup_subject_no == item2.subject_no){ %>
-                                                <option value = <%= item2.subject_no %> selected="selected" > <%= item2.subject_title %> </option>
+                                                <option value = <%= item2.subject_no %> > <%= item2.subject_title %> </option>
                                             <%}%>
                                         <% }); %>
                                     <% }); %>
                                 </select>
+                                
+
                               </td>
 
-                                <script>
-                                    function chageSubject(){
-                                        const target = document.getElementById("category")
-                                        const uri = "http://localhost:3000/myclass/"+target.options[target.selectedIndex].value
-                                       
-                                        if(uri) location.href = uri;
-                                    }
-                                </script>
                         
                     </tr>
             </table>
             </div>
             <ul class="left-side">
                 <li>
-                    <a href="/myclass/plan">강의계획서</a>
+                    <!--<a onclick="location = '/myclass/'+location.href.split('/')[4]+'/plan'"></a>-->
+                    <button onclick="location = '/myclass/'+location.href.split('/')[4]+'/plan'">강의계획서</button>
                 </li>
                 <li>
-                    <a href="/myclass/notice">공지사항</a>
+                    <button onclick="location = '/myclass/'+location.href.split('/')[4]+'/notice'">공지사항</button>  
                 </li>
                 <li>
-                    <a href="/myclass/qna">질의응답</a>
+                    <button onclick="location = '/myclass/'+location.href.split('/')[4]+'/qna'">질의응답</button>
                 </li>
                 <li>
-                    <a href="/myclass/ppt">강의자료</a>
+                    <button onclick="location = '/myclass/'+location.href.split('/')[4]+'/ppt'">강의자료</button>
                 </li>
                 <li>
-                    <a href="/myclass/task">과제</a>
+                    <button onclick="location = '/myclass/'+location.href.split('/')[4]+'/task'">과제</button>
                 </li>
                 <li>
-                    <a href="#">팀프로젝트</a>
+                    <button onclick="location = '/#'">팀프로젝트</button>
                 </li>
                 <li>
-                    <a href="#">성적</a>
+                    <button onclick="location = '/#'">성적</button>
                 </li>
                
             </ul>

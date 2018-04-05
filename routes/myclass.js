@@ -2,13 +2,11 @@ const express = require('express')
   , router = express.Router()
   , models = require('../models');
 
-  myclass_subject_no =1; //테스트  
-
-const myclass_notice_category = 7;
 const myclass_plan_category = 4;
-const myclass_qna_category = 5;
-const myclass_ppt_category = 6;
-
+const myclass_notice_category = 5;
+const myclass_qna_category = 6;
+const myclass_ppt_category = 7;
+const myclass_task_category = 8;
 
 router.route('/').get((req,res)=> {
   
@@ -24,18 +22,19 @@ router.route('/').get((req,res)=> {
 
     models.Subject.findAll({
     }),
-    
-]).spread((returnSubject_no, returnSubject) => {
+
+]).spread((returnSubject_no, returnSubject,) => {
         return res.render('student/myclass', { subject_no: returnSubject_no, subject_list: returnSubject })
     }).catch(function (err) {
         //TODO : status 오류코드 보내기
         return res.redirect('/')
     });
+  
 })
 
+router.route('/:subject').get((req,res)=> {
 
-//강의 계획서
-router.route('/plan').get((req,res)=> {
+  var req_subject_no = req.params.subject
 
   if(!req.session.userinfo) {
     return res.redirect('/login');
@@ -51,7 +50,7 @@ router.route('/plan').get((req,res)=> {
     }),
 
     models.Blog.findAll({
-      where: { Blog_category: myclass_qna_category , Blog_subject_no : myclass_subject_no }
+      where: { Blog_category: myclass_qna_category , Blog_subject_no : req_subject_no }
     }),
     
 ]).spread((returnSubject_no, returnSubject,result) => {
@@ -60,10 +59,13 @@ router.route('/plan').get((req,res)=> {
         //TODO : status 오류코드 보내기
         return res.redirect('/')
     });
+
 })
 
-//공지사항
-router.route('/notice').get((req,res)=> {
+//강의 계획서
+router.route('/:subject/plan').get((req,res)=> {
+
+  var req_subject_no = req.params.subject
 
   if(!req.session.userinfo) {
     return res.redirect('/login');
@@ -79,7 +81,38 @@ router.route('/notice').get((req,res)=> {
     }),
 
     models.Blog.findAll({
-      where: { Blog_category: myclass_qna_category , Blog_subject_no : myclass_subject_no }
+      where: { Blog_category: myclass_qna_category , Blog_subject_no : req_subject_no }
+    }),
+    
+]).spread((returnSubject_no, returnSubject,result) => {
+        return res.render('student/blog_1plan', { subject_no: returnSubject_no, subject_list: returnSubject, blog_list: result })
+    }).catch(function (err) {
+        //TODO : status 오류코드 보내기
+        return res.redirect('/')
+    });
+
+})
+
+//공지사항
+router.route('/:subject/notice').get((req,res)=> {
+
+  var req_subject_no = req.params.subject
+
+  if(!req.session.userinfo) {
+    return res.redirect('/login');
+  }
+
+  models.sequelize.Promise.all([
+
+    models.Signupsubject.findAll({
+      where: { signup_user_no : req.session.userinfo[0]}
+    }),
+
+    models.Subject.findAll({
+    }),
+
+    models.Blog.findAll({
+      where: { Blog_category: myclass_notice_category , Blog_subject_no : req_subject_no }
     }),
     
 ]).spread((returnSubject_no, returnSubject,result) => {
@@ -128,18 +161,13 @@ router.route('/notice/read/:id').get((req, res) => {
 });
 
 //질의 응답
-router.route('/qna').get((req,res)=> {
+router.route('/:subject/qna').get((req,res)=> {
+
+  var req_subject_no = req.params.subject
 
   if(!req.session.userinfo) {
     return res.redirect('/login');
   }
-/*
-  models.Blog.findAll({
-    where: { Blog_category: myclass_qna_category , Blog_subject_no : myclass_subject_no }
-  }).then((result) => {
-    return res.render('student/blog_3qna', { blog_list: result });
-  });
-  */
 
  models.sequelize.Promise.all([
 
@@ -151,7 +179,7 @@ router.route('/qna').get((req,res)=> {
   }),
 
   models.Blog.findAll({
-    where: { Blog_category: myclass_qna_category , Blog_subject_no : myclass_subject_no }
+    where: { Blog_category: myclass_qna_category , Blog_subject_no : req_subject_no }
   }),
   
 ]).spread((returnSubject_no, returnSubject,result) => {
@@ -200,15 +228,32 @@ router.route('/qna/read/:id').get((req, res) => {
 })
 
 
-router.route('/qna/insert')
-  .get((req, res) => {
+router.route('/:subject/qna/insert').get((req, res) => {
+    var req_subject_no = req.params.subject
 
     if (!req.session.userinfo) {
       //TODO : 비정상 경로로 접근 오류처리
       res.redirect('/');
     }
+    models.sequelize.Promise.all([
 
-    res.render('student/blog_3qna_write')
+      models.Signupsubject.findAll({
+        where: { signup_user_no : req.session.userinfo[0]}
+      }),
+    
+      models.Subject.findAll({
+      }),
+    
+      models.Blog.findAll({
+        where: { Blog_category: myclass_qna_category , Blog_subject_no : req_subject_no }
+      }),
+      
+    ]).spread((returnSubject_no, returnSubject,result) => {
+          return res.render('student/blog_3qna_write', { subject_no: returnSubject_no, subject_list: returnSubject, blog_list: result })
+      }).catch(function (err) {
+          //TODO : status 오류코드 보내기
+          return res.redirect('/')
+      });
   })
   .post((req, res) => {
 
@@ -222,9 +267,9 @@ router.route('/qna/insert')
       blog_title: req.body.title,
       blog_content: req.body.content,
       blog_user_no: req.session.userinfo[0],
-      Blog_subject_no: myclass_subject_no,
+      blog_subject_no: req.params.subject,
     }).then((result) => {
-      res.redirect('/myclass');
+      res.redirect('/myclass/'+req.params.subject+'/qna');
     }).catch((err) => {
       //TODO : 글작성 실패시 작성내용 쿠키에 저장
       res.send("<html><body><script>alert('글 작성 실패');</script></body>");
@@ -303,11 +348,10 @@ router.route('/qna/delete/:id').get((req, res) => {
 });
 
 //강의 자료
-router.route('/ppt').get((req,res)=> {
+router.route('/:subject/ppt').get((req,res)=> {
 
-  if(!req.session.userinfo) {
-    return res.redirect('/login');
-  }
+  var req_subject_no = req.params.subject
+
   if(!req.session.userinfo) {
     return res.redirect('/login');
   }
@@ -322,7 +366,7 @@ router.route('/ppt').get((req,res)=> {
     }),
 
     models.Blog.findAll({
-      where: { Blog_category: myclass_qna_category , Blog_subject_no : myclass_subject_no }
+      where: { Blog_category: myclass_ppt_category , Blog_subject_no : req_subject_no }
     }),
     
 ]).spread((returnSubject_no, returnSubject,result) => {
@@ -361,8 +405,9 @@ router.route('/ppt/read/:id').get((req, res) => {
 });
 
 //과제
-router.route('/task')
-.get((req,res)=> {
+router.route('/:subject/task').get((req,res)=> {
+
+  var req_subject_no = req.params.subject
 
   if(!req.session.userinfo) {
     return res.redirect('/login');
@@ -378,7 +423,7 @@ router.route('/task')
     }),
 
     models.Blog.findAll({
-      where: { Blog_category: myclass_qna_category , Blog_subject_no : myclass_subject_no }
+      where: { Blog_category: myclass_task_category , Blog_subject_no : req_subject_no }
     }),
     
 ]).spread((returnSubject_no, returnSubject,result) => {
@@ -389,5 +434,31 @@ router.route('/task')
     });
 
 })
+
+router.route('/task/read/:id').get((req, res) => {
+  //TODO : 세션 검사 및 조회수 및 게시판 카테고리 출력
+
+  models.Blog.find({
+    where: { blog_no: req.params.id }
+  }).then((result) => {
+
+    if (!result) {
+      return res.status(400).send("잘못된 경로로 접근했습니다.")
+    }
+
+    if (!req.session.userinfo) {
+      return res.render('student/blog_5hw_check', { readBlog: result, writer: false });
+    }
+
+    if (result.board_user_no == req.session.userinfo[0]) {
+      return res.render('student/blog_5hw_check', { readBlog: result, writer: true });
+    }
+
+    res.render('student/blog_5hw_check', { readBlog: result, writer: false });
+  }).catch((err)=> {
+    //TODO : 오류처리
+    res.send("테스트")
+  })
+});
 
 module.exports = router;

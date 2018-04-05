@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <!--헤드내용 include -->
+   <% include ../../partials/head.ejs %>  
+</head>
+
+<body class="homepage">
+    <div id="page-wrapper">
+
+       	<% include ./header.ejs %>
+		<%- include ./nav.ejs ,{subject_no:subject_no},{subject_list : subject_list} %>
+
+		<!-- Main -->
+		<div id="main-wrapper">
+			<div id="main" class="container">
+				<div class="row">
+					<div class="10u 12u(mobile) important(mobile)">
+
+						<!--
+							
+							section class= box feature 중간정렬
+							section class= box features 왼쪽정렬
+						 -->
+						 <div class="content content-right">
+							<article class="box page-content">
+								<header>
+									<h2 style="font-size:2.5em;"><a href="#">수강 목록</a></h2>
+									<h2 class="major"></h2>
+								</header>
+
+								<div>
+										<% subject_no.forEach((item1,index) => { %>
+											<% subject_list.forEach((item2,index) => { %>
+												<% if(item1.signup_subject_no == item2.subject_no){ %>
+													
+													<a href="/myclass/<%= item2.subject_no %>"><%= item2.subject_title %>
+												<%}%>
+											<% }); %>
+										<% }); %>
+
+								</div>
+
+				
+				
+							</article>
+						 </div>			
+					</div>
+
+				</div>
+
+
+			</div>
+		</div>
+
+
+	
+    <!-- Footer include  -->
+	<% include ../../partials/footer.ejs %>
+
+    </div>
+    
+    <!-- Scripts -->
+	<% include ../../partials/scripts.ejs %>
+</body>
+
+</html>

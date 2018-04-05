@@ -1,6 +1,7 @@
 const express = require('express')
   , path = require('path')
   , bodyParser = require('body-parser')
+  , cookieParser = require('cookie-parser')
   , static = require('serve-static')
   , session = require('express-session')
   , models = require("./models")
@@ -23,6 +24,7 @@ app.use(session({
   }
 }))
 
+app.use(cookieParser());
 
 app.use(bodyParser.urlencoded({limit: '50mb', extended: false }))
 app.use(bodyParser.json({limit: '50mb'}))

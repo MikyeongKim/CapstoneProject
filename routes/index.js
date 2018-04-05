@@ -6,10 +6,16 @@ const express = require('express')
 const board_notice = 1
     , board_faq = 2
     , board_community = 3
+    ,myclass_plan_category = 4
+    ,myclass_notice_category = 5
+    ,myclass_qna_category = 6
+    ,myclass_ppt_category = 7
 
 const student = 1
     , professor = 2
     , manager = 3
+
+
 
 router.route('/').get((req, res) => {
     
@@ -42,16 +48,26 @@ router.route('/').get((req, res) => {
         // 위에 조기리턴인데..!! else 지워면 왜 오류나는지 모르겠음.. ㅠ_ㅠ
 
         models.sequelize.Promise.all([
+
+            models.Signupsubject.findAll({
+                where: { signup_user_no : req.session.userinfo[0]}
+              }),
+          
+              models.Subject.findAll({
+              }),
+          
+              models.Blog.findAll({
+              }),
             models.Board.findAll({
                 where: { board_category: board_community },
                 limit: 5,
                 order: [['created_at', 'DESC']]
             })
         ])
-            .spread((returnCommunity) => {
+            .spread((returnSubject_no, returnSubject,result,returnCommunity) => {
                 if (req.session.userinfo[1] === student) {
                     return res.render('student/index' 
-                    , { community: returnCommunity });
+                    , { subject_no: returnSubject_no, subject_list: returnSubject, blog_list: result, community: returnCommunity });
                 } else {
                     return res.render('professor/index' 
                     , { community: returnCommunity });

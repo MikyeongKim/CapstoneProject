@@ -14,7 +14,7 @@
 		<% include ./header.ejs %>
 
 		<!-- Nav include -->
-		<% include ./nav.ejs %>
+		<%- include ./nav.ejs ,{subject_no:subject_no},{subject_list : subject_list} %>
 
 
 		<!-- Main -->
@@ -58,7 +58,7 @@
                                                         <label for="blog-in-title">제목</label>
                                                     </th>
                                                     <td>
-                                                        <input type="text" id="blog-in-title"/>
+                                                        <input type="text" id="blog-in-title" name="title"/>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -74,9 +74,9 @@
 												
 												<tr>
 													<td colspan="2">
-														썸머노트 들어갈 자리임
+										
 													<div>
-													<!--여기에 썸머노트 붙이기-->
+														<textarea name="content" class="summernote" id="content" required rows="30" autofocus cols="130"></textarea>
 													</div>
 
 													</td>

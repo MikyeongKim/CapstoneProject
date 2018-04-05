@@ -16,7 +16,7 @@
   <div id="page-wrapper">
 
     <% include ./header.ejs %>
-      <% include ./nav.ejs %>
+    <%- include ./nav.ejs ,{subject_no:subject_no},{subject_list : subject_list} %>
 
         <!--main-->
         <div id="main-wrapper">
@@ -179,7 +179,7 @@
             });
 
             $('#reply_btn').click(() => {
-              const board_no =  <%= readBoard.board_no  %>
+              const board_no =  <%= readBoard.board_no%> 
               const content = $('#reply_content').val()
               $.ajax({
                 url: '/reply',
