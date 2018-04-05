@@ -2,7 +2,6 @@ const express = require('express')
   , router = express.Router()
   , models = require('../models')
 
-
 const community_category = 3
 
 router.route('/').get((req, res) => {
@@ -70,8 +69,6 @@ router.route('/').get((req, res) => {
       res.send(`${err}`)
     })
   })
-
-
 
 router.route('/:id').get((req, res) => {
     const req_board_no = req.params.id
@@ -183,7 +180,6 @@ router.route('/:id').get((req, res) => {
       })
     })
   })
-
 
 router.route('/:id/new')
   .get((req, res) => {

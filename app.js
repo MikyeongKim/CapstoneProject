@@ -13,6 +13,7 @@ const index = require("./routes/index")
   , community = require("./routes/community")
   , myclass = require("./routes/myclass")
   , reply = require("./routes/reply")
+  , file = require("./routes/file")
 
 app.use(session({
   key: 'codit',
@@ -24,12 +25,9 @@ app.use(session({
   }
 }))
 
-app.use(cookieParser());
-
 app.use(bodyParser.urlencoded({limit: '50mb', extended: false }))
 app.use(bodyParser.json({limit: '50mb'}))
 app.use(static('public'))
-
 
 app.set('port', process.env.PORT || '3000')
 app.set('views', path.join(__dirname, 'views/pages'))
@@ -41,6 +39,7 @@ app.use('/myinfo', myinfo)
 app.use('/community', community)
 app.use('/myclass', myclass)
 app.use('/reply', reply)
+app.use('/file', file)
 
 app.use((req, res) => {
   res.status(404).send('<h2>Codit class 404 Page Not Found</h2>')
