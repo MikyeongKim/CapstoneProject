@@ -1,233 +1,265 @@
 <!DOCTYPE html>
-
-
 <!--학생들이 제출한 코드를 돌려보고 점수를 줄 수 있는 페이지임-->
-
-
-<html>
+<html lang="en">
 
 <head>
-   <!--헤드내용 include -->
-   
-   <link rel="stylesheet" href="/stylesheets/style.css" />
-   <script src="http://code.jquery.com/jquery-latest.js"></script>
+  <!--헤드내용 include -->
 
-   <!-- 코드미러 드라큘라테마 오토컴플릿 -->
-   <link rel="stylesheet" href="/stylesheets/dracula.css">
-   <link rel="stylesheet" href="/stylesheets/codemirror.css">
-   <link rel="stylesheet" href="/stylesheets/show-hint.css">
-   <!-- 코드미러 오토컴플릿 -->
-   <script src="/javascripts/codemirror.js"></script>
-   <script src="/javascripts/show-hint.js"></script>
-   <script src="/javascripts/matchbrackets.js"></script>
-   <!-- <script src="/javascripts/anyword-hint.js"></script> -->
-   
-   <!-- Java, C, Python 데꼬오기 -->
-   <!-- <script src="/javascripts/javascript.js"></script>
-   <script src="/javascripts/python.js"></script> -->
-   <script src="/javascripts/clike.js"></script>
-   <% include ../../partials/head.ejs %>  
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+
+  <!-- 코드미러 드라큘라테마(잠정중단), 오토컴플릿 -->
+  <!-- <link rel="stylesheet" href="/stylesheets/dracula.css"> -->
+  <link rel="stylesheet" href="/stylesheets/codemirror.css">
+  <link rel="stylesheet" href="/stylesheets/show-hint.css">
+
+  <!-- 코드미러 오토컴플릿 -->
+  <script src="/javascripts/codemirror.js"></script>
+  <script src="/javascripts/show-hint.js"></script>
+  <script src="/javascripts/matchbrackets.js"></script>
+
+  <!-- Java, C, Python 데꼬오기 -->
+  <script src="/javascripts/python.js"></script>
+  <script src="/javascripts/clike.js"></script>
+
+  <!-- TEXT highlight, Active-line-->
+  <script src="/javascripts/annotatescrollbar.js"></script>
+  <script src="/javascripts/matchesonscrollbar.js"></script>
+  <script src="/javascripts/searchcursor.js"></script>
+  <script src="/javascripts/match-highlighter.js"></script>
+  <style type="text/css">
+    .cm-matchhighlight {
+      background-color: lightgreen
+    }
+
+    .CodeMirror-selection-highlight-scrollbar {
+      background-color: green
+    }
+  </style>
+  <script src="/javascripts/active-line.js"></script>
+
+  <% include ../../partials/head.ejs %>
 
 </head>
 
 <body class="homepage">
-    <div id="page-wrapper">
+  <div id="page-wrapper">
 
-        <% include ./nav.ejs %>
-        
-
-            <!--main-->
-        <div id="main-wrapper">
-            <div id="main" class="container">
-
-                   
-               
-                <div class="row 200%">
-                    <div class="12u" style="width:100%;">
-                        <section class="box blog">
-                            <div>
-                                <form>
-                                     <!-- 학생 :: 언어선택 / 저장버튼/ 제출버튼/ 다운로드버튼 / debug버튼 / run버튼 / 코드미러옵션선택(체크박스)-->                              
-                                      <!-- 교수 :: 언어선택 / 저장버튼/ 성적입력/ 다운로드버튼 / debug버튼 / run버튼 / 코드미러옵션선택(체크박스)-->                              
-                                    <div>
-                                        <div>
-                                    <table class="type06" style="border:none;" >
-                                        <colgroup>
-                                            <col width="1%">
-                                            <col width="7%">
-                                            <col width="7%">
-                                            <col width="7%">
-                                            <col width="7%">
-                                            <col width="37%">
-                                            <col width="7%">
-                                            <col width="1%">
-                                            <col width="26%">
-                                        </colgroup>
-                                          
-                                        <tr>
-                                           <!--여기 아래 전부, 학생정보 긁어와주세요-->
-                                           <td>
-                                                <i class="fas fa-user-circle fa-2x"></i>
-                                           </td>
-                                           
-                                            <th>학번</th>
-                                            <td>2012150001</td>
+    <% include ./nav.ejs %>
 
 
-                                            <th>이름</th>
-                                            <td style="text-align:left;">학생1</td>
-                                            
-                                            <th style="text-align:right;"><label id="score">평가점수입력</label></th>
-                                            <td style="text-align:left;">
-                                                <input type="number" id="score" />
-                                            </td>
-                                            <td style="text-align:left;">
-                                                <!--학생과제 평가점수 저장 버튼 / DB에 들어가는거 처리해주세요-->
-                                                <a href="#" class="fas fa-save fa-2x">save</a>
-                                            </td>
-                                            
-                                            <td style="text-align:right;">
-                                                <button class="button"  >뒤로가기</button>
-                                                <!--버튼 누르면 과제 제출한 학생들 리스트로 감-->
-                                            </td>
-                                        </tr>
-                                           
-                                    </table>
-                                    </div>
-                                    <div>
-                                    <table class="type06"  style="text-align:left; border:none; margin-bottom:0;">
-                                    <colgroup>
-                                        <col width="1%">
-                                        <col width="10%">
-                                        <col width="1%">
-                                        <col width="88%">
-                                       
-                                    </colgroup>
-                                    
-                                        <tr>
-                                            <td>
-                                                <!-- 코드미러 옵션 바꾸는 버튼임-->
-                                                <a href="#" class="fas fa-cog fa-2x"></a>
-                                            </td>
-                                            <td>
-                                                <!--언어선택할수 있는 옵션바-->
-                                                <select name="editor_lang" id="lang">
+      <!--main-->
+      <div id="main-wrapper">
+        <div id="main" class="container">
+
+
+
+          <div class="row 200%">
+            <div class="12u" style="width:100%;">
+              <section class="box blog">
+                <div>
+                  <form>
+                    <!-- 학생 :: 언어선택 / 저장버튼/ 제출버튼/ 다운로드버튼 / debug버튼 / run버튼 / 코드미러옵션선택(체크박스)-->
+                    <!-- 교수 :: 언어선택 / 저장버튼/ 성적입력/ 다운로드버튼 / debug버튼 / run버튼 / 코드미러옵션선택(체크박스)-->
+                    <div>
+                      <div>
+                        <table class="type06" style="border:none;">
+                          <colgroup>
+                            <col width="1%">
+                            <col width="7%">
+                            <col width="7%">
+                            <col width="7%">
+                            <col width="7%">
+                            <col width="37%">
+                            <col width="7%">
+                            <col width="1%">
+                            <col width="26%">
+                          </colgroup>
+
+                          <tr>
+                            <!--여기 아래 전부, 학생정보 긁어와주세요-->
+                            <td>
+                              <i class="fas fa-user-circle fa-2x"></i>
+                            </td>
+
+                            <th>학번</th>
+                            <td>2012150001</td>
+
+
+                            <th>이름</th>
+                            <td style="text-align:left;">학생1</td>
+
+                            <th style="text-align:right;"><label id="score">평가점수입력</label></th>
+                            <td style="text-align:left;">
+                              <input type="number" id="score" />
+                            </td>
+                            <td style="text-align:left;">
+                              <!--학생과제 평가점수 저장 버튼 / DB에 들어가는거 처리해주세요-->
+                              <a href="#" class="fas fa-save fa-2x">save</a>
+                            </td>
+
+                            <td style="text-align:right;">
+                              <button class="button">뒤로가기</button>
+                              <!--버튼 누르면 과제 제출한 학생들 리스트로 감-->
+                            </td>
+                          </tr>
+
+                        </table>
+                      </div>
+                      <div>
+                        <table class="type06" style="text-align:left; border:none; margin-bottom:0;">
+                          <colgroup>
+                            <col width="1%">
+                            <col width="10%">
+                            <col width="1%">
+                            <col width="88%">
+
+                          </colgroup>
+
+                          <tr>
+                            <td>
+                              <!-- 코드미러 옵션 바꾸는 버튼임-->
+                              <a href="#" class="fas fa-cog fa-2x"></a>
+                            </td>
+                            <td>
+                              <!--언어선택할수 있는 옵션바-->
+                              <select name="editor_lang" id="lang">
                                                     <!--value값은 디비 맞춰서 수정해주세요-->
                                                     <option value="c">C</option>
                                                     <option value="java">JAVA</option>
                                                     <option value="python">Python</option>
                                                 </select>
-                                            </td>
-                                            
-                                            
-                                            
-                                            
-                                            <td>
-                                                <!--코드 파일로 다운로드 버튼-->
-                                                <a href="#" class="fas fa-download fa-2x"></a>
-                                            </td>
-                                            
-                                            <td  style="text-align:right;">    
-                                                <!--run버튼
+                            </td>
+
+
+
+
+                            <td>
+                              <!--코드 파일로 다운로드 버튼-->
+                              <a href="#" class="fas fa-download fa-2x"></a>
+                            </td>
+
+                            <td style="text-align:right;">
+                              <!--run버튼
                                                 <a href="#" class="fas fa-play fa-2x" id="run">run</a>
                                                 -->
-                                                <input type="button" id="run" value="Run" />
-                                              </td>
-                                        </tr>
-                                        
-                                    </table>
-                                    </div>
-                                    </div>
-                                    <h2 class="major" style="margin-bottom: 3%;"></h2>
-                                       
-                                    <div class="row">
-                                
-                                            <div class="6u 12u(mobile)" style="float: left;">
-                                              <!--
+                              <input type="button" id="run" value="Run" />
+                            </td>
+                          </tr>
+
+                        </table>
+                      </div>
+                    </div>
+                    <h2 class="major" style="margin-bottom: 3%;"></h2>
+
+                    <div class="row">
+
+                      <div class="6u 12u(mobile)" style="float: left;">
+                        <!--
                                                 <textarea name="area_edit" placeholder="내용을 입력하세요." required rows="20" autofocus></textarea>
                                               -->
-                                              <textarea id="content" rows="20"><%= code_content %></textarea>
-                                            </div>
-                                
-                                            <div class="6u 12u(mobile)" style="float: right;">
-                                              <!--
+                        <textarea id="content" rows="20"><%= code_content %></textarea>
+                      </div>
+
+                      <div class="6u 12u(mobile)" style="float: right;">
+                        <!--
                                                  <textarea name="area_result" placeholder="결과창 " required rows=20 autofocus ></textarea>
                                               -->
-                                                 <textarea id="result" rows="10" readonly></textarea>
-                                            </div>
+                        <textarea id="result" rows="10" readonly></textarea>
+                      </div>
 
-                                       </div>
-
-                                
-                            </form>
-                            </div>
-                            </section>
-                        </div>
                     </div>
+
+
+                  </form>
                 </div>
+              </section>
             </div>
+          </div>
+        </div>
+      </div>
+  </div>
+
+  <script>
+    // 텍스트하이라이트, 오토컴플릿, 단축키기능, 자동 줄맞춤 및 정렬
+    // 디폴트설정은 C
+    var editor = CodeMirror.fromTextArea(document.getElementById("content"), {
+      lineNumbers: true, // 라인넘버ㄱ
+      tabsize: 6, // 탭크기 6
+      mode: "text/x-csrc", // 작성언어 C,C++,C#
+      //theme: "dracula", // 테마는 드라큘라 추가기능으로 추가예정
+      extraKeys: {
+        "Ctrl-Space": "autocomplete" // 컨트롤+스페이스로 오토컴플릿 실행
+      },
+      indentUnit: 5, // 들여쓰기크기 5
+      scrollbarStyle: "native", // 스크롤바 구현
+      matchBrackets: true, // ????
+      highlightSelectionMatches: {
+        showToken: /\w/,
+        annotateScrollbar: true
+      },
+      styleActiveLine: true
+    });
+
+    $('#lang').on('change', function() {
+      const lang = $(this).children("option:selected").val();
+      switch (lang) {
+        case 'c':
+          editor.options.mode = "text/x-csrc"
+          editor.setValue(`#include <stdio.h>\n\nvoid main(){\n\n\tprintf("Hello World!");\n\n}`);
+          console.log(editor.options.mode);
+          break;
+
+        case 'java':
+          editor.setOption('mode', 'text/x-java');
+          editor.setValue(`class Main {\n\n\tpublic static void main(String[] args) {\n\n\t\tSystem.out.println("Hello World!");\n\n\t}\n\n}`);
+          console.log(editor.options.mode);
+          break;
+
+        case 'python':
+          editor.setOption('mode', 'text/x-python');
+          editor.setValue(`def function(str):\n\n\tprint(str)\n\nfunction('Hello World!')`);
+          console.log(editor.options.mode);
+          break;
+      }
+    });
+
+
+    $('#run').click(function() {
+      const target = document.getElementById("lang")
+      const uri = "http://localhost:3000/editor/" + target.options[target.selectedIndex].value
+      $('#result').html('');
+      $.ajax({
+        url: uri,
+        dataType: 'json',
+        type: 'POST',
+        data: {
+          'content': editor.getValue()
+        },
+        success: function(result) {
+          if (result['result'] == true) {
+            $('#result').html(result['content']);
+          }
+        }
+      });
+
+    })
+  </script>
+
+  <% if (!code_content) { %>
+    <script>
+      editor.setValue(`#include <stdio.h>\n\nvoid main(){\n\n\tprintf("Hello World!");\n\n}`);
+    </script>
+
+    <% } %>
+
+      <!-- Footer include  -->
+      <% include ../../partials/footer.ejs %>
+
         </div>
 
-        <script>
-          // 텍스트하이라이트, 오토컴플릿, 단축키기능, 자동 줄맞춤 및 정렬
-          var editor = CodeMirror.fromTextArea(document.getElementById("content"), {
-            lineNumbers: true, // 라인넘버ㄱ
-            tabsize: 6, // 탭크기 6
-            mode: "text/x-csrc", // 작성언어 C,C++,C#
-            theme: "dracula", // 테마는 드라큘라 추가기능으로 추가예정
-            extraKeys: {
-              "Ctrl-Space": "autocomplete" // 컨트롤+스페이스로 오토컴플릿 실행
-            },
-            indentUnit: 5, // 들여쓰기크기 5
-            scrollbarStyle: "native", // 스크롤바 구현
-            matchBrackets: true // ????
-          });
-          
-        
-          // editor.value="asdasdsasad"
-          // editor.setSize(100, 100);
-          // Refresh code mirror element when tab header is clicked.
-          // $("#xxx").click(function() {
-          //   setTimeout(function() {
-          //     editor.refresh();
-          //   }, 10);
-          // });
-    
-          $('#run').click(function() {
-            const target = document.getElementById("lang")
-            const uri = "http://localhost:3000/editor/" + target.options[target.selectedIndex].value
-            $('#result').html('');
-            $.ajax({
-              url: uri,
-              dataType: 'json',
-              type: 'POST',
-              data: {
-                'content': editor.getValue()
-              },
-              success: function(result) {
-                if (result['result'] == true) {
-                  $('#result').html(result['content']);
-                }
-              }
-            });
-    
-          })
-        </script>
-
-        <% if (!code_content) { %>
-        <script>
-             editor.setValue(`#include <stdio.h>\n\nvoid main(){\n\n\tprintf("Hello World!");\n\n}`);
-        </script>
-        
-        <% } %> 
-
-    <!-- Footer include  -->
-	<% include ../../partials/footer.ejs %>
-
-    </div>
-    
-    <!-- Scripts -->
-	<% include ../../partials/scripts.ejs %>
+        <!-- Scripts -->
+        <% include ../../partials/scripts.ejs %>
 </body>
 
 </html>

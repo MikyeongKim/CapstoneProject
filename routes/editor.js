@@ -51,7 +51,7 @@ router.route('/java').post((req, res) => {
 
     bat.stdout.on('data', (result) => {
       fs.readFile('complieFolder/java/test.txt', 'utf-8', (error, data) => {
-        
+
         models.Editlog.update({
           edit_isSuccess: true
         }, {
@@ -85,11 +85,11 @@ router.route('/java').post((req, res) => {
           exec.execFile('javacompile.bat', (error, stdout, stderr) => {
             const errorhandle = error
             fs.readFile('complieFolder/java/test.txt', 'utf-8', (error, data) => {
-    
+
               if (errorhandle && data.length == 0) {
                 return res.send({ result: true, content: `${errorhandle}` });
               }
-    
+
               return res.send({ result: true, content: data });
             });
           });
@@ -99,9 +99,11 @@ router.route('/java').post((req, res) => {
   })
 })
 
+/* 에디터페이지의 Run 클릭시 Ajax방식으로 컴파일 실행결과를 결과창에 표시 */
 router.route('/c').post((req, res) => {
-  const content = req.body.content;
+  const content = req.body.content; // 소스내용
   const filename = Date.now() + '-' + req.session.userinfo[0];
+
   let editlogNo;
   models.Editlog.create({
     edit_filepath: 'complieFolder/c/',
@@ -115,16 +117,31 @@ router.route('/c').post((req, res) => {
 
   StoreCode(filename, content)
 
-
+  // 첫번째 인자로 들어가는 폴더경로에 컴파일시간을 이름으로 하는 C 소스파일 생성
+  // 소스내용은 editor페이지에서 입력한 소스, 인코딩방식은 utf-8
+  // C소스파일을 생성후 err함수 실행
   fs.writeFile(`complieFolder/c/${filename}.c`, content, 'utf-8', err => {
+    // error 발생시 err메시지 화면에 출력
     if (err) {
       return res.send(err)
     }
 
+    // 프로젝트 루트 폴더에 있는 Compile.bat 파일 실행
+    // 두번째 인자로 넘겨주는것이 실행할 C소스파일명
+    // Compile.bat 파일이 실행되면 complieFolder/c 경로에 파일이름을 가진
+    // exe 파일과 실행파일의 결과를 담은 txt 파일이 생성
+    // 실행완료시 다음함수 실행
     exec.execFile('Compile.bat', [`${filename}`], (error, stdout, stderr) => {
       const errorhandle = error
+      
+      // 실행파일의 결과를 담은 txt 파일 내용 읽기
       fs.readFile(`complieFolder/c/${filename}.txt`, 'utf-8', (error, data) => {
 
+        // 컴파일 폴더의 내용물 비우기
+        // exec.execFile('batch\\FileClear.bat')
+
+        // 에러발생과 txt파일 내용이 없으면 결과창으로 보내버림
+        // 애초에 C소스파일에 에러가 있으면 생성된 txt 는 빈 파일임
         if (errorhandle && data.length == 0) {
           return res.send({ result: true, content: `${errorhandle}` });
         }
@@ -135,6 +152,7 @@ router.route('/c').post((req, res) => {
             where: { edit_no: editlogNo }
           })
 
+        // 에러가 없다면?? 성공적으로 컴파일 된것이므로 실행결과 보내버림
         return res.send({ result: true, content: data });
       });
     });
@@ -158,7 +176,7 @@ router.route('/python').post((req, res) => {
         if (errorhandle && data.length == 0) {
           return res.send({ result: true, content: `${errorhandle}` });
         }
-        
+
         return res.send({ result: true, content: data });
       });
     });

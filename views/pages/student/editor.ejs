@@ -1,49 +1,66 @@
 <!DOCTYPE html>
 <!--학생들이 제출한 코드를 돌려보고 점수를 줄 수 있는 페이지임-->
-<html>
+<html lang="en">
 
 <head>
-   <!--헤드내용 include -->
-     
-   <link rel="stylesheet" href="/stylesheets/style.css" />
-   <script src="http://code.jquery.com/jquery-latest.js"></script>
+  <!--헤드내용 include -->
 
-   <!-- 코드미러 드라큘라테마 오토컴플릿 -->
-   <link rel="stylesheet" href="/stylesheets/dracula.css">
-   <link rel="stylesheet" href="/stylesheets/codemirror.css">
-   <link rel="stylesheet" href="/stylesheets/show-hint.css">
-   <!-- 코드미러 오토컴플릿 -->
-   <script src="/javascripts/codemirror.js"></script>
-   <script src="/javascripts/show-hint.js"></script>
-   <script src="/javascripts/matchbrackets.js"></script>
-   <!-- <script src="/javascripts/anyword-hint.js"></script> -->
-   
-   <!-- Java, C, Python 데꼬오기 -->
-   <!-- <script src="/javascripts/javascript.js"></script>
-   <script src="/javascripts/python.js"></script> -->
-   <script src="/javascripts/clike.js"></script>
-   <% include ../../partials/head.ejs %>
+  <link rel="stylesheet" href="/stylesheets/style.css" />
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+
+  <!-- 코드미러 드라큘라테마(잠정중단), 오토컴플릿 -->
+  <!-- <link rel="stylesheet" href="/stylesheets/dracula.css"> -->
+  <link rel="stylesheet" href="/stylesheets/codemirror.css">
+  <link rel="stylesheet" href="/stylesheets/show-hint.css">
+
+  <!-- 코드미러 오토컴플릿 -->
+  <script src="/javascripts/codemirror.js"></script>
+  <script src="/javascripts/show-hint.js"></script>
+  <script src="/javascripts/matchbrackets.js"></script>
+
+  <!-- Java, C, Python 데꼬오기 -->
+  <script src="/javascripts/python.js"></script>
+  <script src="/javascripts/clike.js"></script>
+
+  <!-- TEXT highlight, Active-line-->
+  <script src="/javascripts/annotatescrollbar.js"></script>
+  <script src="/javascripts/matchesonscrollbar.js"></script>
+  <script src="/javascripts/searchcursor.js"></script>
+  <script src="/javascripts/match-highlighter.js"></script>
+  <style type="text/css">
+    .cm-matchhighlight {
+      background-color: lightgreen
+    }
+
+    .CodeMirror-selection-highlight-scrollbar {
+      background-color: green
+    }
+  </style>
+  <script src="/javascripts/active-line.js"></script>
+
+  <% include ../../partials/head.ejs %>
+
 </head>
 
 <body class="homepage">
     <div id="page-wrapper">
 
         <% include ./nav.ejs %>
-        
+
 
             <!--main-->
         <div id="main-wrapper">
             <div id="main" class="container">
 
-                   
-               
+
+
                 <div class="row 200%">
                     <div class="12u" style="width:100%;">
                         <section class="box blog">
                             <div>
                               <form>
-                                <!-- 학생 :: 언어선택 / 저장버튼/ 제출버튼/ 다운로드버튼 / debug버튼 / run버튼 / 코드미러옵션선택(체크박스)-->                              
-                                 <!-- 교수 :: 언어선택 / 저장버튼/ 성적입력/ 다운로드버튼 / debug버튼 / run버튼 / 코드미러옵션선택(체크박스)-->                              
+                                <!-- 학생 :: 언어선택 / 저장버튼/ 제출버튼/ 다운로드버튼 / debug버튼 / run버튼 / 코드미러옵션선택(체크박스)-->
+                                 <!-- 교수 :: 언어선택 / 저장버튼/ 성적입력/ 다운로드버튼 / debug버튼 / run버튼 / 코드미러옵션선택(체크박스)-->
                                <div>
                                <table class="type06"  style="text-align:left; border:none; margin-bottom:0;">
                                <colgroup>
@@ -71,18 +88,18 @@
                                                <option value="python">Python</option>
                                            </select>
                                        </td>
-                                                                    
+
                                        <td>
                                            <!--임시저장 버튼-->
                                            <a href="#" class="fas fa-save fa-2x"></a>
                                        </td>
-                                       
+
                                        <td>
                                            <!--코드 파일로 다운로드 버튼-->
                                            <a href="#" class="fas fa-download fa-2x"></a>
                                        </td>
-                                       
-                                       <td  style="text-align:right;">    
+
+                                       <td  style="text-align:right;">
                                            <!--run버튼
                                            <a href="#" class="fas fa-play fa-2x"></a> -->
                                            <input type="button" id="run" value="Run" />
@@ -97,16 +114,16 @@
                                </table>
                                </div>
                                <h2 class="major" style="margin-bottom: 3%;"></h2>
-                                  
+
                                <div class="row">
-                           
+
                                        <div class="6u 12u(mobile)" style="float: left;">
                                          <!--
                                            <textarea name="area_edit" placeholder="내용을 입력하세요." required rows="20" autofocus></textarea>
                                           -->
                                          <textarea id="content" rows="20"></textarea>
                                        </div>
-                           
+
                                        <div class="6u 12u(mobile)" style="float: right;">
                                         <!--
                                             <textarea name="area_result" placeholder="결과창 " required rows=20 autofocus ></textarea>
@@ -114,7 +131,7 @@
                                             <textarea id="result" rows="10" readonly></textarea>
                                        </div>
                                   </div>
-                          
+
                        </form>
                             </div>
                             </section>
@@ -125,29 +142,49 @@
         </div>
 
         <script>
-          // 텍스트하이라이트, 오토컴플릿, 단축키기능, 자동 줄맞춤 및 정렬
-          var editor = CodeMirror.fromTextArea(document.getElementById("content"), {
-            lineNumbers: true, // 라인넘버ㄱ
-            tabsize: 6, // 탭크기 6
-            mode: "text/x-csrc", // 작성언어 C,C++,C#
-            theme: "dracula", // 테마는 드라큘라 추가기능으로 추가예정
-            extraKeys: {
-              "Ctrl-Space": "autocomplete" // 컨트롤+스페이스로 오토컴플릿 실행
-            },
-            indentUnit: 5, // 들여쓰기크기 5
-            scrollbarStyle: "native", // 스크롤바 구현
-            matchBrackets: true // ????
-          });
-          editor.setValue(`#include <stdio.h>\n\nvoid main(){\n\n\tprintf("Hello World!");\n\n}`);
-          // editor.value="asdasdsasad"
-          // editor.setSize(100, 100);
-          // Refresh code mirror element when tab header is clicked.
-          // $("#xxx").click(function() {
-          //   setTimeout(function() {
-          //     editor.refresh();
-          //   }, 10);
-          // });
-    
+        // 텍스트하이라이트, 오토컴플릿, 단축키기능, 자동 줄맞춤 및 정렬
+        // 디폴트설정은 C
+        var editor = CodeMirror.fromTextArea(document.getElementById("content"), {
+          lineNumbers: true, // 라인넘버ㄱ
+          tabsize: 6, // 탭크기 6
+          mode: "text/x-csrc", // 작성언어 C,C++,C#
+          //theme: "dracula", // 테마는 드라큘라 추가기능으로 추가예정
+          extraKeys: {
+            "Ctrl-Space": "autocomplete" // 컨트롤+스페이스로 오토컴플릿 실행
+          },
+          indentUnit: 5, // 들여쓰기크기 5
+          scrollbarStyle: "native", // 스크롤바 구현
+          matchBrackets: true, // ????
+          highlightSelectionMatches: {
+            showToken: /\w/,
+            annotateScrollbar: true
+          },
+          styleActiveLine: true
+        });
+
+        $('#lang').on('change', function() {
+          const lang = $(this).children("option:selected").val();
+          switch (lang) {
+            case 'c':
+              editor.options.mode = "text/x-csrc"
+              editor.setValue(`#include <stdio.h>\n\nvoid main(){\n\n\tprintf("Hello World!");\n\n}`);
+              console.log(editor.options.mode);
+              break;
+
+            case 'java':
+              editor.setOption('mode', 'text/x-java');
+              editor.setValue(`class Main {\n\n\tpublic static void main(String[] args) {\n\n\t\tSystem.out.println("Hello World!");\n\n\t}\n\n}`);
+              console.log(editor.options.mode);
+              break;
+
+            case 'python':
+              editor.setOption('mode', 'text/x-python');
+              editor.setValue(`def function(str):\n\n\tprint(str)\n\nfunction('Hello World!')`);
+              console.log(editor.options.mode);
+              break;
+          }
+        });
+
           $('#run').click(function() {
             const target = document.getElementById("lang")
             const uri = "http://localhost:3000/editor/" + target.options[target.selectedIndex].value
@@ -165,7 +202,7 @@
                 }
               }
             });
-    
+
           })
         </script>
 
@@ -173,7 +210,7 @@
 	<% include ../../partials/footer.ejs %>
 
     </div>
-    
+
     <!-- Scripts -->
 	<% include ../../partials/scripts.ejs %>
 </body>
