@@ -1,9 +1,28 @@
 <!DOCTYPE html>
+<!--학생들이 제출한 코드를 돌려보고 점수를 줄 수 있는 페이지임-->
 <html>
 
 <head>
    <!--헤드내용 include -->
-   <% include ../../partials/head.ejs %>  
+     
+   <link rel="stylesheet" href="/stylesheets/style.css" />
+   <script src="http://code.jquery.com/jquery-latest.js"></script>
+
+   <!-- 코드미러 드라큘라테마 오토컴플릿 -->
+   <link rel="stylesheet" href="/stylesheets/dracula.css">
+   <link rel="stylesheet" href="/stylesheets/codemirror.css">
+   <link rel="stylesheet" href="/stylesheets/show-hint.css">
+   <!-- 코드미러 오토컴플릿 -->
+   <script src="/javascripts/codemirror.js"></script>
+   <script src="/javascripts/show-hint.js"></script>
+   <script src="/javascripts/matchbrackets.js"></script>
+   <!-- <script src="/javascripts/anyword-hint.js"></script> -->
+   
+   <!-- Java, C, Python 데꼬오기 -->
+   <!-- <script src="/javascripts/javascript.js"></script>
+   <script src="/javascripts/python.js"></script> -->
+   <script src="/javascripts/clike.js"></script>
+   <% include ../../partials/head.ejs %>
 </head>
 
 <body class="homepage">
@@ -22,76 +41,81 @@
                     <div class="12u" style="width:100%;">
                         <section class="box blog">
                             <div>
-                                <form>
-                                     <!-- 학생 :: 언어선택 / 저장버튼/ 제출버튼/ 다운로드버튼 / debug버튼 / run버튼 / 코드미러옵션선택(체크박스)-->                              
-                                      <!-- 교수 :: 언어선택 / 저장버튼/ 성적입력/ 다운로드버튼 / debug버튼 / run버튼 / 코드미러옵션선택(체크박스)-->                              
-                                    <div>
-                                    <table class="type06"  style="text-align:left; border:none; margin-bottom:0;">
-                                    <colgroup>
-                                        <col width="1%">
-                                        <col width="10%">
-                                        <col width="1%">
-                                        <col width="1%">
-                                        <col width="30%">
-                                        <col width="1%">
-                                    </colgroup>
-                                        <tr>
-                                            <td>
-                                                <!-- 코드미러 옵션 바꾸는 버튼임-->
-                                                <a href="#" class="fas fa-cog fa-2x"></a>
-                                            </td>
-                                            <td>
-                                                <!--언어선택할수 있는 옵션바-->
-                                                <select name="editor_lang">
-                                                    <!--value값은 디비 맞춰서 수정해주세요-->
-                                                    <option value="1">JAVA</option>
-                                                    <option value="2">C</option>
-                                                    <option value="3">Python</option>
-                                                </select>
-                                            </td>
-                                            
-                                            
-                                            <td>
-                                                <!--임시저장 버튼-->
-                                                <a href="#" class="fas fa-save fa-2x"></a>
-                                            </td>
-                                            
-                                            <td>
-                                                <!--코드 파일로 다운로드 버튼-->
-                                                <a href="#" class="fas fa-download fa-2x"></a>
-                                            </td>
-                                            
-                                            <td  style="text-align:right;">    
-                                                <!--run버튼-->
-                                                <a href="#" class="fas fa-play fa-2x"></a>
-                                            </td>
-                                            <td>
-                                                <!--과제제출 버튼-->
-                                                <!--이거누르면 어떤 과제로 제출할건지 물어보는 팝업창 떠야할것같음..
-                                                    뷰에 넣어야하면 나중에 수정-->
-                                                <a href="#" class="fas fa-check-square fa-2x"></a>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                    </div>
-                                    <h2 class="major" style="margin-bottom: 3%;"></h2>
+                              <form>
+                                <!-- 학생 :: 언어선택 / 저장버튼/ 제출버튼/ 다운로드버튼 / debug버튼 / run버튼 / 코드미러옵션선택(체크박스)-->                              
+                                 <!-- 교수 :: 언어선택 / 저장버튼/ 성적입력/ 다운로드버튼 / debug버튼 / run버튼 / 코드미러옵션선택(체크박스)-->                              
+                               <div>
+                               <table class="type06"  style="text-align:left; border:none; margin-bottom:0;">
+                               <colgroup>
+                                   <col width="1%">
+                                   <col width="10%">
+                                   <col width="1%">
+                                   <col width="1%">
+                                   <col width="30%">
+                                   <col width="1%">
+                               </colgroup>
+                                  <tr>
+                                    <td colspan="6">과제명</td>
+                                  </tr>
+                                   <tr>
+                                       <td>
+                                           <!-- 코드미러 옵션 바꾸는 버튼임-->
+                                           <a href="#" class="fas fa-cog fa-2x"></a>
+                                       </td>
+                                       <td>
+                                           <!--언어선택할수 있는 옵션바-->
+                                           <select name="editor_lang" id="lang">
+                                               <!--value값은 디비 맞춰서 수정해주세요-->
+                                               <option value="c">C</option>
+                                               <option value="java">JAVA</option>
+                                               <option value="python">Python</option>
+                                           </select>
+                                       </td>
+                                                                    
+                                       <td>
+                                           <!--임시저장 버튼-->
+                                           <a href="#" class="fas fa-save fa-2x"></a>
+                                       </td>
                                        
-                                    <div class="row">
-                                
-                                            <div class="6u 12u(mobile)" style="float: left;">
-                                
-                                                <textarea name="area_edit" placeholder="내용을 입력하세요." required rows="20" autofocus></textarea>
-                                
-                                            </div>
-                                
-                                            <div class="6u 12u(mobile)" style="float: right;">
-                                
-                                                 <textarea name="area_result" placeholder="결과창 " required rows=20 autofocus ></textarea>
-                                
-                                            </div>
+                                       <td>
+                                           <!--코드 파일로 다운로드 버튼-->
+                                           <a href="#" class="fas fa-download fa-2x"></a>
+                                       </td>
+                                       
+                                       <td  style="text-align:right;">    
+                                           <!--run버튼
+                                           <a href="#" class="fas fa-play fa-2x"></a> -->
+                                           <input type="button" id="run" value="Run" />
+                                       </td>
+                                       <td>
+                                           <!--과제제출 버튼-->
+                                           <!--이거누르면 어떤 과제로 제출할건지 물어보는 팝업창 떠야할것같음..
+                                               뷰에 넣어야하면 나중에 수정-->
+                                           <a href="#" class="fas fa-check-square fa-2x">submit</a>
+                                       </td>
+                                   </tr>
+                               </table>
+                               </div>
+                               <h2 class="major" style="margin-bottom: 3%;"></h2>
+                                  
+                               <div class="row">
+                           
+                                       <div class="6u 12u(mobile)" style="float: left;">
+                                         <!--
+                                           <textarea name="area_edit" placeholder="내용을 입력하세요." required rows="20" autofocus></textarea>
+                                          -->
+                                         <textarea id="content" rows="20"></textarea>
                                        </div>
-                               
-                            </form>
+                           
+                                       <div class="6u 12u(mobile)" style="float: right;">
+                                        <!--
+                                            <textarea name="area_result" placeholder="결과창 " required rows=20 autofocus ></textarea>
+                                         -->
+                                            <textarea id="result" rows="10" readonly></textarea>
+                                       </div>
+                                  </div>
+                          
+                       </form>
                             </div>
                             </section>
                         </div>
@@ -99,6 +123,52 @@
                 </div>
             </div>
         </div>
+
+        <script>
+          // 텍스트하이라이트, 오토컴플릿, 단축키기능, 자동 줄맞춤 및 정렬
+          var editor = CodeMirror.fromTextArea(document.getElementById("content"), {
+            lineNumbers: true, // 라인넘버ㄱ
+            tabsize: 6, // 탭크기 6
+            mode: "text/x-csrc", // 작성언어 C,C++,C#
+            theme: "dracula", // 테마는 드라큘라 추가기능으로 추가예정
+            extraKeys: {
+              "Ctrl-Space": "autocomplete" // 컨트롤+스페이스로 오토컴플릿 실행
+            },
+            indentUnit: 5, // 들여쓰기크기 5
+            scrollbarStyle: "native", // 스크롤바 구현
+            matchBrackets: true // ????
+          });
+          editor.setValue(`#include <stdio.h>\n\nvoid main(){\n\n\tprintf("Hello World!");\n\n}`);
+          // editor.value="asdasdsasad"
+          // editor.setSize(100, 100);
+          // Refresh code mirror element when tab header is clicked.
+          // $("#xxx").click(function() {
+          //   setTimeout(function() {
+          //     editor.refresh();
+          //   }, 10);
+          // });
+    
+          $('#run').click(function() {
+            const target = document.getElementById("lang")
+            const uri = "http://localhost:3000/editor/" + target.options[target.selectedIndex].value
+            $('#result').html('');
+            $.ajax({
+              url: uri,
+              dataType: 'json',
+              type: 'POST',
+              data: {
+                'content': editor.getValue()
+              },
+              success: function(result) {
+                if (result['result'] == true) {
+                  $('#result').html(result['content']);
+                }
+              }
+            });
+    
+          })
+        </script>
+
     <!-- Footer include  -->
 	<% include ../../partials/footer.ejs %>
 

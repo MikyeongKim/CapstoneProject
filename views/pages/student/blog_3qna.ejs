@@ -49,11 +49,12 @@
                                     <form method="POST">
                                             <table class="type06" style="vertical-align:middle; text-align:center;">
                                                 <colgroup>
-                                                    <col width="15%">
-                                                    <col width="40%">
-                                                    <col width="15%">
-                                                    <col width="15%">
-                                                    <col width="15%">
+                                                    <col width="12%">
+                                                    <col width="38%">
+                                                    <col width="6%">
+                                                    <col width="16%">
+                                                    <col width="16%">
+                                                    <col width="12%">
                                                 </colgroup>
             
                                                 <thead scope="row" class="even">
@@ -63,7 +64,8 @@
                                                         <th>첨부</th>
                                                         <th>작성자</th>
                                                         <th>등록일</th>
-                                                        
+                                                        <th>조회수</th>
+                                                       
                                                     </tr>
                                                 </thead>
                                                 <tbody scope="row" style="text-align:center; ">
@@ -73,19 +75,20 @@
                                                                 <tr>
                                                                     <td><%= index+1 %></td>
                                                                     <td style="text-align:left;">
-                                                                        <a href="/myclass/qna/read/<%=item.blog_no%>"><%= item.blog_title %>
+                                                                        <a onclick="location = '/myclass/'+location.href.split('/')[4]+'/qna/read/'+'<%=item.blog_no%>'" href="#"><%= item.blog_title %>
                                                                         </td>
-                                                                    <td><%= item.blog_user_no %></td>
+                                                                    <td>???</td>
+                                                                    <td><%= item.blog_writer %></td>
                                                                     <td><%= item.created_at %></td>
                                                                     <td><%= item.blog_count %></td>
                                                                 </tr>
                                                                 <% }); %>
-                                                    
+
                                                 </tbody>
             
                                                 <tfoot>
                                                     <tr>
-                                                        <td scope="row" class="even" colspan="5">
+                                                        <td scope="row" class="even" colspan="6">
             
                                                             <!--이전,다음 페이지로 넘어가는 값 구하기-->
                                                             <!--현재페이지 값도-->
@@ -98,7 +101,7 @@
                                                         
                                                     </tr>
                                                     <tr>
-                                                        <td scope="row" class="even" colspan="5">
+                                                        <td scope="row" class="even" colspan="6">
                                                                 <select id="category" style="width:60px; display:inline-block;">
                                                                     <option selected="selected">제목</option>
                                                                     <option>내용</option>

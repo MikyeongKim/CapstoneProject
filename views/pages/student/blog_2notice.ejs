@@ -73,9 +73,10 @@
                                                         <tr>
                                                             <td><%= index+1 %></td>
                                                             <td style="text-align:left;">
-                                                                <a href="/myclass/notice/read/<%=item.blog_no%>"><%= item.blog_title %>
+                                                                <a onclick="location = '/myclass/'+location.href.split('/')[4]+'/notice/read/'+'<%=item.blog_no%>'" href="#"><%= item.blog_title %>
                                                                 </td>
-                                                            <td><%= item.blog_user_no %></td>
+                                                            <td>???</td>
+                                                            <td><%= item.blog_writer %></td>
                                                             <td><%= item.created_at %></td>
                                                             <td><%= item.blog_count %></td>
                                                         </tr>

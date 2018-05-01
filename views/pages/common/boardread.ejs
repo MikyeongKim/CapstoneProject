@@ -4,11 +4,11 @@
 <head>
   <!--헤드내용 include -->
 
-  <link rel="stylesheet" href="/stylesheets/bootstrap.min.css"> 
+  <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
   <link rel="stylesheet" href="/stylesheets/summernote.css">
-  
+
   <% include ../../partials/head.ejs %>
-  <% include ../../partials/scripts.ejs %>
+    <% include ../../partials/scripts.ejs %>
 
 </head>
 
@@ -28,10 +28,11 @@
                   <article class="box post">
                     <header>
                       <h3>
-                                        <a href="/community">#웰컴_코딧커뮤니티!!</a>
-                                        <a onclick="location.href='/Community/insert'" style="float:right; margin:2% 0; font-weight:inherit; font-size:0.4em;" href="/community" class="button">목록보기</a>
+                        <a href="/community">#웰컴_코딧커뮤니티!!</a>
+                        <a onclick="location.href='/Community/insert'" style="float:right; margin:2% 0; font-weight:inherit; font-size:0.4em;" href="/community"
+                          class="button">목록보기</a>
 
-                                    </h3>
+                      </h3>
                       <p>공부 중 궁금한게 생길 때, 스터디를 구하고 싶을 때, 강의후기가 궁금할 때 등 이유불문 무엇이든 산기인들에게 물어보세요 :)</p>
                       <h2 class="major"></h2>
                     </header>
@@ -59,7 +60,29 @@
                         <tr>
                           <th scope="row" class="even">등록일</th>
                           <td>
-                            <%= readBoard.created_at %>
+                            <% let date2 = new Date(readBoard.created_at)
+                                                                const year = date2.getFullYear();
+                                                                let month = date2.getMonth() - 1;
+                                                                let day = date2.getDate();
+                                                                let hour = date2.getHours()
+                                                                let min = date2.getMinutes()
+                                                                if (month < 10) {
+                                                                    month = "0" + month
+                                                                }
+                                                                if (day < 10) {
+                                                                    day = "0" + day
+                                                                }
+                                                
+                                                                if (hour < 10) {
+                                                                    hour = "0" + hour
+                                                                }
+                                                
+                                                                if (min < 10) {
+                                                                    min = "0" + min
+                                                                }
+                                                                const temp = `${year}.${month}.${day} ${hour}:${min}`
+                                                                 %>
+                              <%=temp%>
                           </td>
                           <th scope="row" class="even">조회수</th>
                           <td>
@@ -71,7 +94,7 @@
                             <textarea class="summernote"><%= readBoard.board_content %></textarea>
                           </td>
                         </tr>
-                        
+
                         <tr>
                           <td colspan="4" scope="row" class="even"></td>
                         </tr>
@@ -87,7 +110,7 @@
                     </div>
 
                     <h2 class="major" style="margin:3% 0;"></h2>
-                      
+
                     <!--달린 댓글 보이는 테이블-->
                     <div style="padding:0 10%;">
                       <table class="type06">
@@ -98,20 +121,21 @@
 
                         <thead scope="row" class="even">
                           <tr>
-                            <th colspan="2" style="text-align:left; padding-left:3%;" >댓글 <%= reply.length %>개</th>
+                            <th colspan="2" style="text-align:left; padding-left:3%;">댓글
+                              <%= reply.length %>개</th>
                           </tr>
                         </thead>
                         <tbody>
                           <% reply.forEach((item , index) => { %>
-                          <tr>
-                            <th>
-                              <%= item.reply_writer %> (2017-03-31 11:40)
-                            </th>
-                            <td>
-                              <%= item.reply_content %>
-                            </td>
-                          </tr>
-                          <% })  %>
+                            <tr>
+                              <th>
+                                <%= item.reply_writer %> (2017-03-31 11:40)
+                              </th>
+                              <td>
+                                <%= item.reply_content %>
+                              </td>
+                            </tr>
+                            <% })  %>
                         </tbody>
 
                       </table>
@@ -130,7 +154,7 @@
   <!-- Scripts -->
   <!-- summernote 에딧창 추가 -->
   <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
       $('.summernote').summernote({
         height: 300,
         tabsize: 2,

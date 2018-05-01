@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <!--헤드내용 include -->
+   <% include ../../partials/head.ejs %>  
+</head>
+
+<body class="homepage">
+    <div id="page-wrapper">
+
+       	<% include ./header.ejs %>
+		<%- include ./nav.ejs ,{subject_no:subject_no},{subject_list : subject_list} %>
+
+		<!-- Main -->
+		<div id="main-wrapper">
+			<div id="main" class="container">
+				<div class="row">
+					<div class="2u">
+                    
+						<%- include ./blog_sidebar.ejs ,{subject_no:subject_no},{subject_list : subject_list} %>
+					</div>
+
+					<div class="10u 12u(mobile) important(mobile)">
+						<div class="content content-right">
+							<article class="box page-content">
+								<header>
+									<h2 style="font-size:2.5em;"><a href="#">팀원지정</a></h2>
+									<a style="float:right; margin:2% 2%; font-size:1em;" href="#" class="button">뒤로가기</a>
+									
+									<a style="float:right; margin:2% 0; font-size:1em;" href="#" class="button">저장하기</a>
+									<h2 class="major"></h2>
+								</header>
+
+
+								<div>
+									<form>
+									<div>
+										<table class="type06" style="text-align:center; margin:2% 0;" >
+											<tr scope="row" class="even" >
+													<td>
+														팀원수
+														<input type="number" placeholder="3" style="width:60px;" />
+														<button style="font-size:1em;" >랜덤배정</button>
+													</td>
+													<td>
+															<select id="category" style="width:60px; display:inline-block;">
+																<option selected="selected">이름</option>
+																<option>학번</option>
+																<option>팀번호</option>
+															</select>
+															<input type="search" id="search"/>
+															<!--검색버튼 눌렀을때 목록중에서 쏘팅해주는거 코드짜야함-->
+															<input type="submit" value="검색" style="padding:0.4em 1.5em; font-weight:initial; font-size:1em;" />
+		
+															<!--안되면 table바로 밖으로 form태그 추가-->
+													</td>
+													<td>
+														정렬기준
+															<select id="order" style="width:80px; display:inline-block;">
+																	<option selected="selected">학번순</option>
+																	<option>이름순</option>
+																	<option>팀순</option>
+																</select>
+													</td>
+													
+												</tr>
+										</table>
+									</div>
+									<div>
+										<table class="type06" style="margin:0; vertical-align:middle; text-align:center;">
+											<colgroup>
+												<col width="22%"/>
+												<col width="33%"/>
+												<col width="33%"/>
+												<col width="12%"/>
+											</colgroup>
+											<style>
+												th,td {
+													padding-top: 2px;
+													padding-bottom: 2px;
+												}
+											</style>
+											<!-- 들어갈 내용은 다시 합의해야할 것 같아요 우선 메모장에 적어둠 -->
+											<thead scope="row" class="even">
+												<tr>
+													<th>팀번호</th>
+													<th>학번</th>
+													<th>이름</th>
+													<th>더보기</th>
+												</tr>
+											</thead>
+											<tbody style="vertical-align:middle;">
+												<tr>	
+													<!--팀번호 수정하거나 점수 입력할때-->	
+													<td>
+														<!--select눌렀을때 뜨는 최대숫자는 = (학생수) / (교수가 설정한 팀인원수) -->
+														<select id="team_no" style="width:60px; display:inline-block;">
+															<!--위에주석에서 계산한 결과만큼 option 증가시키면되요-->
+															<option selected="selected">1</option>
+														</select>
+													</td>
+													<td>
+														2013222222
+													</td>
+													<td>
+														학생2
+													</td>
+													<td>
+														<!--누르면 학생성적 수정가능, 상세성적 열람가능 -->
+														<a href="#" class="icono-plusCircle"></a>
+													</td>
+												</tr>
+											</tbody>
+									
+										</table>
+										</div>
+									</form>
+								</div>
+								
+							</article>
+						 </div>			
+					</div>
+
+				</div>
+
+
+			</div>
+		</div>
+
+
+	
+    <!-- Footer include  -->
+	<% include ../../partials/footer.ejs %>
+
+    </div>
+    
+    <!-- Scripts -->
+	<% include ../../partials/scripts.ejs %>
+</body>
+
+</html>

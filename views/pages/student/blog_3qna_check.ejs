@@ -36,7 +36,7 @@
 						 <div class="content content-right">
 							<article class="box page-content">
 								<header>
-									<h2 style="font-size:2.5em;"><a href="#">강의계획서</a></h2>
+									<h2 style="font-size:2.5em;"><a href="#">질의응답</a></h2>
 									<h2 class="major"></h2>
 								</header>
 
@@ -72,9 +72,13 @@
                                                 <!--첨부파일 갯수 저장해서 n개 표시-->
                                                 <label for="blog-in-upload">첨부파일(n개)</label>
                                             </th>
-                                            <td>
-                                                <a href="#" >클릭하면 첨부파일 다운로드가능 하게 만들기</a>
-                                            </td>
+                        
+                                                <% file_list.forEach((item,index) => { %>
+                                                <td>
+                                                    <a onclick="location = '/myclass/download/'+'<%=item.Upload_title%>'" href="#"><%=item.Upload_title%></a>
+                                                </td>
+                                                <% }); %>
+                        
                                         </tr>
                                         
                                     </table>

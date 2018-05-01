@@ -16,41 +16,47 @@
 		<div id="main-wrapper">
 			<div id="main" class="container">
 				<div class="row">
-					<div class="10u 12u(mobile) important(mobile)">
+					
+					<div class="12u 12u(mobile) important(mobile)">
 
-						<!--
-							
-							section class= box feature 중간정렬
-							section class= box features 왼쪽정렬
-						 -->
 						 <div class="content content-right">
 							<article class="box page-content">
 								<header>
-									<h2 style="font-size:2.5em;"><a href="#">수강 목록</a></h2>
+									<h2 style="font-size:2.5em;"><a href="#">수강 중인 강의목록</a></h2>
 									<h2 class="major"></h2>
 								</header>
 
-								<div>
-										<% subject_no.forEach((item1,index) => { %>
-											<% subject_list.forEach((item2,index) => { %>
-												<% if(item1.signup_subject_no == item2.subject_no){ %>
-													
-													<a href="/myclass/<%= item2.subject_no %>"><%= item2.subject_title %>
-												<%}%>
+								<form>
+								<div style="display:inline;">
+									<div style="float: left; width:48%; margin-right:2%;">
+											<% subject_no.forEach((item1,index) => { %>
+												<% subject_list.forEach((item2,index) => { %>
+													<% if(item1.signup_subject_no == item2.subject_no){ %>
+														<table class="type06" style="text-align:center;">
+																<thead class="even" style="font-size:1.5em;">
+																	<th colspan="2">
+																		<a href="/myclass/<%= item2.subject_no %>"><%= item2.subject_title %></a>
+																	</th>
+																</thead>
+																<tbody>
+																	<tr>
+																		<td>교수명1</td> <td>강의시간정보</td>
+																	</tr>
+																</tbody>
+															</table>
+														<tr>
+													<%}%>
+												<% }); %>
 											<% }); %>
-										<% }); %>
-
+										
+									</div>
+									
 								</div>
-
-				
-				
+								</form>
 							</article>
 						 </div>			
 					</div>
-
 				</div>
-
-
 			</div>
 		</div>
 
@@ -66,3 +72,4 @@
 </body>
 
 </html>
+

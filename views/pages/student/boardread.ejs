@@ -60,7 +60,30 @@
                         <tr>
                           <th scope="row" class="even">등록일</th>
                           <td>
-                            <%= readBoard.created_at %>
+                          <% let date2 = new Date(readBoard.created_at)
+                                                                const year = date2.getFullYear();
+                                                                let month = date2.getMonth() - 1;
+                                                                let day = date2.getDate();
+                                                                let hour = date2.getHours()
+                                                                let min = date2.getMinutes()
+                                                                if (month < 10) {
+                                                                    month = "0" + month
+                                                                }
+                                                                if (day < 10) {
+                                                                    day = "0" + day
+                                                                }
+                                                
+                                                                if (hour < 10) {
+                                                                    hour = "0" + hour
+                                                                }
+                                                
+                                                                if (min < 10) {
+                                                                    min = "0" + min
+                                                                }
+                                                                const temp = `${year}.${month}.${day} ${hour}:${min}`
+                                                                 %>
+                                                                <%=temp%>
+                      
                           </td>
                           <th scope="row" class="even">조회수</th>
                           <td>
@@ -179,7 +202,7 @@
             });
 
             $('#reply_btn').click(() => {
-              const board_no =  <%= readBoard.board_no%> 
+              const board_no =  <%=readBoard.board_no%> 
               const content = $('#reply_content').val()
               $.ajax({
                 url: '/reply',

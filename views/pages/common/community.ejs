@@ -2,115 +2,174 @@
 <html>
 
 <head>
-   <!--헤드내용 include -->
-   <% include ../../partials/head.ejs %>  
+    <!--헤드내용 include -->
+    <% include ../../partials/head.ejs %>
 </head>
 
 <body class="homepage">
     <div id="page-wrapper">
 
-       	<% include ./header.ejs %>
-		<% include ./nav.ejs %>
+        <% include ./header.ejs %>
+            <% include ./nav.ejs %>
 
-        <!--main-->
-        <div id="main-wrapper">
-            <div id="main" class="container">
+                <!--main-->
+                <div id="main-wrapper">
+                    <div id="main" class="container">
 
-                <div class="row 200%">
-                    <div class="12u">
-                        <div class="content content-left">
-                            <article class="box post">
-                                <header>
-                                    <h3>
-                                        <a href="/community">#웰컴_코딧커뮤니티!!</a>
-                                    </h3>
-                                    <p>공부 중 궁금한게 생길 때, 스터디를 구하고 싶을 때, 강의후기가 궁금할 때 등 이유불문 무엇이든 산기인들에게 물어보세요 :)</p>
-	
-                                </header>
-                                <a onclick="location.href='/login'" style="float:right; margin:2% 0; font-weight:inherit; font-size:1.1em;" class="button">글쓰기</a>
-                                    
-                                <form method="POST">
-                                <table class="type06" style="vertical-align:middle; text-align:center;">
-                                    <colgroup>
-                                        <col width="10%">
-                                        <col width="40%">
-                                        <col width="20%">
-                                        <col width="20%">
-                                        <col width="10%">
-                                    </colgroup>
+                        <div class="row 200%">
+                            <div class="12u">
+                                <div class="content content-left">
+                                    <article class="box post">
+                                        <header>
+                                            <h3>
+                                                <a href="/community">#웰컴_코딧커뮤니티!!</a>
+                                            </h3>
+                                            <p>공부 중 궁금한게 생길 때, 스터디를 구하고 싶을 때, 강의후기가 궁금할 때 등 이유불문 무엇이든 산기인들에게 물어보세요 :)</p>
 
-                                    <thead scope="row" class="even">
-                                        <tr>
-                                            <th>번호</th>
-                                            <th>제목</th>
-                                            <th>작성자</th>
-                                            <th>등록일</th>
-                                            <th>조회수</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody scope="row" style="text-align:center;">
+                                        </header>
+                                        <a onclick="location.href='/login'" style="float:right; margin:2% 0; font-weight:inherit; font-size:1.1em;" class="button">글쓰기</a>
 
-                                        <!--td갯수는 최대15개로 fix해야함, 16번글부터는 2번째 페이지로 아웃-->
-                                            <% board_list.forEach((item,index) => { %>
-                                                <tr>
-                                                    <td><%= index+1 %></td>
-                                                    <td style="text-align:left;">
-                                                        <a href="/community/<%=item.board_no%>"><%= item.board_title %>
-                                                        </td>
-                                                    <td><%= item.board_writer %></td>
-                                                    <td><%= item.created_at %></td>
-                                                    <td><%= item.board_count %></td>
-                                                </tr>
-                                                <% }); %>
-                                    </tbody>
+                                        <form method="POST">
+                                            <table class="type06" style="vertical-align:middle; text-align:center;">
+                                                <colgroup>
+                                                    <col width="10%">
+                                                    <col width="40%">
+                                                    <col width="20%">
+                                                    <col width="20%">
+                                                    <col width="10%">
+                                                </colgroup>
 
-                                    <tfoot>
-                                        <tr>
-                                            <td scope="row" class="even" colspan="5">
+                                                <thead scope="row" class="even">
+                                                    <tr>
+                                                        <th>번호</th>
+                                                        <th>제목</th>
+                                                        <th>작성자</th>
+                                                        <th>등록일</th>
+                                                        <th>조회수</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody scope="row" style="text-align:center;">
 
-                                                <!--이전,다음 페이지로 넘어가는 값 구하기-->
-                                                <!--현재페이지 값도-->
-                                                <a href="#" class="icono-caretLeft"></a>
-                                                <a href="/community">1</a>
-                                                <a href="#" class="icono-caretRight"></a>
+                                                    <!--td갯수는 최대15개로 fix해야함, 16번글부터는 2번째 페이지로 아웃-->
+                                                    <% board_list.forEach((item,index) => { %>
+                                                        <tr>
+                                                            <td>
+                                                                <%= index+1 %>
+                                                            </td>
+                                                            <td style="text-align:left;">
+                                                                <a href="/community/<%=item.board_no%>">
+                                                                    <%= item.board_title %>
+                                                            </td>
+                                                            <td>
+                                                                <%= item.board_writer %>
+                                                            </td>
+                                                            <td>
+                                                                <% let date2 = new Date(item.created_at)
+                                                                const year = date2.getFullYear();
+                                                                let month = date2.getMonth() - 1;
+                                                                let day = date2.getDate();
+                                                                let hour = date2.getHours()
+                                                                let min = date2.getMinutes()
+                                                                if (month < 10) {
+                                                                    month = "0" + month
+                                                                }
+                                                                if (day < 10) {
+                                                                    day = "0" + day
+                                                                }
                                                 
-                                            </td>
-                                            
-                                        </tr>
-                                        <tr>
-                                            <td scope="row" class="even" colspan="5">
-                                                    <select id="category" style="width:60px; display:inline-block;">
-                                                        <option selected="selected">제목</option>
-                                                        <option>내용</option>
-                                                        <option>작성자</option>
-                                                        <option>등록일</option>
-                                                    </select>
-                                                    <input type="search" id="search"/>
-                                                    <!--검색버튼 눌렀을때 목록중에서 쏘팅해주는거 코드짜야함-->
-                                                    <input type="submit" value="검색" style="padding:0.4em 1.5em; font-weight:initial; font-size:1em;" />
+                                                                if (hour < 10) {
+                                                                    hour = "0" + hour
+                                                                }
+                                                
+                                                                if (min < 10) {
+                                                                    min = "0" + min
+                                                                }
+                                                                const temp = `${year}.${month}.${day} ${hour}:${min}`
+                                                                 %>
+                                                                <%=temp%>
+                                                            </td>
 
-                                                    <!--안되면 table바로 밖으로 form태그 추가-->
-                                            </td>
-                                            
-                                        </tr>
-                                        
-                                    </tfoot>
-                                </table>
-                                </form>
-                  
-                            </article>
+                                                            <td>
+                                                                <%= item.board_count %>
+                                                            </td>
+                                                        </tr>
+                                                        <% }); %>
+                                                </tbody>
+
+                                                <tfoot>
+                                                    <tr>
+                                                        <td scope="row" class="even" colspan="5">
+
+                                                            <!--이전,다음 페이지로 넘어가는 값 구하기-->
+                                                            <!--현재페이지 값도-->
+                                                            <a href="#" class="icono-caretLeft"></a>
+                                                            <a href="/community">1</a>
+                                                            <a href="#" class="icono-caretRight"></a>
+
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <td scope="row" class="even" colspan="5">
+                                                            <select id="category" style="width:60px; display:inline-block;">
+                                                                <option selected="selected">제목</option>
+                                                                <option>내용</option>
+                                                                <option>작성자</option>
+                                                                <option>등록일</option>
+                                                            </select>
+                                                            <input type="search" id="search" />
+                                                            <!--검색버튼 눌렀을때 목록중에서 쏘팅해주는거 코드짜야함-->
+                                                            <input type="submit" value="검색" style="padding:0.4em 1.5em; font-weight:initial; font-size:1em;" />
+
+                                                            <!--안되면 table바로 밖으로 form태그 추가-->
+                                                        </td>
+
+                                                    </tr>
+
+                                                </tfoot>
+                                            </table>
+                                        </form>
+
+                                    </article>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    <!-- Footer include  -->
-	<% include ../../partials/footer.ejs %>
+                <!-- Footer include  -->
+                <% include ../../partials/footer.ejs %>
 
     </div>
-    
+
     <!-- Scripts -->
-	<% include ../../partials/scripts.ejs %>
+    <% include ../../partials/scripts.ejs %>
+
+        <script>
+            function DateFormat(date) {
+                let date2 = new Date(date)
+                const year = date2.getFullYear();
+                let month = date2.getMonth() - 1;
+                let day = date2.getDate();
+                let hour = date2.getHours()
+                let min = date2.getMinutes()
+                if (month < 10) {
+                    month = "0" + month
+                }
+                if (day < 10) {
+                    day = "0" + day
+                }
+
+                if (hour < 10) {
+                    hour = "0" + hour
+                }
+
+                if (min < 10) {
+                    min = "0" + min
+                }
+                return `${year}.${month}.${day} ${hour}:${min}`;
+            }
+
+        </script>
 </body>
 
 </html>

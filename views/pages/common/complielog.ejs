@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div style="width : 70%">
+        <table border="1" text-align:center;>
+            <colgroup>
+                <col width="7%">
+                <col width="30%">
+                <col width="20%">
+                <col width="10%">
+                <col width="20%">
+            </colgroup>
+
+            <th>edit_no</th>
+            <th>edit_filepath</th>
+            <th>edit_lang</th>
+            <th>success</th>
+            <th>user_no</th>
+            <th>소스보러가기</th>
+            
+            <% result.forEach((item,index) => { %>
+            <tr>
+                <td> <%= item.edit_no %></td>
+                <td><%= item.edit_filepath %></td>
+                <td> <%= item.edit_lang %></td>
+                <td><%= item.edit_isSuccess %></td>
+                <td><%= item.edit_user_no%></td>
+                <td><a href="/editor/read/<%=item.edit_no%>&<%= item.edit_lang %>" >소스보러가기</td>
+                
+            </tr>
+            <% }) %>
+        </table>
+    </div>
+</body>
+
+</html>

@@ -45,7 +45,7 @@
                                 
                                 <div>
                   
-                                    <form action="#" method="POST">
+                                    <form action="#" method="POST" enctype="multipart/form-data">
                                         <div>
                                             <table class="type06" style="margin:0;">
                                                 <colgroup>
@@ -76,18 +76,19 @@
 													<td colspan="2">
 										
 													<div>
-														<textarea name="content" class="summernote" id="content" required rows="30" autofocus cols="130"></textarea>
+														<textarea name="content" id="content" required rows="30" autofocus cols="130"></textarea>
 													</div>
 
 													</td>
 												</tr>
 												<tr>
 													<th scope="row" class="even">
-														<label for="blog-in-upload">첨부파일</label>
+												
+															<input type = "file" class="inputFile" id = "uploadFile" name = "uploadFile" multiple>
+															<label for="blog-in-upload">첨부파일</label>
+														
+													
 													</th>
-													<td>
-															<input type="file" />
-													</td>
 												</tr>
 												<tr>
 													<td colspan="2" style="text-align:center; padding:0.5em 1.5em; margin:1%;">

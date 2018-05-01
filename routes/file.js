@@ -9,7 +9,7 @@ const _storage = multer.diskStorage({
     cb(null, 'uploads/')
   },
   filename: function (req, file, cb) {
-    cb(null, file.originalname)
+    cb(null, Date.now() + file.originalname ) //파일저장될때 현재시간 + 파일이름으로 저장됨 ok?
   }
 })
 
@@ -29,20 +29,20 @@ router.route('/')
 
     return res.status(303).redirect('/community')
 
-
   })
 
-function SavedFile(files) {
+function SavedFile(files) {   //실제 파일이 저장되있는지 확인하는 함수 
   const file_len = files.length
+  console.log(files)
 
   for (let i = 0; i < file_len; i++) {
-    fs.stat(files[i].path, function (err, stat) {
+    //files[i].path 가 저장된 path + 파일명이다. ok?
+    fs.stat(files[i].path, function (err, stat) {  
       if (err) {
         return false
       }
     })
   }
-
   return true
 }
 

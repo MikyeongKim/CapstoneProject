@@ -15,8 +15,6 @@ const student = 1
     , professor = 2
     , manager = 3
 
-
-
 router.route('/').get((req, res) => {
     
     if (!req.session.userinfo) {
@@ -165,8 +163,6 @@ router.route('/signup')
                                     manager_name: body.name,
                                 }, { transaction: t })
                             }
-
-
                         })
                 })
 
@@ -177,7 +173,5 @@ router.route('/signup')
             console.log("데이터 추가 실패");
         });
     })
-
-
 
 module.exports = router;

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <!--헤드내용 include -->
+   <% include ../../partials/head.ejs %>  
+</head>
+
+<body class="homepage">
+    <div id="page-wrapper">
+
+       	<% include ./header.ejs %>
+		<%- include ./nav.ejs ,{subject_no:subject_no},{subject_list : subject_list} %>
+
+		<!-- Main -->
+		<div id="main-wrapper">
+			<div id="main" class="container">
+				<div class="row">
+					<div class="2u">
+                    
+						<%- include ./blog_sidebar.ejs ,{subject_no:subject_no},{subject_list : subject_list} %>
+					</div>
+
+					<div class="10u 12u(mobile) important(mobile)">
+						<div class="content content-right">
+							<article class="box page-content">
+								<header>
+									<h2 style="font-size:2.5em;"><a href="#">팀프로젝트</a></h2>
+									<a style="float:right; margin:2% 0; font-size:1em;" href="#" class="button">글쓰기</a>
+									
+									<h2 class="major"></h2>
+								</header>
+								
+								<div>
+                  
+									<form action="#" method="POST">
+										<div>
+											<table class="type06" style="margin:0;">
+												<colgroup>
+													<col width="25%"/>
+													<col width="75%"/>
+												</colgroup>
+																								
+												<tr>
+													<th scope="row" class="even">
+														<label for="hw-title">제목</label>
+													</th>
+													<td>
+														<input type="text" id="hw-title"/>
+													</td>
+												</tr>
+												
+												<tr>
+													<th scope="row" class="even">
+														<label for="hw-type">제출방식</label>
+													</th>
+													<td>
+														<input type="radio" id="hw-how" name="how" value="online" />온라인
+														<input type="radio" name="how" value="inclass"/>강의실제출
+													</td>
+												</tr>
+												
+												<tr>
+
+													<!--디비에는 글작성되는 시간도 저장해야해요-->
+													<th scope="row" class="even">
+														<label for="hw-dday">마감일</label>
+													</th>
+													<td>
+														<input type="date" name="setdate"  id="hw-dday"/>
+														<input type="time" name="setdate"  id="hw-ddaytime" value="23:59"/>
+														
+													</td>
+												</tr>
+												
+												<tr>
+													<th scope="row" class="even">
+														<label for="hw-member">팀원 선정방식</label>
+													</th>
+													<td style="display:inline-block;">
+														<input type="radio" id="hw-memberate" name="member" value="indirect" />학생 자율
+															<input type="text" id="hw-mem-num" name="mem-num" style="width:60px;" placeholder="3" />
+
+														<input type="radio" id="hw-memberate" name="member" value="indirect" />교수 랜덤배정
+															<input type="text" id="hw-mem-num" name="mem-num" style="width:60px;" placeholder="3" />
+
+														<input type="radio" name="member" value="direct" />교수 직접지정
+															<button style="font-size:1em;">팀원지정</button>
+													</td>
+												</tr>
+
+												<tr>
+													<th scope="row" class="even">
+														<label for="hw-late">지각제출허용</label>
+													</th>
+													<td>
+														<input type="radio" id="hw-late" name="late" value="no" />비허용
+														<input type="radio" name="late" value="yes"/>허용
+													</td>
+												</tr>
+												<tr>
+													<td colspan="2" >
+														썸머노트 들어갈 자리임
+													<div>
+													<!--여기에 썸머노트 붙이기-->
+													</div>
+
+													</td>
+												</tr>
+												<tr>
+													<th scope="row" class="even">
+														<label for="blog-in-upload">첨부파일</label>
+													</th>
+													<td>
+															<input type="file" />
+													</td>
+												</tr>
+												<tr>
+													<td colspan="2" style="text-align:center; padding:0.5em 1.5em; margin:1%;">
+	
+														<input type="submit" value="저장" />
+														<input type="reset" value="취소"/>				
+													</td>
+												</tr>
+												
+
+											</table>
+										</div>
+
+									</form>
+								</div>
+
+						
+							</article>
+						 </div>			
+					</div>
+
+				</div>
+
+
+			</div>
+		</div>
+
+
+	
+    <!-- Footer include  -->
+	<% include ../../partials/footer.ejs %>
+
+    </div>
+    
+    <!-- Scripts -->
+	<% include ../../partials/scripts.ejs %>
+</body>
+
+</html>

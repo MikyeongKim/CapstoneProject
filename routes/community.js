@@ -2,10 +2,14 @@ const express = require('express')
   , router = express.Router()
   , models = require('../models')
 
+
 const community_category = 3
+
+
 
 router.route('/').get((req, res) => {
   if (!req.session.userinfo) {
+
     models.Board.findAll({
       where: { board_category: community_category },
       order: [['created_at', 'DESC']]
@@ -15,28 +19,28 @@ router.route('/').get((req, res) => {
   }
   else {
     models.sequelize.Promise.all([
-    
+
       models.Signupsubject.findAll({
-        where: { signup_user_no : req.session.userinfo[0]}
+        where: { signup_user_no: req.session.userinfo[0] }
       }),
-  
+
       models.Subject.findAll({
       }),
       models.Board.findAll({
         where: { board_category: community_category },
         order: [['created_at', 'DESC']]
       })
-  
-  ]).spread((returnSubject_no, returnSubject,result) => {
-          return res.render('student/community', { subject_no: returnSubject_no, subject_list: returnSubject, board_list: result })
-      }).catch(function (err) {
-          //TODO : status 오류코드 보내기
-          return res.redirect('/')
-      });
-    
+
+    ]).spread((returnSubject_no, returnSubject, result) => {
+      return res.render('student/community', { subject_no: returnSubject_no, subject_list: returnSubject, board_list: result })
+    }).catch(function (err) {
+      //TODO : status 오류코드 보내기
+      return res.redirect('/')
+    });
+
   }
-  
-  })
+
+})
   .post((req, res) => {
 
     if (!req.session.userinfo) {
@@ -70,73 +74,75 @@ router.route('/').get((req, res) => {
     })
   })
 
+
+
 router.route('/:id').get((req, res) => {
-    const req_board_no = req.params.id
+  const req_board_no = req.params.id
 
-    if(!req.session.userinfo){
-      models.sequelize.Promise.all([
+  if (!req.session.userinfo) {
+    models.sequelize.Promise.all([
 
-        models.Board.find({
-          where: { board_no: req_board_no }
-        }),
+      models.Board.find({
+        where: { board_no: req_board_no }
+      }),
 
-        models.Board.update({
-          board_count: models.sequelize.literal('board_count+1')
-        }, { where: { board_no: req_board_no } }),
+      models.Board.update({
+        board_count: models.sequelize.literal('board_count+1')
+      }, { where: { board_no: req_board_no } }),
 
-        models.Reply.findAll({
-          where: { board_no: req_board_no }
-        })
-      ]).spread((boardResult, updateResult, replyResult) => {
+      models.Reply.findAll({
+        where: { board_no: req_board_no }
+      })
+    ]).spread((boardResult, updateResult, replyResult) => {
 
-        if (!boardResult) {
-          return res.status(400).send('400 Bad Request')
-        }
-        return res.render('common/boardread', { readBoard: boardResult, writer: false, reply: replyResult })
-      }).catch((err) => {
-        //TODO :: 에러처리 
-        
-        return res.status(503).send("503 Service Unavailable")
-      });
+      if (!boardResult) {
+        return res.status(400).send('400 Bad Request')
+      }
+      return res.render('common/boardread', { readBoard: boardResult, writer: false, reply: replyResult })
+    }).catch((err) => {
+      //TODO :: 에러처리 
 
-    }else{
-      models.sequelize.Promise.all([
-    
-        models.Signupsubject.findAll({
-          where: { signup_user_no : req.session.userinfo[0]}
-        }),
-    
-        models.Subject.findAll({
-        }),
-        models.Board.find({
-          where: { board_no: req_board_no }
-        }),
+      return res.status(503).send("503 Service Unavailable")
+    });
 
-        models.Board.update({
-          board_count: models.sequelize.literal('board_count+1')
-        }, { where: { board_no: req_board_no } }),
+  } else {
+    models.sequelize.Promise.all([
 
-        models.Reply.findAll({
-          where: { board_no: req_board_no }
-        })
-      ]).spread((returnSubject_no, returnSubject,boardResult, updateResult, replyResult) => {
+      models.Signupsubject.findAll({
+        where: { signup_user_no: req.session.userinfo[0] }
+      }),
 
-        if (!boardResult) {
-          return res.status(400).send('400 Bad Request')
-        }
-        IsWriter(replyResult, req.session.userinfo[0])
+      models.Subject.findAll({
+      }),
+      models.Board.find({
+        where: { board_no: req_board_no }
+      }),
 
-        if (boardResult.board_user_no == req.session.userinfo[0]) {
-          return res.render('student/boardread', { subject_no: returnSubject_no, subject_list: returnSubject,readBoard: boardResult, writer: true, reply: replyResult })
-        }
+      models.Board.update({
+        board_count: models.sequelize.literal('board_count+1')
+      }, { where: { board_no: req_board_no } }),
 
-        return res.render('student/boardread', { subject_no: returnSubject_no, subject_list: returnSubject,readBoard: boardResult, writer: false, reply: replyResult })
-      }).catch((err) => {
-        //TODO :: 에러처리 
-        return res.status(503).send("503 Service Unavailable")
-      });
+      models.Reply.findAll({
+        where: { board_no: req_board_no }
+      })
+    ]).spread((returnSubject_no, returnSubject, boardResult, updateResult, replyResult) => {
 
-    }
+      if (!boardResult) {
+        return res.status(400).send('400 Bad Request')
+      }
+      IsWriter(replyResult, req.session.userinfo[0])
+
+      if (boardResult.board_user_no == req.session.userinfo[0]) {
+        return res.render('student/boardread', { subject_no: returnSubject_no, subject_list: returnSubject, readBoard: boardResult, writer: true, reply: replyResult })
+      }
+
+      return res.render('student/boardread', { subject_no: returnSubject_no, subject_list: returnSubject, readBoard: boardResult, writer: false, reply: replyResult })
+    }).catch((err) => {
+      //TODO :: 에러처리 
+      return res.status(503).send("503 Service Unavailable")
+    });
+
+  }
 })
   .put((req, res) => {
 
@@ -180,6 +186,7 @@ router.route('/:id').get((req, res) => {
       })
     })
   })
+
 
 router.route('/:id/new')
   .get((req, res) => {
