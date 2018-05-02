@@ -85,9 +85,8 @@
                             <th>학번</th>
                             <td>2012150001</td>
 
-
                             <th>이름</th>
-                            <td style="text-align:left;">학생1</td>
+                            <td style="text-align:left;">학생</td>
 
                             <th style="text-align:right;"><label id="score">평가점수입력</label></th>
                             <td style="text-align:left;">
@@ -125,9 +124,9 @@
                               <!--언어선택할수 있는 옵션바-->
                               <select name="editor_lang" id="lang">
                                                     <!--value값은 디비 맞춰서 수정해주세요-->
-                                                    <option value="c">C</option>
-                                                    <option value="java">JAVA</option>
-                                                    <option value="python">Python</option>
+                                                    <option value="C">C</option>
+                                                    <option value="JAVA">JAVA</option>
+                                                    <option value="PYTHON">Python</option>
                                                 </select>
                             </td>
 
@@ -154,18 +153,23 @@
 
                     <div class="row">
 
-                      <div class="6u 12u(mobile)" style="float: left;">
+                      <div class="8u 12u(mobile)" style="float: left;">
                         <!--
                                                 <textarea name="area_edit" placeholder="내용을 입력하세요." required rows="20" autofocus></textarea>
                                               -->
+
+                        <% if(readcode)  { %>
                         <textarea id="content" rows="20"><%= code_content %></textarea>
+                        <% }else { %>
+                        <textarea id="content" rows="20"></textarea>
+                        <% } %>
                       </div>
 
-                      <div class="6u 12u(mobile)" style="float: right;">
+                      <div class="4u 12u(mobile)" style="float: right;">
                         <!--
                                                  <textarea name="area_result" placeholder="결과창 " required rows=20 autofocus ></textarea>
                                               -->
-                        <textarea id="result" rows="10" readonly></textarea>
+                        <textarea id="result" rows="5" readonly></textarea>
                       </div>
 
                     </div>
@@ -184,10 +188,10 @@
     // 텍스트하이라이트, 오토컴플릿, 단축키기능, 자동 줄맞춤 및 정렬
     // 디폴트설정은 C
     var editor = CodeMirror.fromTextArea(document.getElementById("content"), {
-      lineNumbers: true, // 라인넘버ㄱ
+      lineNumbers: true, // 라인넘버
       tabsize: 6, // 탭크기 6
       mode: "text/x-csrc", // 작성언어 C,C++,C#
-      //theme: "dracula", // 테마는 드라큘라 추가기능으로 추가예정
+      theme: "dracula", // 테마는 드라큘라 추가기능으로 추가예정
       extraKeys: {
         "Ctrl-Space": "autocomplete" // 컨트롤+스페이스로 오토컴플릿 실행
       },
@@ -239,6 +243,8 @@
         success: function(result) {
           if (result['result'] == true) {
             $('#result').html(result['content']);
+          } else {
+            window.location.replace("http://localhost:3000/login");
           }
         }
       });
@@ -246,11 +252,14 @@
     })
   </script>
 
-  <% if (!code_content) { %>
+  <% if (!readcode) { %>
     <script>
       editor.setValue(`#include <stdio.h>\n\nvoid main(){\n\n\tprintf("Hello World!");\n\n}`);
     </script>
-
+    <% } else { %> 
+    <script>
+    $("#lang").val('<%= code_lang %>').prop("selected", true);
+    </script>
     <% } %>
 
       <!-- Footer include  -->

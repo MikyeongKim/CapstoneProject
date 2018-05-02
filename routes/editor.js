@@ -16,12 +16,9 @@ router.route('/').get((req, res) => {
 
   if (req.session.userinfo[1] === student) {
     return res.render('student/editor');
-  } else {
-    return res.render('professor/editor');
   }
-
-  return res.render('professor/editor')
-
+  return res.render('professor/editor', { readcode : false });
+ 
 })
 
 router.route('/java').post((req, res) => {
@@ -101,6 +98,10 @@ router.route('/java').post((req, res) => {
 
 /* 에디터페이지의 Run 클릭시 Ajax방식으로 컴파일 실행결과를 결과창에 표시 */
 router.route('/c').post((req, res) => {
+
+  if (! req.session.userinfo ) {
+    return res.send({ result: false});
+  }
   const content = req.body.content; // 소스내용
   const filename = Date.now() + '-' + req.session.userinfo[0];
 
@@ -133,7 +134,7 @@ router.route('/c').post((req, res) => {
     // 실행완료시 다음함수 실행
     exec.execFile('Compile.bat', [`${filename}`], (error, stdout, stderr) => {
       const errorhandle = error
-      
+
       // 실행파일의 결과를 담은 txt 파일 내용 읽기
       fs.readFile(`complieFolder/c/${filename}.txt`, 'utf-8', (error, data) => {
 
@@ -160,27 +161,7 @@ router.route('/c').post((req, res) => {
 })
 
 router.route('/python').post((req, res) => {
-  const content = req.body.content
-  const date = new Date()
-  const filename = date.getTime()
-
-  fs.writeFile(`complieFolder/c/${filename}.c`, content, 'utf-8', err => {
-    if (err) {
-      return res.send(err)
-    }
-
-    exec.execFile('Compile.bat', [`${filename}`], (error, stdout, stderr) => {
-      const errorhandle = error
-      fs.readFile(`complieFolder/c/${filename}.txt`, 'utf-8', (error, data) => {
-
-        if (errorhandle && data.length == 0) {
-          return res.send({ result: true, content: `${errorhandle}` });
-        }
-
-        return res.send({ result: true, content: data });
-      });
-    });
-  })
+  return res.send({ result: true, content: "구현중입니다." });
 })
 
 router.route('/read/:no&:lang').get((req, res) => {
@@ -196,7 +177,7 @@ router.route('/read/:no&:lang').get((req, res) => {
         res.send(`error ${error}`)
       }
       console.log(data)
-      res.render('professor/editor', {code_content: data , code_lang : lang})
+      res.render('professor/editor', { readcode: true , code_content: data, code_lang: lang })
 
     })
   })

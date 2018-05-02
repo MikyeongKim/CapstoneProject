@@ -9,7 +9,7 @@ const _storage = multer.diskStorage({
     cb(null, 'uploads/')
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + file.originalname ) //파일저장될때 현재시간 + 파일이름으로 저장됨 ok?
+    cb(null, Date.now() + file.originalname ) //파일저장될때 현재시간 + 파일이름으로 저장됨
   }
 })
 
@@ -36,7 +36,7 @@ function SavedFile(files) {   //실제 파일이 저장되있는지 확인하는
   console.log(files)
 
   for (let i = 0; i < file_len; i++) {
-    //files[i].path 가 저장된 path + 파일명이다. ok?
+    //files[i].path : 저장된 path + 파일명
     fs.stat(files[i].path, function (err, stat) {  
       if (err) {
         return false

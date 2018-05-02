@@ -8,7 +8,7 @@ router.route('/').get((req, res) => {
 
     if (!req.session.userinfo) {
         //todo : 잘못된 경로로 접근함.. 알림.
-        return res.redirect('/');
+        return res.redirect('/login');
     }
 
     const user_no = req.session.userinfo[0];

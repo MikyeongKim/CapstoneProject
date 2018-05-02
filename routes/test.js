@@ -5,6 +5,10 @@ const express = require('express')
 
 router.route('/').get((req, res) => {
 
+    if (!req.session.userinfo) {
+        res.redirect('login')
+    }
+
     models.Editlog.findAll({
         limit: 10,
         order: [['created_at', 'DESC']]
