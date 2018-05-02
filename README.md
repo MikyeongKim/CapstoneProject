@@ -37,5 +37,6 @@
 
 Copyright (c) 2018 CoditClass. All rights reserved.
 
-License under the [MIT](CapstoneProject/LICENSE.txt) License.
+License under the [MIT](https://github.com/MikyeongKim/CapstoneProject/blob/master/LICENSE.txt) License.
+
 
