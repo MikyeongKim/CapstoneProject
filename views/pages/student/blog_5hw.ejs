@@ -22,7 +22,7 @@
 			<div id="main" class="container">
 				<div class="row">
 					<div class="2u">
-                    
+                    s
                             <%- include ./blog_sidebar.ejs ,{subject_no:subject_no},{subject_list : subject_list} %>
 					</div>
 
@@ -65,15 +65,16 @@
                                             <tbody scope="row" style="text-align:center; ">
                                                 <!--바로 아래는 뷰짜려고 임시로 만든 <td>목록임-->
 
-                                                        <% blog_list.forEach((item,index) => { %>
+                                                        <% task_list.forEach((item,index) => { %>
                                                             <tr>
                                                                 <td><%= index+1 %></td>
                                                                 <td style="text-align:left;">
-                                                                        <a onclick="location = '/myclass/'+location.href.split('/')[4]+'/task/read/'+'<%=item.blog_no%>'" href="#"><%= item.blog_title %>
+                                                                        <a onclick="location = '/myclass/'+location.href.split('/')[4]+'/task/read/'+'<%=item.task_no%>'" href="#"><%= item.task_title %>
                                                                     </td>
-                                                                <td><%= item.blog_user_no %></td>
-                                                                <td><%= item.created_at %></td>
-                                                                <td><%= item.blog_count %></td>
+                                                                <td><%= item.task_method %></td>
+                                                                <td><%= item.task_deadline %></td>
+                                                                <td>submit로 구현해야함</td>
+                                                                <td>점수</td>
                                                             </tr>
                                                             <% }); %>
         

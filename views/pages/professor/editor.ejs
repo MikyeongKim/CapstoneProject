@@ -58,7 +58,7 @@
             <div class="12u" style="width:100%;">
               <section class="box blog">
                 <div>
-                  <form>
+                  <form method="POST">
                     <!-- 학생 :: 언어선택 / 저장버튼/ 제출버튼/ 다운로드버튼 / debug버튼 / run버튼 / 코드미러옵션선택(체크박스)-->
                     <!-- 교수 :: 언어선택 / 저장버튼/ 성적입력/ 다운로드버튼 / debug버튼 / run버튼 / 코드미러옵션선택(체크박스)-->
                     <div>
@@ -90,11 +90,11 @@
 
                             <th style="text-align:right;"><label id="score">평가점수입력</label></th>
                             <td style="text-align:left;">
-                              <input type="number" id="score" />
+                              <input type="number" id="score" name="score" />
                             </td>
                             <td style="text-align:left;">
                               <!--학생과제 평가점수 저장 버튼 / DB에 들어가는거 처리해주세요-->
-                              <a href="#" class="fas fa-save fa-2x">save</a>
+                              <input type="submit" value="저장"  class="fas fa-save fa-2x">
                             </td>
 
                             <td style="text-align:right;">

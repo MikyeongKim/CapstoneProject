@@ -46,7 +46,7 @@
                                         
                                         <div>
                           
-                                                <form action="#" method="POST">
+                                            <form id="myForm" name="myForm" action="#" method="POST" enctype="multipart/form-data">
                                                     <div>
                                                         <table class="type06" style="margin:0;">
                                                             <colgroup>
@@ -56,19 +56,19 @@
                                                                                                             
                                                             <tr>
                                                                 <th scope="row" class="even">
-                                                                    <label for="blog-in-title">과제제목</label>
+                                                                    <label for="blog-in-title">제목</label>
                                                                 </th>
                                                                 <td>
-                                                                    <!--이전 과제내용 상세페이지에서 교수가 저장했던 제목 읽어와주세요-->
-                                                                    <p style="margin:0;">과제1</p>
+                                                                    
+                                                                    <input type="text" id="blog-in-title" name="title"/>
                                                                 </td>
                                                             </tr>
                                                             
                                                             <tr>
                                                                 <td colspan="2" >
-                                                                    썸머노트 들어갈 자리임
+                                                            
                                                                     <div>
-                                                                    <!--여기에 썸머노트 붙이기-->
+                                                                        <textarea name="content" id="content" required rows="30" autofocus cols="130"></textarea>
                                                                     </div>
             
                                                                 </td>
@@ -78,7 +78,7 @@
                                                                     <label for="blog-in-upload">첨부파일</label>
                                                                 </th>
                                                                 <td>
-                                                                        <input type="file" />
+                                                                    <input type = "file" class="inputFile" id = "uploadFile" name = "uploadFile">
                                                                 </td>
                                                             </tr>
                                                             <tr>

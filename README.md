@@ -30,13 +30,3 @@
 18.05.02 by 종화 : 컴파일러 오류 해결함 (에디터 결함으로 추정됨 ) // 컴파일 파일 읽어와서 보여주는 기능 성공
 
 18.05.02 by 태경 : 교수/학생 에디터 페이지 최신화, Codemirror(텍스트하이라이트, 라인활성화, 셀렉트옵션 추가)
-
-* * *
-
-# LICENSE
-
-Copyright (c) 2018 CoditClass. All rights reserved.
-
-License under the [MIT](https://github.com/MikyeongKim/CapstoneProject/blob/master/LICENSE.txt) License.
-
-

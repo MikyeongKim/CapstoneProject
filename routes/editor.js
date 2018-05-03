@@ -28,7 +28,7 @@ router.route('/java').post((req, res) => {
 
   let editlogNo;
   models.Editlog.create({
-    edit_filepath: 'complieFolder/c/',
+    edit_filepath: 'complieFolder/java/',
     edit_lang: 'JAVA',
     edit_filename: filename,
     edit_user_no: req.session.userinfo[0],
@@ -37,7 +37,7 @@ router.route('/java').post((req, res) => {
     editlogNo = result.edit_no
   })
 
-  StoreCode(filename, content)
+  StoreCode(filename, content , 'java')
 
   fs.writeFile(`complieFolder/java/test.java`, content, 'utf-8', err => {
     if (err) {
@@ -116,7 +116,7 @@ router.route('/c').post((req, res) => {
     editlogNo = result.edit_no
   })
 
-  StoreCode(filename, content)
+  StoreCode(filename, content , 'c')
 
   // 첫번째 인자로 들어가는 폴더경로에 컴파일시간을 이름으로 하는 C 소스파일 생성
   // 소스내용은 editor페이지에서 입력한 소스, 인코딩방식은 utf-8
@@ -181,27 +181,10 @@ router.route('/read/:no&:lang').get((req, res) => {
 
     })
   })
-
-  //   let path = result.edit_filepath +"origin-"+result.edit_filename + '.txt'
-  //   console.log(path)
-
-  //   fs.readFile(`complieFolder/c/${result.edit_filename}.txt`, 'utf-8', (error, data) => {
-
-  //     return res.send({ result: true, content: data });
-  //   }).catch(err => {
-  //     console.log(err)
-  //   });
-  //   //res.send(`언어 :${lang} 넘버 ${edit_log_no}`)
-  // }).catch(err => {
-  //   console.log(`여기서 에러난다 ${err}`)
-  // })
-
 })
 
-
-
-function StoreCode(filename, content) {
-  fs.writeFile(`complieFolder/c/origin-${filename}.txt`, content, 'utf-8', err => {
+function StoreCode(filename, content , lang) {
+  fs.writeFile(`complieFolder/${lang}/origin-${filename}.txt`, content, 'utf-8', err => {
     if (err) {
       return res.send(err)
     }

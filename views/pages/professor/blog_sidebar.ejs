@@ -1,75 +1,85 @@
 <div class="sidebar" >
-        <!--사이드바 입력-->
-        <section class="box feature" >
-            <h2 style="text-align:center;">· 수강과목 ·</h2>
+    <!--사이드바 입력-->
+    <section class="box feature" >
+        <h2 style="text-align:center;">· 강의과목 ·</h2>
 
-            <div style="text-align:center;">
-            <table class="type06" style="display:inline; text-align:center; border:none;" >
-                <tr scope="row" class="even" >
-                        <td>
-                            <!--교수가 강의중인 강좌목록 읽어오기-->
-                                <select id="category" style="width:120px; display:inline-block;">
-                                    <option selected="selected">자료구조</option>
-                                    <option>프로그래밍</option>
-                                    <option>알고리즘</option>
-                                    <option>전산학기초</option>
-                                </select>
-                              </td>
+        <div style="text-align:center;">
+        <table class="type06" style="display:inline; text-align:center; border:none;" >
+            <tr scope="row" class="even" >
+                    <td>
+                        <!--학생이 수강중인 강의명 읽어오기-->
+
                         
-                    </tr>
-            </table>
-            </div>
-            <ul class="left-side">
-                <li>
-                    <a href="#">강의계획서</a>
-                </li>
-                <li>
-                    <a href="#">공지사항</a>
-                </li>
-                <li>
-                    <a href="#">질의응답</a>
-                </li>
-                <li>
-                    <a href="#">강의자료</a>
-                </li>
-                <li>
-                    <a href="#">과제</a>
-                </li>
-                <li>
-                    <a href="#">팀프로젝트</a>
-                </li>
-                <li>
-                    <a href="#">성적</a>
-                </li>
-               
-            </ul>
-        </section>
+                            <select id="category" name="sidebar_subject" onchange="location = '/myclass/' + this.options[this.selectedIndex].value;" style="width:120px; display:inline-block; ">
+                                <option>수강과목</option>
+                                
+                                    <% subject_list.forEach((item,index) => { %>
+                                        
+                                            <option value = <%= item.subject_no %> > <%= item.subject_title %> </option>
+                                        
+                                    <% }); %>
+                               
+                            </select>
+                            
+
+                          </td>
+
+                    
+                </tr>
+        </table>
+        </div>
+        <ul class="left-side">
+            <li>
+                <!--<a onclick="location = '/myclass/'+location.href.split('/')[4]+'/plan'"></a>-->
+                <a onclick="location = '/myclass/'+location.href.split('/')[4]+'/plan'"href="#">강의계획서</a>
+            </li>
+            <li>
+                <a onclick="location = '/myclass/'+location.href.split('/')[4]+'/notice'"href="#">공지사항</a>  
+            </li>
+            <li>
+                <a onclick="location = '/myclass/'+location.href.split('/')[4]+'/qna'"href="#">질의응답</a>
+            </li>
+            <li>
+                <a onclick="location = '/myclass/'+location.href.split('/')[4]+'/ppt'"href="#">강의자료</a>
+            </li>
+            <li>
+                <a onclick="location = '/myclass/'+location.href.split('/')[4]+'/task'"href="#">과제</a>
+            </li>
+            <li>
+                <a onclick="location = '/myclass/'+location.href.split('/')[4]+'/team'"href="#">팀프로젝트</a>
+            </li>
+            <li>
+                <a onclick="location = '/myclass/'+location.href.split('/')[4]+'/grade'"href="#">성적</a>
+            </li>
+           
+        </ul>
+    </section>
+
     
-        
-    </div>
-    <div >
-            <ul class="mobile-sidebar">
+</div>
+<div >
+        <ul class="mobile-sidebar">
+                <li>
+                        <a href="/myclass/plan">강의계획서</a>
+                    </li>
                     <li>
-                            <a href="#">강의계획서</a>
-                        </li>
-                        <li>
-                            <a href="#">공지사항</a>
-                        </li>
-                        <li>
-                            <a href="#">질의응답</a>
-                        </li>
-                        <li>
-                            <a href="#">강의자료</a>
-                        </li>
-                        <li>
-                            <a href="#">과제</a>
-                        </li>
-                        <li>
-                            <a href="#">팀프로젝트</a>
-                        </li>
-                        <li>
-                            <a href="#">성적</a>
-                        </li>
-                        
-            </ul>
-    </div>
+                        <a href="/myclass/notice">공지사항</a>
+                    </li>
+                    <li>
+                        <a href="/myclass/qna">질의응답</a>
+                    </li>
+                    <li>
+                        <a href="/myclass/ppt">강의자료</a>
+                    </li>
+                    <li>
+                        <a href="/myclass/task">과제</a>
+                    </li>
+                    <li>
+                        <a href="#">팀프로젝트</a>
+                    </li>
+                    <li>
+                        <a href="#">성적</a>
+                    </li>
+                    
+        </ul>
+</div>

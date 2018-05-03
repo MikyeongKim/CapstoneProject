@@ -23,7 +23,7 @@
 				<div class="row">
 					<div class="2u">
                     
-                        <% include ./sidebar.ejs %>
+                        <%- include ./blog_sidebar.ejs ,{subject_list : subject_list} %>
 					</div>
 
 					<div class="10u 12u(mobile) important(mobile)">
@@ -47,7 +47,7 @@
                                         
                                         <div>
                           
-                                                <form action="#" method="POST">
+                                                <form id="myForm" name="myForm" action="#" method="POST" enctype="multipart/form-data">
                                                     <div>
                                                         <table class="type06" style="margin:0;">
                                                             <colgroup>
@@ -60,7 +60,7 @@
                                                                     <label for="hw-title">제목</label>
                                                                 </th>
                                                                 <td>
-                                                                    <input type="text" id="hw-title"/>
+                                                                    <input type="text" id="blog-in-title" name="title"/>
                                                                 </td>
                                                             </tr>
                                                             <tr>
@@ -68,8 +68,8 @@
                                                                     <label for="hw-type">제출방식</label>
                                                                 </th>
                                                                 <td>
-                                                                    <input type="radio" id="hw-how" name="how" value="online" />온라인
-                                                                    <input type="radio" name="how" value="inclass"/>강의실제출
+                                                                    <input type="radio" id="hw-how" name="how" value="온라인" />온라인
+                                                                    <input type="radio" name="how" value="강의실제출"/>강의실제출
                                                                 </td>
                                                             </tr>
                                                             
@@ -80,25 +80,17 @@
                                                                     <label for="hw-dday">마감일</label>
                                                                 </th>
                                                                 <td>
-                                                                    <input type="date" name="setdate"  id="hw-dday"/>
-                                                                    <input type="time" name="setdate"  id="hw-ddaytime" value="23:59"/>
+                                                                    <input type="date" name="setdate1"  id="hw-dday"/>
+                                                                    <input type="time" name="setdate2"  id="hw-ddaytime" value="23:59"/>
                                                                     
                                                                 </td>
                                                             </tr>
-                                                            <tr>
-                                                                <th scope="row" class="even">
-                                                                    <label for="hw-late">지각제출허용</label>
-                                                                </th>
-                                                                <td>
-                                                                    <input type="radio" id="hw-late" name="late" value="no" />비허용
-                                                                    <input type="radio" name="late" value="yes"/>허용
-                                                                </td>
-                                                            </tr>
+                                                
                                                             <tr>
                                                                 <td colspan="2" >
-                                                                    썸머노트 들어갈 자리임
+                                                                    
                                                                 <div>
-                                                                <!--여기에 썸머노트 붙이기-->
+                                                                    <textarea name="content" id="content" required rows="30" autofocus cols="130"></textarea>
                                                                 </div>
             
                                                                 </td>
@@ -108,7 +100,7 @@
                                                                     <label for="blog-in-upload">첨부파일</label>
                                                                 </th>
                                                                 <td>
-                                                                        <input type="file" />
+                                                                    <input type = "file" class="inputFile" id = "uploadFile" name = "uploadFile">
                                                                 </td>
                                                             </tr>
                                                             <tr>

@@ -117,18 +117,18 @@
 
                                <div class="row">
 
-                                       <div class="8u 12u(mobile)" style="float: left;">
+                                       <div class="6u 12u(mobile)" style="float: left;">
                                          <!--
                                            <textarea name="area_edit" placeholder="내용을 입력하세요." required rows="20" autofocus></textarea>
                                           -->
                                          <textarea id="content" rows="20"></textarea>
                                        </div>
 
-                                       <div class="4u 12u(mobile)" style="float: right;">
+                                       <div class="6u 12u(mobile)" style="float: right;">
                                         <!--
                                             <textarea name="area_result" placeholder="결과창 " required rows=20 autofocus ></textarea>
                                          -->
-                                            <textarea id="result" rows="5" readonly></textarea>
+                                            <textarea id="result" rows="10" readonly></textarea>
                                        </div>
                                   </div>
 
@@ -162,8 +162,6 @@
           styleActiveLine: true
         });
 
-        editor.setValue(`#include <stdio.h>\n\nvoid main(){\n\n\tprintf("Hello World!");\n\n}`);
-
         $('#lang').on('change', function() {
           const lang = $(this).children("option:selected").val();
           switch (lang) {
@@ -175,7 +173,7 @@
 
             case 'java':
               editor.setOption('mode', 'text/x-java');
-              editor.setValue(`class test {\n\n\tpublic static void main(String[] args) {\n\n\t\tSystem.out.println("Hello World!");\n\n\t}\n\n}`);
+              editor.setValue(`class Main {\n\n\tpublic static void main(String[] args) {\n\n\t\tSystem.out.println("Hello World!");\n\n\t}\n\n}`);
               console.log(editor.options.mode);
               break;
 
@@ -201,8 +199,6 @@
               success: function(result) {
                 if (result['result'] == true) {
                   $('#result').html(result['content']);
-                }else {
-                  window.location.replace("http://localhost:3000/login");
                 }
               }
             });

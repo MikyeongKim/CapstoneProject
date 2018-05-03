@@ -23,7 +23,7 @@
 				<div class="row">
 					<div class="2u">
                     
-                        <% include ./sidebar.ejs %>
+                        <%- include ./blog_sidebar.ejs ,{subject_list : subject_list} %>
 					</div>
 
 					<div class="10u 12u(mobile) important(mobile)">
@@ -57,7 +57,7 @@
                                                         <label for="blog-in-title">제목</label>
                                                     </th>
                                                     <td>
-                                                        <p style="margin:0;"> 게시글 제목 읽어와주세요 </p>
+                                                        <p style="margin:0;"> <%= readTask.task_title %> </p>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -65,7 +65,7 @@
                                                         <label for="blog-in-submit">제출방식</label>
                                                     </th>
                                                     <td>
-                                                        <p style="margin:0;">온라인 또는 강의실제출 </p>
+                                                        <p style="margin:0;"><%= readTask.task_method %></p>
                                                     </td>
                                                 </tr>
         
@@ -74,7 +74,7 @@
                                                         <label for="blog-in-loadday">게시일</label>
                                                     </th>
                                                     <td>
-                                                        <p style="margin:0;">yyyy-mm-dd 오전/오후 xx:xx까지 공개</p>
+                                                        <p style="margin:0;"><%= readTask.created_at %></p>
                                                         
                                                     </td>
                                                 </tr>
@@ -85,24 +85,17 @@
                                                         <label for="blog-in-dday">마감일</label>
                                                     </th>
                                                     <td>
-                                                        <p style="margin:0;">yyyy-mm-dd 오전/오후 xx:xx까지 공개</p>
+                                                        <p style="margin:0;"><%= readTask.task_deadline %></p>
                                                         
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <th scope="row" class="even">
-                                                        <label for="blog-in-submit">지각제출</label>
-                                                    </th>
-                                                    <td>
-                                                        <p style="margin:0;">불허 </p>
-                                                    </td>
-                                                </tr>
+                                            
                                                 <tr>
                                                     <td colspan="2" >
                                                         
                                                         <p style="height:20px; padding:8px;" >
                                                         <!--썸머노트에 저장되었던 내용-->
-                                                        썸머노트에 저장되었던 내용 가져오기
+                                                        <%= readTask.task_content %>
                                                         </p>
                                                     </td>
                                                 </tr>
@@ -112,7 +105,7 @@
                                                         <label for="blog-in-upload">첨부파일(n개)</label>
                                                     </th>
                                                     <td>
-                                                        <a href="#" >클릭하면 첨부파일 다운로드가능 하게 만들기</a>
+                                                        <a onclick="location = 'myclass/download/task/'+'<%=readTask.task_fileup%>'"href="#" ><%=readTask.task_fileup%></a>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -143,12 +136,10 @@
                                                         <a style="float:right; margin:2% 0; font-size:1em;" href="#" class="button">수정하기</a>
                                                 <table class="type06" style="margin:0; vertical-align:middle; text-align:center;">
                                                     <colgroup>
-                                                        <col width="16%"/>
-                                                        <col width="16%"/>
-                                                        <col width="16%"/>
-                                                        <col width="16%"/>
-                                                        <col width="16%"/>
-                                                        <col width="16%"/>
+                                                        <col width="24%"/>
+                                                        <col width="24%"/>
+                                                        <col width="24%"/>
+                                                        <col width="24%"/>
                                                     </colgroup>
                                                     <style>
                                                         th,td {
@@ -161,8 +152,6 @@
                                                         <tr>
                                                             <th>학번</th>
                                                             <th>이름</th>
-                                                            <th>제출유무</th>
-                                                            <th>상태</th>
                                                             <th>평가점수</th>
                                                             <th>더보기</th>
                                                         </tr>
@@ -170,93 +159,28 @@
                                                     <tbody style="vertical-align:middle;">
         
                                                         <!--아래tr3개는 뷰만들려고 해둔거니깐 지우고 하면되요-->
+                                                        <% subject_user.forEach((item1,index) => { %>
+                                                            <% submit_list.forEach((item2,index) => { %>
+                                                                <% if(item1.signup_user_no == item2.submit_user_no){%>
                                                         <tr>	
                                                             <td>
-                                                                2012111111
+                                                                학번<%=item1.signup_user_no%>
                                                             </td>
                                                             <td>
-                                                                학생1
+                                                                <%=item1.signup_user_no%>
                                                             </td>
         
                                                             <td>
-                                                                <p style="margin:0;">X</p>
-                                                                <!-- 학생의 과제 제출 유무에 따라서 X 또는 O 표시 -->
+                                                                <p style="margin:0;"> <%=item2.submit_point%> </p>
                                                             </td>
-        
-                                                            <td>
-                                                                <p style="margin:0;">미제출</p>
-                                                                <!-- 제출전/제출/평가완료 -->
-                                                            </td>
-        
-                                                            <td>
-                                                                <p style="margin:0;"> - </p>
-                                                                <!-- 입력한 점수(누르면 코드에디터로 이동) 또는 미제출시 (-)표시 -->
-                                                            </td>
-        
                                                             <td>
                                                                 <!--누르면 학생성적 수정가능, 상세성적 열람가능 -->
-                                                                <a href="#" class="icono-plusCircle"></a>
+                                                                <a onclick="location = '/myclass/'+location.href.split('/')[4]+'/task/'+location.href.split('/')[7]+'/editor'" href="#" class="icono-plusCircle"></a>
                                                             </td>
                                                         </tr>
-        
-                                                        <tr>	
-                                                            <td>
-                                                                2013222222
-                                                            </td>
-                                                            <td>
-                                                                학생2
-                                                            </td>
-        
-                                                            <td>
-                                                                <p style="margin:0;">O</p>
-                                                                <!-- 학생의 과제 제출 유무에 따라서 X 또는 O 표시 -->
-                                                            </td>
-        
-                                                            <td>
-                                                                <a href="#">지각제출</a>
-                                                                <!-- 미제출/지각제출/정상제출/평가완료 네가지 상태로 표시 -->
-                                                            </td>
-        
-                                                            <td>
-                                                                <a href="#">45</a>
-                                                                <!-- 입력한 점수&수정하기아이콘 또는 미제출시 (-)표시 -->
-                                                            </td>
-        
-                                                            <td>
-                                                                <!--누르면 학생성적 수정가능, 상세성적 열람가능 -->
-                                                                <a href="#" class="icono-plusCircle"></a>
-                                                            </td>
-                                                        </tr>
-        
-                                                        <tr>	
-                                                            <td>
-                                                                2014332222
-                                                            </td>
-                                                            <td>
-                                                                학생3
-                                                            </td>
-        
-                                                            <td>
-                                                                <p style="margin:0;">O</p>
-                                                                <!-- 학생의 과제 제출 유무에 따라서 X 또는 O 표시 -->
-                                                            </td>
-        
-                                                            <td>
-                                                                <a href="#">정상제출</a>
-                                                                <!-- 미제출/지각제출/정상제출/평가완료 네가지 상태로 표시 -->
-                                                                <!-- 지각제출,정상제출 = 에디터페이지로 넘어가서 평가가능하게 연결해주세요-->
-                                                            </td>
-        
-                                                            <td>
-                                                                <a href="#">85</a>
-                                                                <!-- 입력한 점수&수정하기아이콘 또는 미제출시 (-)표시 -->
-                                                            </td>
-        
-                                                            <td>
-                                                                <!--누르면 학생성적 수정가능, 상세성적 열람가능 -->
-                                                                <a href="#" class="icono-plusCircle"></a>
-                                                            </td>
-                                                        </tr>
+                                                        <%}%>
+                                                        <% }); %>
+                                                        <% }); %>
         
                                                     </tbody>
                                                     
@@ -265,9 +189,11 @@
                                                     </tfoot>
                                                 
                                                 </table>
+                                                <!--
                                                 <div style="float:right; margin-top:20px;">
                                                     <a style=" margin:2% 0; font-size:1em;" href="#" class="button">성적입력 및 강의종료</a>
                                                     </div>
+                                                -->
                                                 </form>
                                                 
                                             </div>
@@ -277,6 +203,7 @@
         
                                         <!--과제에 대한 문의댓글이 달렸을때 표시-->
                                         <!--근데 굳이 넣어야하나 싶음..-->
+                                        <!--
                                         <div>
                                             <div>
                                                 <div style="margin-top:10%;">
@@ -297,9 +224,10 @@
                                                         <label for="blog-in-submit-title">문의내용</label>
                                                     </th>
                                                 
-                                                </tr>
+                                                </tr>-->
         
                                                 <!--댓글이 아무한테도 안달렸을 경우-->
+                                                <!--
                                                 <tr>
                                                     
                                                     <td colspan="2" style="text-align:center;">
@@ -317,8 +245,10 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
+                                                -->
                                                     <!--바로 아래에 대댓글 기능이 있는게 좋을거 같음 / 나중에 회의좀..-->
                                                     <!--아니면 버튼을 한개더 만들어서 해당 학생이 댓글달았던 페이지로 이동하게끔-->
+                                                    <!--
                                                     <td colspan="2" style="text-align:center;">
                                                         <p style="margin:0;">└> 네 그렇게 하세요.</p>
                                                         
@@ -328,6 +258,7 @@
                                             </table>
                                             </div>
                                         </div>
+                                    -->
                                     </article>
 						 </div>			
 					</div>

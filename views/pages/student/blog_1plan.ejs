@@ -44,6 +44,7 @@
 
 								<div>
 									<!-- table 내용 중 <td></td>사이에 물결 표시된부분 내용 처리해주세요 -->
+									
 									<table class="type06" style="margin:0; ">
 										<colgroup>
 											<col width="25%"/>
@@ -51,52 +52,55 @@
 											<col width="25%"/>
 											<col width="25%"/>
 										</colgroup>
-										<tr>
-											<th scope="row" class="even">교과목명</th>
-											<td>~</td>
-											<th scope="row" class="even">이수구분</th>
-											<td>~</td>
-										</tr>
-										<tr>
-											<th scope="row" class="even">교과코드</th>
-											<td>~</td>
-											<th scope="row" class="even">분반</th>
-											<td>~</td>
-										</tr>
-										<tr>
-											<th scope="row" class="even">학과</th>
-											<td>~</td>
-											<th scope="row" class="even">학년</th>
-											<td>~</td>
-										</tr>
-										<tr>
-											<th scope="row" class="even">교수</th>
-											<td>~</td>
-											<th scope="row" class="even">학점/강의</th>
-											<td>~</td>
-										</tr>
-										<tr>
-											<th scope="row" class="even">강의시간</th>
-											<td>~</td>
-											<th scope="row" class="even">E-mail</th>
-											<td>~</td>
-										</tr>
-										<tr>
-											<th scope="row" class="even">교과목개요 및 학습목표</th>
-											<td colspan="3">~</td>
-										</tr>
-										<tr>
-											<th scope="row" class="even">교재 및 참고문헌</th>
-											<td colspan="3">~</td>
-										</tr>
-										<tr>
-											<th scope="row" class="even">학습 평가방법</th>
-											<td colspan="3">~</td>						
-										</tr>
-										<tr>
-											<th scope="row" class="even">기타안내 및 유의사항</th>
-											<td colspan="3">~</td>		
-										</tr>
+				
+													<tr>
+														<th scope="row" class="even">교과목명</th>
+														<td><%=subject_info.subject_info_title%></td>
+														<th scope="row" class="even">이수구분</th>
+														<td><%=subject_info.subject_category%></td>
+													</tr>
+													<tr>
+														<th scope="row" class="even">교과코드</th>
+														<td><%=subject_info.subject_no%></td>
+														<th scope="row" class="even">분반</th>
+														<td><%=subject_info.subject_class%></td>
+													</tr>
+													<tr>
+														<th scope="row" class="even">학과</th>
+														<td><%=subject_info.subject_department%></td>
+														<th scope="row" class="even">학년</th>
+														<td><%=subject_info.subject_grade%></td>
+													</tr>
+													<tr>
+														<th scope="row" class="even">교수</th>
+														<td><%=subject_info.subject_professor_name%></td>
+														<th scope="row" class="even">학점/강의</th>
+														<td><%=subject_info.subject_point%></td>
+													</tr>
+													<tr>
+														<th scope="row" class="even">강의시간</th>
+														<td><%=subject_info.subject_time%></td>
+														<th scope="row" class="even">E-mail</th>
+														<td></td>
+													</tr>
+													<tr>
+														<th scope="row" class="even">교과목개요 및 학습목표</th>
+														<td colspan="3"><%=subject_info.subject_goal%></td>
+													</tr>
+													<tr>
+														<th scope="row" class="even">교재 및 참고문헌</th>
+														<td colspan="3"><%=subject_info.subject_ref%></td>
+													</tr>
+													<tr>
+														<th scope="row" class="even">학습 평가방법</th>
+														<td colspan="3"><%=subject_info.subject_assessment%></td>						
+													</tr>
+													<tr>
+														<th scope="row" class="even">기타안내 및 유의사항</th>
+														<td colspan="3"><%=subject_info.subject_ex%></td>		
+													</tr>
+										
+		
 	
 									</table>
 								</div>
@@ -121,59 +125,59 @@
 											</tr>
 											<tr>
 												<th scope="row">1주차</th>
-												<td colspan="3">~</td>
+												<td colspan="3"><%=subject_info.subject_1week%></td>
 											<tr>
 												<th scope="row" class="even">2주차</th>
-												<td colspan="3">~</td>											
+												<td colspan="3"><%=subject_info.subject_2week%></td>											
 											</tr>
 											<tr>
 												<th scope="row">3주차</th>
-												<td colspan="3">~</td>
+												<td colspan="3"><%=subject_info.subject_3week%></td>
 											<tr>
 												<th scope="row" class="even">4주차</th>
-												<td colspan="3">~</td>											
+												<td colspan="3"><%=subject_info.subject_4week%></td>											
 											</tr>
 											<tr>
 												<th scope="row">5주차</th>
-												<td colspan="3">~</td>
+												<td colspan="3"><%=subject_info.subject_5week%></td>
 											<tr>
 												<th scope="row" class="even">6주차</th>
-												<td colspan="3">~</td>											
+												<td colspan="3"><%=subject_info.subject_6week%></td>											
 											</tr>
 											<tr>
 												<th scope="row">7주차</th>
-												<td colspan="3">~</td>
+												<td colspan="3"><%=subject_info.subject_7week%></td>
 											<tr>
 												<th scope="row" class="even">8주차</th>
-												<td colspan="3">~</td>											
+												<td colspan="3"><%=subject_info.subject_8week%></td>											
 											</tr>
 											<tr>
 												<th scope="row">9주차</th>
-												<td colspan="3">~</td>
+												<td colspan="3"><%=subject_info.subject_9week%></td>
 											<tr>
 												<th scope="row" class="even">10주차</th>
-												<td colspan="3">~</td>											
+												<td colspan="3"><%=subject_info.subject_10week%></td>											
 											</tr>
 											<tr>
 												<th scope="row">11주차</th>
-												<td colspan="3">~</td>
+												<td colspan="3"><%=subject_info.subject_11week%></td>
 											<tr>
 												<th scope="row" class="even">12주차</th>
-												<td colspan="3">~</td>											
+												<td colspan="3"><%=subject_info.subject_12week%></td>											
 											</tr>
 											<tr>
 												<th scope="row">13주차</th>
-												<td colspan="3">~</td>
+												<td colspan="3"><%=subject_info.subject_13week%></td>
 											<tr>
 												<th scope="row" class="even">14주차</th>
-												<td colspan="3">~</td>											
+												<td colspan="3"><%=subject_info.subject_14week%></td>											
 											</tr>
 											<tr>
 												<th scope="row">15주차</th>
-												<td colspan="3">~</td>
+												<td colspan="3"><%=subject_info.subject_15week%></td>
 											<tr>
 												<th scope="row" class="even">16주차</th>
-												<td colspan="3">~</td>											
+												<td colspan="3"><%=subject_info.subject_16week%></td>											
 											</tr>
 											
 										</table>
