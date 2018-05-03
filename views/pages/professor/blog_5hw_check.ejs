@@ -105,7 +105,7 @@
                                                         <label for="blog-in-upload">첨부파일(n개)</label>
                                                     </th>
                                                     <td>
-                                                        <a onclick="location = 'myclass/download/task/'+'<%=readTask.task_fileup%>'"href="#" ><%=readTask.task_fileup%></a>
+                                                        <a onclick = "location = '/myclass/download/task/'+'<%=readTask.task_fileup%>'"href="#" ><%=readTask.task_fileup%></a>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -175,7 +175,7 @@
                                                             </td>
                                                             <td>
                                                                 <!--누르면 학생성적 수정가능, 상세성적 열람가능 -->
-                                                                <a onclick="location = '/myclass/'+location.href.split('/')[4]+'/task/'+location.href.split('/')[7]+'/editor'" href="#" class="icono-plusCircle"></a>
+                                                                <a onclick="location = '/myclass/'+location.href.split('/')[4]+'/task/'+location.href.split('/')[7]+'/editor/<%=item2.submit_no%>'" class="icono-plusCircle"></a>
                                                             </td>
                                                         </tr>
                                                         <%}%>

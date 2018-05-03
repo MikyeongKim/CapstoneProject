@@ -1,10 +1,7 @@
 const express = require('express')
   , router = express.Router()
   , models = require('../models')
-  , bodyParser = require('body-parser')
-  , cookieParser = require('cookie-parser')
   , fs = require('fs')
-  , path = require('path')
   , multer = require('multer')
   , storage = multer.diskStorage({
     destination: (req, file, callback) => {
@@ -39,6 +36,7 @@ const express = require('express')
   ,upload = multer({storage:storage})
   ,submitfile = multer({storage:submitdisk})
   ,taskfile = multer({storage:taskdisk})
+  
 
 const myclass_plan_category = 4;
 const myclass_notice_category = 5;
@@ -1109,17 +1107,17 @@ router.route('/download/:fileid').get((req, res) => {
     res.download(filepath);
 });
 
-router.route('/:subject/task/:id/editor')
+router.route('/:subject/task/:id/editor/:submit')
 .get((req, res) => {
   models.Submit.find({
-    where: { submit_no: req.params.id }
+    where: { submit_no: req.params.submit }
   }).then(result => {
     fs.readFile('./submit/'+result.submit_fileup, 'utf-8', (error, data) => {
       if (error) {
         res.send(`error ${error}`)
       }
       console.log(data)
-      res.render('professor/editor', {code_content: data , code_lang : 'C' , readcode : true})
+      res.render('professor/editor', {code_content: data , code_lang : 'C', readcode : true})
 
     })
   })
@@ -1129,7 +1127,7 @@ router.route('/:subject/task/:id/editor')
     submit_point:req.body.score 
   }
     , {
-      where: { submit_no: req.params.id }
+      where: { submit_no: req.params.submit }
     }).then((result) => {
       res.redirect('/myclass/' + req.params.subject+'/task/read/'+req.params.id);
     }).catch((err) => {
