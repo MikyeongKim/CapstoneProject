@@ -3,15 +3,15 @@
 <html>
 
 		<head>
-			<% include ../../partials/head.ejs %>  			
+			<% include ../../partials/head.ejs %>
 		</head>
-			
+
 <body class="homepage">
 	<div id="page-wrapper">
 
-		<% include ./header.ejs %>  
-		
-		<% include ./nav.ejs %> 
+		<% include ./header.ejs %>
+
+		<% include ./nav.ejs %>
 
 
 		<!-- Main -->
@@ -49,10 +49,10 @@
 
 							<div class="6u 12u(mobile)">
 									<div class="content content-right">
-									
+
 										<section class="box feature">
 											<h2 class="major"><span>FAQ</span></h2>
-											
+
 											<ul>
 												<% faq.forEach((item,index) => { %>
 												<li>
@@ -75,7 +75,7 @@
 
 		<div class="row 200%">
 				<div class="12u">
-	
+
 					<!-- Blog -->
 					<section class="box blog">
 						<h2 class="major">
@@ -85,7 +85,7 @@
 							<div class="row">
 								<div class="8u 12u(mobile)">
 									<div class="content content-left">
-	
+
 										<!-- Featured Post -->
 										<article class="box post">
 											<header>
@@ -93,10 +93,10 @@
 													<a href="/community">#코딧_Community</a>
 												</h3>
 												<p>궁금한 건 산기인들에게 물어봐~ #궁금해#알려죠</p>
-	
+
 												<a style="float:right;" href="/community" class="button">go!</a>
-									
-											   
+
+
 												<ul class="meta">
 													<li class="icon fa-clock-o">최신글 15분 전</li>
 													<li class="icon fa-comments">
@@ -104,12 +104,12 @@
 													</li>
 												</ul>
 											</header>
-											
+
 											<table class="type06">
 
-												<% community.forEach((item,index) => { 
+												<% community.forEach((item,index) => {
 													if((index+1)%2) { %>
-												
+
 														<tr>
 															<th scope="row">
 																<%= index+1 %>
@@ -119,7 +119,7 @@
 																	<%= item.board_title %>
 																</a>
 															</td>
-															
+
 															<% } else {  %>
 															<th scope="row" class="even">
 																<%= index+1 %>
@@ -133,23 +133,19 @@
 													</tr>
 													<% }); %>
 											</table>
-										
+
 										</article>
-	
+
 									</div>
 								</div>
 								<div class="4u 12u(mobile)">
-									<div class="sidebar">
-										
-										<p>
-											태경아 여기에 달력이 들어가면 좋겠다 ^^
-										</p>
+									<div id="calendar"></div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</section>
-	
+
 				</div>
 			</div>
 
@@ -160,10 +156,46 @@
 	<% include ../../partials/footer.ejs %>
 
 	</div>
-
     <!-- Scripts -->
- 
 	<% include ../../partials/scripts.ejs %>
+
+		<script>
+			// DB 연동해서 로그인한 학생, 교수들 스케줄 출력은 추후에
+			$(document).ready(function() {
+				// var date = new Date();
+				// var d = date.getDate();
+				// var m = date.getMonth();
+				// var y = date.getFullYear();
+				$('#calendar').fullCalendar({
+					header: {
+						left: "",
+						center: "title",
+						right: "today prev,next"
+					},
+					dayNamesShort: ["일", "월", "화", "수", "목", "금", "토"],
+					dayNames: ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"],
+					allDayDefault: false,
+					defaultView: "month",
+					editable: false,
+					monthNamesShort: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+					monthNames: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+					buttonText: {
+						today: "오늘",
+						month: "월별",
+						week: "주별",
+						day: "일별",
+					}
+				});
+
+			});
+		</script>
+
+
+
+
+
+
+
 
 </body>
 

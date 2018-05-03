@@ -14,7 +14,7 @@
 		<!-- 헤더에서 로고 연결되는 주소 맞게 됐는지 확인하기 -->
 		<% include ./header.ejs %>
 
-		
+
 		<!-- Nav include -->
 		<% include ./nav.ejs %>
 
@@ -26,18 +26,18 @@
 					<div class="12u">
 
 						<section class="box features">
-						
+
 							<div>
 
 								<div class="row">
-									
+
 									<div class="4u 12u(mobile)">
 
 										<div class="content content-right">
 											<!--섹션 내부에서 구성되는 소내용 1개-->
 											<section class="box feature">
 												<h2 class="major"><span>강의과목</span></h2>
-                                                
+
                                                 <ul>
                                                         <li>
                                                                 <a href="#">전산학기초</a>
@@ -66,7 +66,7 @@
                                     <div class="5u 12u(mobile)">
 
                                             <div class="content content-left">
-                                                
+
                                                 <!--섹션 내부에서 구성되는 소내용 1개-->
                                                 <!--
                                                     section class= box feature 중간정렬
@@ -79,15 +79,15 @@
 																<a href="#" class="icono-caretLeft"></a>
 																강의자료 업로드
 																<a href="#" class="icono-caretRight"></a>
-																
+
 																<p style="margin:10px 0 0 0; font-size:18px;">
-																	
+
 																	자료구조
-																	
+
 																</p>
 															</span>
 														</h2>
-														
+
                                                     <ul>
                                                         <li>
 															<a href="#">chap01.자료구조란?</a>
@@ -103,7 +103,7 @@
                                     <div class="3u 12u(mobile)">
 
                                             <div class="content content-left">
-                                                
+
                                                 <!--섹션 내부에서 구성되는 소내용 1개-->
                                                 <!--
                                                     section class= box feature 중간정렬
@@ -111,7 +111,7 @@
                                                  -->
                                                 <section class="box feature">
                                                     <h2 class="major"><span>알림</span></h2>
-                                                    
+
                                                     <ul>
                                                         <li>
 															<a href="#">프로그래밍>질의응답 1건</a>
@@ -123,8 +123,8 @@
                                                 </section>
                                             </div>
                                         </div>
-    
-    
+
+
 								</div>
 
 							</div>
@@ -157,8 +157,8 @@
                                             <p>궁금한 건 산기인들에게 물어봐~ #궁금해#알려죠</p>
 
 											<a style="float:right;" href="/community" class="button">go!</a>
-								
-                                           
+
+
                                             <ul class="meta">
 												<li class="icon fa-clock-o">최신글 15분 전</li>
 												<li class="icon fa-comments">
@@ -166,13 +166,13 @@
 												</li>
 											</ul>
                                         </header>
-										
-										
+
+
 										<!-- table 안에 각 <td> 마다 커뮤니티에서 인기글 상위 5개 긁어와야함-->
 										<table class="type06">
-										<% community.forEach((item,index) => { 
+										<% community.forEach((item,index) => {
 											if((index+1)%2) { %>
-										
+
 												<tr>
 													<th scope="row">
 														<%= index+1 %>
@@ -182,7 +182,7 @@
 															<%= item.board_title %>
 														</a>
 													</td>
-													
+
 													<% } else {  %>
 													<th scope="row" class="even">
 														<%= index+1 %>
@@ -195,19 +195,15 @@
 											<% } %>
 											</tr>
 											<% }); %>
-						
+
 										</table>
-									
+
 									</article>
 
 								</div>
 							</div>
 							<div class="4u 12u(mobile)">
-								<div class="sidebar">
-									
-									<p>
-										태경아~~ 여기에 달력이 들어가면 좋겠다 ^^
-									</p>
+								<div id="calendar">
 								</div>
 							</div>
 						</div>
@@ -222,18 +218,39 @@
 	<!-- Footer include -->
 	<% include ../../partials/footer.ejs %>
 
-
 	</div>
+	<% include ../../partials/scripts.ejs %>
 
-	<!-- Scripts -->
-	<script src="assets/js/jquery.min.js"></script>
-	<script src="assets/js/jquery.dropotron.min.js"></script>
-	<script src="assets/js/skel.min.js"></script>
-	<script src="assets/js/skel-viewport.min.js"></script>
-	<script src="assets/js/util.js"></script>
-	<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-	<script src="assets/js/main.js"></script>
+	<script>
+		// DB 연동해서 로그인한 학생, 교수들 스케줄 출력은 추후에
+		$(document).ready(function() {
+			// var date = new Date();
+			// var d = date.getDate();
+			// var m = date.getMonth();
+			// var y = date.getFullYear();
+			$('#calendar').fullCalendar({
+				header: {
+					left: "",
+					center: "title",
+					right: "today prev,next"
+				},
+				dayNamesShort: ["일", "월", "화", "수", "목", "금", "토"],
+				dayNames: ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"],
+				allDayDefault: false,
+				defaultView: "month",
+				editable: false,
+				monthNamesShort: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+				monthNames: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+				buttonText: {
+					today: "오늘",
+					month: "월별",
+					week: "주별",
+					day: "일별",
+				}
+			});
 
+		});
+	</script>
 </body>
 
 </html>

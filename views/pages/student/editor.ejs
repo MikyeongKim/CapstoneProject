@@ -43,176 +43,178 @@
 </head>
 
 <body class="homepage">
-    <div id="page-wrapper">
+  <div id="page-wrapper">
 
-        <% include ./nav.ejs %>
-
-
-            <!--main-->
-        <div id="main-wrapper">
-            <div id="main" class="container">
+    <% include ./nav.ejs %>
 
 
+      <!--main-->
+      <div id="main-wrapper">
+        <div id="main" class="container">
 
-                <div class="row 200%">
-                    <div class="12u" style="width:100%;">
-                        <section class="box blog">
-                            <div>
-                              <form>
-                                <!-- 학생 :: 언어선택 / 저장버튼/ 제출버튼/ 다운로드버튼 / debug버튼 / run버튼 / 코드미러옵션선택(체크박스)-->
-                                 <!-- 교수 :: 언어선택 / 저장버튼/ 성적입력/ 다운로드버튼 / debug버튼 / run버튼 / 코드미러옵션선택(체크박스)-->
-                               <div>
-                               <table class="type06"  style="text-align:left; border:none; margin-bottom:0;">
-                               <colgroup>
-                                   <col width="1%">
-                                   <col width="10%">
-                                   <col width="1%">
-                                   <col width="1%">
-                                   <col width="30%">
-                                   <col width="1%">
-                               </colgroup>
-                                  <tr>
-                                    <td colspan="6">과제명</td>
-                                  </tr>
-                                   <tr>
-                                       <td>
-                                           <!-- 코드미러 옵션 바꾸는 버튼임-->
-                                           <a href="#" class="fas fa-cog fa-2x"></a>
-                                       </td>
-                                       <td>
-                                           <!--언어선택할수 있는 옵션바-->
-                                           <select name="editor_lang" id="lang">
+
+
+          <div class="row 200%">
+            <div class="12u" style="width:100%;">
+              <section class="box blog">
+                <div>
+                  <form>
+                    <!-- 학생 :: 언어선택 / 저장버튼/ 제출버튼/ 다운로드버튼 / debug버튼 / run버튼 / 코드미러옵션선택(체크박스)-->
+                    <!-- 교수 :: 언어선택 / 저장버튼/ 성적입력/ 다운로드버튼 / debug버튼 / run버튼 / 코드미러옵션선택(체크박스)-->
+                    <div>
+                      <table class="type06" style="text-align:left; border:none; margin-bottom:0;">
+                        <colgroup>
+                          <col width="1%">
+                          <col width="10%">
+                          <col width="1%">
+                          <col width="1%">
+                          <col width="30%">
+                          <col width="1%">
+                        </colgroup>
+                        <tr>
+                          <td colspan="6">과제명</td>
+                        </tr>
+                        <tr>
+                          <td>
+                            <!-- 코드미러 옵션 바꾸는 버튼임-->
+                            <a href="#" class="fas fa-cog fa-2x"></a>
+                          </td>
+                          <td>
+                            <!--언어선택할수 있는 옵션바-->
+                            <select name="editor_lang" id="lang">
                                                <!--value값은 디비 맞춰서 수정해주세요-->
                                                <option value="c">C</option>
                                                <option value="java">JAVA</option>
                                                <option value="python">Python</option>
                                            </select>
-                                       </td>
+                          </td>
 
-                                       <td>
-                                           <!--임시저장 버튼-->
-                                           <a href="#" class="fas fa-save fa-2x"></a>
-                                       </td>
+                          <td>
+                            <!--임시저장 버튼-->
+                            <a href="#" class="fas fa-save fa-2x"></a>
+                          </td>
 
-                                       <td>
-                                           <!--코드 파일로 다운로드 버튼-->
-                                           <a href="#" class="fas fa-download fa-2x"></a>
-                                       </td>
+                          <td>
+                            <!--코드 파일로 다운로드 버튼-->
+                            <a href="#" class="fas fa-download fa-2x"></a>
+                          </td>
 
-                                       <td  style="text-align:right;">
-                                           <!--run버튼
+                          <td style="text-align:right;">
+                            <!--run버튼
                                            <a href="#" class="fas fa-play fa-2x"></a> -->
-                                           <input type="button" id="run" value="Run" />
-                                       </td>
-                                       <td>
-                                           <!--과제제출 버튼-->
-                                           <!--이거누르면 어떤 과제로 제출할건지 물어보는 팝업창 떠야할것같음..
+                            <input type="button" id="run" value="Run" />
+                          </td>
+                          <td>
+                            <!--과제제출 버튼-->
+                            <!--이거누르면 어떤 과제로 제출할건지 물어보는 팝업창 떠야할것같음..
                                                뷰에 넣어야하면 나중에 수정-->
-                                           <a href="#" class="fas fa-check-square fa-2x">submit</a>
-                                       </td>
-                                   </tr>
-                               </table>
-                               </div>
-                               <h2 class="major" style="margin-bottom: 3%;"></h2>
+                            <a href="#" class="fas fa-check-square fa-2x">submit</a>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                    <h2 class="major" style="margin-bottom: 3%;"></h2>
 
-                               <div class="row">
+                    <div class="row">
 
-                                       <div class="6u 12u(mobile)" style="float: left;">
-                                         <!--
+                      <div class="6u 12u(mobile)" style="float: left;">
+                        <!--
                                            <textarea name="area_edit" placeholder="내용을 입력하세요." required rows="20" autofocus></textarea>
                                           -->
-                                         <textarea id="content" rows="20"></textarea>
-                                       </div>
+                        <textarea id="content" rows="20"></textarea>
+                      </div>
 
-                                       <div class="6u 12u(mobile)" style="float: right;">
-                                        <!--
+                      <div class="6u 12u(mobile)" style="float: right;">
+                        <!--
                                             <textarea name="area_result" placeholder="결과창 " required rows=20 autofocus ></textarea>
                                          -->
-                                            <textarea id="result" rows="10" readonly></textarea>
-                                       </div>
-                                  </div>
-
-                       </form>
-                            </div>
-                            </section>
-                        </div>
+                        <textarea id="result" rows="10" readonly></textarea>
+                      </div>
                     </div>
+
+                  </form>
                 </div>
+              </section>
             </div>
+          </div>
         </div>
+      </div>
+  </div>
 
-        <script>
-        // 텍스트하이라이트, 오토컴플릿, 단축키기능, 자동 줄맞춤 및 정렬
-        // 디폴트설정은 C
-        var editor = CodeMirror.fromTextArea(document.getElementById("content"), {
-          lineNumbers: true, // 라인넘버ㄱ
-          tabsize: 6, // 탭크기 6
-          mode: "text/x-csrc", // 작성언어 C,C++,C#
-          //theme: "dracula", // 테마는 드라큘라 추가기능으로 추가예정
-          extraKeys: {
-            "Ctrl-Space": "autocomplete" // 컨트롤+스페이스로 오토컴플릿 실행
-          },
-          indentUnit: 5, // 들여쓰기크기 5
-          scrollbarStyle: "native", // 스크롤바 구현
-          matchBrackets: true, // ????
-          highlightSelectionMatches: {
-            showToken: /\w/,
-            annotateScrollbar: true
-          },
-          styleActiveLine: true
-        });
+  <script>
+    // 텍스트하이라이트, 오토컴플릿, 단축키기능, 자동 줄맞춤 및 정렬
+    // 디폴트설정은 C
+    var editor = CodeMirror.fromTextArea(document.getElementById("content"), {
+      lineNumbers: true, // 라인넘버ㄱ
+      tabsize: 6, // 탭크기 6
+      mode: "text/x-csrc", // 작성언어 C,C++,C#
+      //theme: "dracula", // 테마는 드라큘라 추가기능으로 추가예정
+      extraKeys: {
+        "Ctrl-Space": "autocomplete" // 컨트롤+스페이스로 오토컴플릿 실행
+      },
+      indentUnit: 5, // 들여쓰기크기 5
+      scrollbarStyle: "native", // 스크롤바 구현
+      matchBrackets: true, // ????
+      highlightSelectionMatches: {
+        showToken: /\w/,
+        annotateScrollbar: true
+      },
+      styleActiveLine: true
+    });
+    editor.setValue(`#include <stdio.h>\n\nvoid main(){\n\n\tprintf("Hello World!");\n\n}`);
+    
+    $('#lang').on('change', function() {
+      const lang = $(this).children("option:selected").val();
+      switch (lang) {
+        case 'c':
+          editor.options.mode = "text/x-csrc"
+          editor.setValue(`#include <stdio.h>\n\nvoid main(){\n\n\tprintf("Hello World!");\n\n}`);
+          console.log(editor.options.mode);
+          break;
 
-        $('#lang').on('change', function() {
-          const lang = $(this).children("option:selected").val();
-          switch (lang) {
-            case 'c':
-              editor.options.mode = "text/x-csrc"
-              editor.setValue(`#include <stdio.h>\n\nvoid main(){\n\n\tprintf("Hello World!");\n\n}`);
-              console.log(editor.options.mode);
-              break;
+        case 'java':
+          editor.setOption('mode', 'text/x-java');
+          editor.setValue(`class Main {\n\n\tpublic static void main(String[] args) {\n\n\t\tSystem.out.println("Hello World!");\n\n\t}\n\n}`);
+          console.log(editor.options.mode);
+          break;
 
-            case 'java':
-              editor.setOption('mode', 'text/x-java');
-              editor.setValue(`class Main {\n\n\tpublic static void main(String[] args) {\n\n\t\tSystem.out.println("Hello World!");\n\n\t}\n\n}`);
-              console.log(editor.options.mode);
-              break;
+        case 'python':
+          editor.setOption('mode', 'text/x-python');
+          editor.setValue(`def function(str):\n\n\tprint(str)\n\nfunction('Hello World!')`);
+          console.log(editor.options.mode);
+          break;
+      }
+    });
 
-            case 'python':
-              editor.setOption('mode', 'text/x-python');
-              editor.setValue(`def function(str):\n\n\tprint(str)\n\nfunction('Hello World!')`);
-              console.log(editor.options.mode);
-              break;
+    $('#run').click(function() {
+      const target = document.getElementById("lang")
+      const uri = "http://localhost:3000/editor/" + target.options[target.selectedIndex].value
+      $('#result').html('');
+      $.ajax({
+        url: uri,
+        dataType: 'json',
+        type: 'POST',
+        data: {
+          'content': editor.getValue()
+        },
+        success: function(result) {
+          if (result['result'] == true) {
+            $('#result').html(result['content']);
           }
-        });
+        }
+      });
 
-          $('#run').click(function() {
-            const target = document.getElementById("lang")
-            const uri = "http://localhost:3000/editor/" + target.options[target.selectedIndex].value
-            $('#result').html('');
-            $.ajax({
-              url: uri,
-              dataType: 'json',
-              type: 'POST',
-              data: {
-                'content': editor.getValue()
-              },
-              success: function(result) {
-                if (result['result'] == true) {
-                  $('#result').html(result['content']);
-                }
-              }
-            });
+    })
+  </script>
 
-          })
-        </script>
 
-    <!-- Footer include  -->
-	<% include ../../partials/footer.ejs %>
+  <!-- Footer include  -->
+  <% include ../../partials/footer.ejs %>
 
     </div>
 
     <!-- Scripts -->
-	<% include ../../partials/scripts.ejs %>
+    <% include ../../partials/scripts.ejs %>
 </body>
 
 </html>
