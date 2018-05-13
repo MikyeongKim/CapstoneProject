@@ -18,7 +18,7 @@ router.route('/').get((req, res) => {
     return res.render('student/editor');
   }
   return res.render('professor/editor', { readcode : false });
- 
+
 })
 
 router.route('/java').post((req, res) => {
@@ -44,7 +44,7 @@ router.route('/java').post((req, res) => {
       return res.send(err)
     }
 
-    const bat = exec.spawn('javacompile.bat');
+    const bat = exec.spawn(`batch\\java_Compile.bat`);
 
     bat.stdout.on('data', (result) => {
       fs.readFile('complieFolder/java/test.txt', 'utf-8', (error, data) => {
@@ -99,23 +99,28 @@ router.route('/java').post((req, res) => {
 /* 에디터페이지의 Run 클릭시 Ajax방식으로 컴파일 실행결과를 결과창에 표시 */
 router.route('/c').post((req, res) => {
 
+  // 미로그인시 거절!
   if (! req.session.userinfo ) {
     return res.send({ result: false});
   }
-  const content = req.body.content; // 소스내용
+  // 소스내용 저장
+  const content = req.body.content;
+  // 저장할 파일명은 현재시간에 로그인유저정보
   const filename = Date.now() + '-' + req.session.userinfo[0];
 
+  // 데이터베이스 테이블 Editlog에 정보 생성
   let editlogNo;
   models.Editlog.create({
-    edit_filepath: 'complieFolder/c/',
-    edit_lang: 'C',
-    edit_filename: filename,
-    edit_user_no: req.session.userinfo[0],
-    edit_isSuccess: false
+    edit_filepath: 'complieFolder/c/',      // 파일경로
+    edit_lang: 'C',                         // 언어
+    edit_filename: filename,                // 파일이름
+    edit_user_no: req.session.userinfo[0],  // 세션정보
+    edit_isSuccess: false                   // 실패?
   }).then(result => {
-    editlogNo = result.edit_no
+    editlogNo = result.edit_no              // 생성된 데이터의 기본키값을 저장
   })
 
+  // 추후에 불러올 소스내용 텍스트로 저장
   StoreCode(filename, content , 'c')
 
   // 첫번째 인자로 들어가는 폴더경로에 컴파일시간을 이름으로 하는 C 소스파일 생성
@@ -132,7 +137,7 @@ router.route('/c').post((req, res) => {
     // Compile.bat 파일이 실행되면 complieFolder/c 경로에 파일이름을 가진
     // exe 파일과 실행파일의 결과를 담은 txt 파일이 생성
     // 실행완료시 다음함수 실행
-    exec.execFile('Compile.bat', [`${filename}`], (error, stdout, stderr) => {
+    exec.execFile(`batch\\c_Compile.bat`, [`${filename}`], (error, stdout, stderr) => {
       const errorhandle = error
 
       // 실행파일의 결과를 담은 txt 파일 내용 읽기
@@ -147,6 +152,7 @@ router.route('/c').post((req, res) => {
           return res.send({ result: true, content: `${errorhandle}` });
         }
 
+        // 여기까지 진입하면 컴파일 성공이므로 성공으로 DB정보 업데이트
         models.Editlog.update({
           edit_isSuccess: true
         }, {
@@ -161,7 +167,48 @@ router.route('/c').post((req, res) => {
 })
 
 router.route('/python').post((req, res) => {
-  return res.send({ result: true, content: "구현중입니다." });
+  if (! req.session.userinfo ) {
+    return res.send({ result: false});
+  }
+  const content = req.body.content;
+  const filename = Date.now() + '-' + req.session.userinfo[0];
+
+  let editlogNo;
+  models.Editlog.create({
+    edit_filepath: 'complieFolder/python/',   // 파일경로
+    edit_lang: 'PYTHON',                      // 언어
+    edit_filename: filename,                  // 파일이름
+    edit_user_no: req.session.userinfo[0],    // 세션정보
+    edit_isSuccess: false                     // 컴파일 성공여부 처음은 실패!
+  }).then(result => {
+    editlogNo = result.edit_no                // 생성된 데이터의 기본키값을 저장
+  })
+
+  StoreCode(filename, content , 'python')
+
+  fs.writeFile(`complieFolder/python/${filename}.py`, content, 'utf-8', err => {
+    if (err) {
+      return res.send(err)
+    }
+    exec.execFile(`batch\\python_Compile.bat`, [`${filename}`], (error, stdout, stderr) => {
+      const errorhandle = error
+
+      fs.readFile(`complieFolder/python/${filename}.txt`, 'utf-8', (error, data) => {
+
+        if (errorhandle && data.length == 0) {
+          return res.send({ result: true, content: `${errorhandle}` });
+        }
+
+        models.Editlog.update({
+          edit_isSuccess: true
+        }, {
+            where: { edit_no: editlogNo }
+          })
+
+        return res.send({ result: true, content: data });
+      });
+    });
+  })
 })
 
 router.route('/read/:no&:lang').get((req, res) => {
@@ -183,6 +230,7 @@ router.route('/read/:no&:lang').get((req, res) => {
   })
 })
 
+// 파일명, 내용, 언어를 인자로 받아 origin붙은 텍스트파일생성 >> 추후에 불러올때
 function StoreCode(filename, content , lang) {
   fs.writeFile(`complieFolder/${lang}/origin-${filename}.txt`, content, 'utf-8', err => {
     if (err) {
