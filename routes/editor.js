@@ -9,7 +9,6 @@ const student = 1
 
 router.route('/').get((req, res) => {
 
-  //TODO :: 테스트 끝나면 주석 풀기
   if (!req.session.userinfo) {
     return res.status(401).redirect('/login')
   }
@@ -66,33 +65,6 @@ router.route('/java').post((req, res) => {
       console.log(`Child exited with code ${code}`);
     });
 
-    /*
-    exec.exec('javacompile.bat', (err, stdout, stderr) => {
-      if (err) {
-        console.error(err);
-        return;
-      }
-      fs.readFile('complieFolder/java/test.txt', 'utf-8', (error, data) => {
-        console.log("아아아아")
-        return res.send({ result: true, content: data });
-      })
-    });
-
-    /*
-          exec.execFile('javacompile.bat', (error, stdout, stderr) => {
-            const errorhandle = error
-            fs.readFile('complieFolder/java/test.txt', 'utf-8', (error, data) => {
-
-              if (errorhandle && data.length == 0) {
-                return res.send({ result: true, content: `${errorhandle}` });
-              }
-
-              return res.send({ result: true, content: data });
-            });
-          });
-        } catch (exception) {
-          return res.send({ result: true, content: "여기는 오긴 하는건가??" });
-        } */
   })
 })
 
