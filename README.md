@@ -1,38 +1,65 @@
 # CapstoneProject
 
-#종화 기록일지
-18.01.27 by 종화   : 폴더정리랑 DB폴더 따로 만들 예정 view폴더 수정 / config폴더 생성 db폴더 수정예정
+#웹IDE를 지원하는 교육지원시스템(LMS)
 
-18.02.11 by 종화 java compile batch 완성
+지원언어 : c , java ,python
 
-18.03.12 by 종화 ORM  : Sequelize / 폴더구조 기본틀 완성 / 게시판 CRUD 기능 / 로그인기능 /  My info 제공  
+서버 : nodejs
 
-18.03.12 by 미경  html로 구성한 기본 view 틀 우선 업로드 / 위치 : MKworkingDir 브랜치 선택 > codit_1 디렉토리에 업로드
+db: mysql
 
-18.03.17 by 종화 : 유저정보 DB 재설계
+orm : sequelize
 
-18.03.18 by 미경 커뮤니티, 에디터 뷰 완성 (에디터에서 아이콘 깨지는건 ionicons.zip으로 해결가능) / 과제~성적페이지 아직X
+오픈소스 : codemirror , summer note 
 
-18.03.19 by 미경 : 과제, 성적 뷰 추가함
+# 구현 
 
-18.03.21 by 태경 public 폴더내 섬머노트 추가 / board(insert,edit,read) 섬머노트 추가 / community.js 수정 / head,scripts 파일 수정
+## 인덱스 페이지
 
-18.03.22 by 종화 : ajax  / 컴파일 C언어 (알수 없는 오류.. try catch 로 일단 막음.. 결함.. but 실패는 하지 않게..)
+![index](https://user-images.githubusercontent.com/31912670/40877621-0e6f50c2-66bf-11e8-84a9-f6023cdaa1d3.jpg)
 
-18.03.23 by 종화 : 제가 바보같아서 user테이블을 잘못설계했었습니다. ㅠㅠ  전부 수정했고 이전보다 좋은 db가 되었습니다 대햇
+## 로그인 인덱스
 
-18.04.01 by 종화 : 댓글 기능 구현  
+![index_login](https://user-images.githubusercontent.com/31912670/40877623-11b1fece-66bf-11e8-90da-75b03ccef22b.jpg)
 
-18.04.05 by 종화 : 전체 코드 병합
 
-18.04.19 by 태경 : 코드 에디터 구현
 
-18.05.02 by 종화 : 컴파일러 오류 해결함 (에디터 결함으로 추정됨 ) // 컴파일 파일 읽어와서 보여주는 기능 성공
+## 커뮤니티 페이지
 
-18.05.02 by 태경 : 교수/학생 에디터 페이지 최신화, Codemirror(텍스트하이라이트, 라인활성화, 셀렉트옵션 추가)
 
-18.05.03 by 태경 : index화면에 달력 표시(미완)
 
-18.05.12 by 태경 : 게스트와 학생 커뮤니티 페이징 구현
+![community](https://user-images.githubusercontent.com/31912670/40877635-280479f4-66bf-11e8-88b0-c0bd2d1f8dc1.jpg)
 
-18.05.14 by 태경 : python 컴파일 구현(C언어 컴파일이랑 같은 방식) 
+## IDE
+
+
+
+![clang](https://user-images.githubusercontent.com/31912670/40877640-33ca895e-66bf-11e8-9f61-e547641cc046.jpg)
+
+
+
+![ava](https://user-images.githubusercontent.com/31912670/40877641-33f4363c-66bf-11e8-9d3d-eabce54f16c2.jpg)
+
+
+
+# LMS
+
+![class](https://user-images.githubusercontent.com/31912670/40877644-437240f4-66bf-11e8-8728-e8b265347016.jpg)
+
+
+
+##  과제제출 확생화면
+
+![class-task](https://user-images.githubusercontent.com/31912670/40877645-4db588c8-66bf-11e8-839f-ec139b1ff304.jpg)
+
+
+
+## 과제제출 교수화면
+
+![class_task_professor](https://user-images.githubusercontent.com/31912670/40877655-5fdb254e-66bf-11e8-83e4-55a8bca1a345.jpg)
+
+
+
+## 제출한 과제 채점 교수화면
+
+![default](https://user-images.githubusercontent.com/31912670/40877658-8104a33a-66bf-11e8-86ee-82fd392c3b14.jpg)
