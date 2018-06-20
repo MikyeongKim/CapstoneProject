@@ -31,7 +31,6 @@
     .cm-matchhighlight {
       background-color: lightgreen
     }
-
     .CodeMirror-selection-highlight-scrollbar {
       background-color: green
     }
@@ -69,7 +68,7 @@
                           <col width="1%">
                           <col width="1%">
                           <col width="87%">
-                          
+
                         </colgroup>
                         <tr>
                           <td colspan="4">
@@ -80,7 +79,7 @@
                             <input type="submit" value="과제제출">
 <!--                            <a href="#" class="fas fa-check-square fa-2x">submit</a>  -->
                           </td>
-                          
+
                         </tr>
 
                         <tr>
@@ -113,7 +112,7 @@
                                            <a href="#" class="fas fa-play fa-2x"></a> -->
                             <input type="button" id="run" value="Run" />
                           </td>
-                          
+
                         </tr>
                       </table>
                     </div>
@@ -128,17 +127,18 @@
 
                       <div class="6u 12u(mobile)" style="float: right;">
                         <div style="margin-bottom:3%;">
-                          
-                              <input type="radio" id="r1" name="inType"/><label for="r1">매개변수없음</label>
-                           
-                              <input type="radio" id="r2" name="inType"><label for="r2">파일입력</label>
-                                  <input type="file"/>
+
+                              <input type="radio"  id="r1" name="inType" value="1"><label for="r1">매개변수없음</label>
                               </input>
-                           
-                              <input type="radio" id="r3" name="inType"><label for="r3">Text입력</label>
-                                <input type="text" placeholder="입력값 작성" />
+
+                              <input type="radio"  id="r2" name="inType" value="2"><label for="r2">파일입력</label>
+                                  <input type="file" id="fileIn"/>
                               </input>
-                           
+
+                              <input type="radio"  id="r3" name="inType" value="3"><label for="r3" >Text입력</label>
+                                <input type="text" placeholder="입력값 작성" id="textIn"/>
+                              </input>
+
                         </div>
                         <textarea id="result" rows="10" readonly></textarea>
                       </div>
@@ -156,6 +156,9 @@
   <script>
     // 텍스트하이라이트, 오토컴플릿, 단축키기능, 자동 줄맞춤 및 정렬
     // 디폴트설정은 C
+    // $("#r1").attr( "disabled" )
+    // $("#r2").removeAttr( "disabled" )
+    // $("input:radio[name={inType}]:checked").val()
     var editor = CodeMirror.fromTextArea(document.getElementById("content"), {
       lineNumbers: true, // 라인넘버ㄱ
       tabsize: 6, // 탭크기 6
@@ -174,7 +177,24 @@
       styleActiveLine: true
     });
     editor.setValue(`#include <stdio.h>\n\nvoid main(){\n\n\tprintf("Hello World!");\n\n}`);
-    
+
+    $('input[type=radio][name=inType]').on('change', function() {
+			var radioValue = $(this).val();
+			if (radioValue == "1") {
+        $('#fileIn, #textIn').attr("disabled", true);
+			} else if (radioValue == "2") {
+        $('#fileIn').removeAttr("disabled");
+        $('#textIn').attr("disabled", true);
+			} else if (radioValue == "3") {
+        $('#textIn').removeAttr("disabled");
+        $('#fileIn').attr("disabled", true);
+      }
+		});
+    // $(this).hide();
+    $("#r1").attr("checked", true);
+    $('#fileIn, #textIn').attr("disabled", true);
+
+
     $('#lang').on('change', function() {
       const lang = $(this).children("option:selected").val();
       switch (lang) {
@@ -183,13 +203,11 @@
           editor.setValue(`#include <stdio.h>\n\nvoid main(){\n\n\tprintf("Hello World!");\n\n}`);
           console.log(editor.options.mode);
           break;
-
         case 'java':
           editor.setOption('mode', 'text/x-java');
           editor.setValue(`class test {\n\n\tpublic static void main(String[] args) {\n\n\t\tSystem.out.println("Hello World!");\n\n\t}\n\n}`);
           console.log(editor.options.mode);
           break;
-
         case 'python':
           editor.setOption('mode', 'text/x-python');
           editor.setValue(`def function(str):\n\n\tprint(str)\n\nfunction('Hello World!')`);
@@ -197,10 +215,12 @@
           break;
       }
     });
-
     $('#run').click(function() {
       const target = document.getElementById("lang")
       const uri = "http://localhost:3000/editor/" + target.options[target.selectedIndex].value
+
+
+
       $('#result').html('');
       $.ajax({
         url: uri,
@@ -215,7 +235,6 @@
           }
         }
       });
-
     })
   </script>
 
