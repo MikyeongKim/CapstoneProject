@@ -153,11 +153,8 @@
 
                     <div class="row">
 
-                      <div class="8u 12u(mobile)" style="float: left;">
-                        <!--
-                                                <textarea name="area_edit" placeholder="내용을 입력하세요." required rows="20" autofocus></textarea>
-                                              -->
-
+                      <div class="6u 12u(mobile)" style="float: left;">
+  
                         <% if(readcode)  { %>
                         <textarea id="content" rows="20"><%= code_content %></textarea>
                         <% }else { %>
@@ -165,11 +162,22 @@
                         <% } %>
                       </div>
 
-                      <div class="4u 12u(mobile)" style="float: right;">
-                        <!--
-                                                 <textarea name="area_result" placeholder="결과창 " required rows=20 autofocus ></textarea>
-                                              -->
-                        <textarea id="result" rows="5" readonly></textarea>
+                      <div class="6u 12u(mobile)" style="float: right;">
+                       
+                          <div style="margin-bottom:3%;">
+                          
+                              <input type="radio" id="r1" name="inType"/><label for="r1">매개변수없음</label>
+                           
+                              <input type="radio" id="r2" name="inType"><label for="r2">파일입력</label>
+                                  <input type="file"/>
+                              </input>
+                           
+                              <input type="radio" id="r3" name="inType"><label for="r3">Text입력</label>
+                                <input type="text" placeholder="입력값 작성" />
+                              </input>
+                           
+                        </div>
+                        <textarea id="result" rows="10" readonly></textarea>
                       </div>
 
                     </div>

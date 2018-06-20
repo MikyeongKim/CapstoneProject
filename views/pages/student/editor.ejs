@@ -68,12 +68,21 @@
                           <col width="10%">
                           <col width="1%">
                           <col width="1%">
-                          <col width="30%">
-                          <col width="1%">
+                          <col width="87%">
+                          
                         </colgroup>
                         <tr>
-                          <td colspan="6">과제명</td>
+                          <td colspan="4">
+                              해당과제명 읽어오기 (ex:자료구조 계산기만들기)
+                          </td>
+                          <td>
+                            <!--과제제출 버튼-->
+                            <input type="submit" value="과제제출">
+<!--                            <a href="#" class="fas fa-check-square fa-2x">submit</a>  -->
+                          </td>
+                          
                         </tr>
+
                         <tr>
                           <td>
                             <!-- 코드미러 옵션 바꾸는 버튼임-->
@@ -104,12 +113,7 @@
                                            <a href="#" class="fas fa-play fa-2x"></a> -->
                             <input type="button" id="run" value="Run" />
                           </td>
-                          <td>
-                            <!--과제제출 버튼-->
-                            <!--이거누르면 어떤 과제로 제출할건지 물어보는 팝업창 떠야할것같음..
-                                               뷰에 넣어야하면 나중에 수정-->
-                            <a href="#" class="fas fa-check-square fa-2x">submit</a>
-                          </td>
+                          
                         </tr>
                       </table>
                     </div>
@@ -118,16 +122,24 @@
                     <div class="row">
 
                       <div class="6u 12u(mobile)" style="float: left;">
-                        <!--
-                                           <textarea name="area_edit" placeholder="내용을 입력하세요." required rows="20" autofocus></textarea>
-                                          -->
+
                         <textarea id="content" rows="20"></textarea>
                       </div>
 
                       <div class="6u 12u(mobile)" style="float: right;">
-                        <!--
-                                            <textarea name="area_result" placeholder="결과창 " required rows=20 autofocus ></textarea>
-                                         -->
+                        <div style="margin-bottom:3%;">
+                          
+                              <input type="radio" id="r1" name="inType"/><label for="r1">매개변수없음</label>
+                           
+                              <input type="radio" id="r2" name="inType"><label for="r2">파일입력</label>
+                                  <input type="file"/>
+                              </input>
+                           
+                              <input type="radio" id="r3" name="inType"><label for="r3">Text입력</label>
+                                <input type="text" placeholder="입력값 작성" />
+                              </input>
+                           
+                        </div>
                         <textarea id="result" rows="10" readonly></textarea>
                       </div>
                     </div>

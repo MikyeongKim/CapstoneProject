@@ -36,24 +36,20 @@ router.route('/').get((req, res) => {
             }),
         ])
             .spread((returnNotice, returnFAQ, returnCommunity) => {
-                return res.render('common/index', { notice: returnNotice, faq: returnFAQ, community: returnCommunity })
+                return res.status(200).render('common/index', { notice: returnNotice, faq: returnFAQ, community: returnCommunity })
             }).catch(function (err) {
                 //TODO : status 오류코드 보내기
-                return res.redirect('/')
+                return res.status(500).redirect('/')
             });
 
     } else {
-        // 위에 조기리턴인데..!! else 지워면 왜 오류나는지 모르겠음.. ㅠ_ㅠ
-
         models.sequelize.Promise.all([
 
             models.Signupsubject.findAll({
                 where: { signup_user_no : req.session.userinfo[0]}
               }),
-          
               models.Subject.findAll({
               }),
-          
               models.Blog.findAll({
               }),
             models.Board.findAll({
@@ -71,8 +67,7 @@ router.route('/').get((req, res) => {
                     , { community: returnCommunity });
                 }
             }).catch(function (err) {
-                //TODO : status 오류코드 보내기
-                return res.redirect('/')
+                return res.status(500).redirect('/')
             });
 
     }
@@ -81,17 +76,13 @@ router.route('/').get((req, res) => {
 
 router.route('/login')
     .get((req, res) => {
-
         res.render('common/login', { message: "" });
     })
     .post((req, res) => {
-
         const body = req.body;
-
         if (!(body.id && body.password)) {
             return res.render('common/login', { message: "아이디/패스워드를 입력해주세요." });
         }
-
         models.Userlogin.find({
             where: { user_id: body.id, user_password: body.password }
         }).then(result => {
@@ -102,14 +93,10 @@ router.route('/login')
         });
     });
 
-
-router.route('/logout').get((req, res) => {
-
+    router.route('/logout').get((req, res) => {
     if (!req.session.userinfo) {
-        //TODO : 잘못된 경로로 접근하였습니다. 메세지 출력후 인덱스로 이동
-        return res.redirect('/');
+        return res.status(401).redirect('/');
     }
-
     req.session.destroy((err) => {
         if (err) {
             console.log(err);
@@ -120,14 +107,11 @@ router.route('/logout').get((req, res) => {
     });
 });
 
-
 router.route('/signup')
     .get((req, res) => {
-
         res.render('common/signup')
     })
     .post((req, res) => {
-
         return models.sequelize.transaction(function (t) {
             const body = req.body;
 
@@ -165,7 +149,6 @@ router.route('/signup')
                             }
                         })
                 })
-
         }).then(function (result) {
             console.log("데이터 추가 완료");
             res.redirect('login');

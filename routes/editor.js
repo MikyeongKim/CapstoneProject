@@ -1,7 +1,6 @@
 const express = require('express')
   , router = express.Router()
   , models = require('../models')
-  , fs = require('fs')
   , editFunc = require('./func/editfunc')
 
 const student = 1
@@ -17,56 +16,46 @@ router.route('/').get((req, res) => {
   return res.render('student/editor', { readcode: false });
 })
 
+router.route('/c').post((req, res) => {
+  /*
+  if (!req.session.userinfo) {
+    return res.status(401).send({ result: false });
+  }*/
+  const content = req.body.content;
+  const param = "10 20"
+
+  editFunc.paramExecute(content,param, 1, 'c', result => {
+    return res.send({ result: true, content: result });
+  })
+  /*
+  editFunc.logicExecute(content, 1, 'c', result => {
+    return res.send({ result: true, content: result });
+  })
+*/
+})
+
 router.route('/java').post((req, res) => {
   const content = req.body.content
   const date = new Date()
-  const filename = Date.now() + '-' + req.session.userinfo[0];
+  const filename = Date.now() + '-' + 1;
+  //const filename = Date.now() + '-' + req.session.userinfo[0];
   let editlogNo;
 
-  editFunc.createLog(filename, req.session.userinfo[0], 'java', editLog => {
-    editlogNo = editLog;
-  })
-
-  editFunc.saveCode(filename, content, 'java')
-
-  editFunc.javaCompile(editlogNo, data => {
-    return res.send({ result: true, content: data });
-  })
-})
-
-router.route('/c').post((req, res) => {
-  if (!req.session.userinfo) {
-    return res.status(401).send({ result: false });
-  }
-  const content = req.body.content;
-  const filename = Date.now() + '-' + req.session.userinfo[0];
-  let editlogNo;
-
-  editFunc.createLog(filename, req.session.userinfo[0], 'c', editLog => {
-    editlogNo = editLog;
-  })
-  editFunc.saveCode(filename, content, 'c')
-
-  editFunc.compileFunc(editlogNo, filename,'c', data => {
-    return res.send({ result: true, content: data });
+  editFunc.logicExecute(content, 1, 'java', result => {
+   
+    return res.send({ result: true, content: result });
   })
 })
 
 router.route('/python').post((req, res) => {
+  /*
   if (!req.session.userinfo) {
     return res.send({ result: false });
-  }
+  }*/
   const content = req.body.content;
-  const filename = Date.now() + '-' + req.session.userinfo[0];
-  let editlogNo;
 
-  editFunc.createLog(filename, req.session.userinfo[0], 'python', editLog => {
-    editlogNo = editLog;
-  })
-  editFunc.saveCode(filename, content, 'python')
-
-  editFunc.compileFunc(editlogNo, filename, 'python', data => {
-    return res.send({ result: true, content: data });
+  editFunc.logicExecute(content, 1, 'python', result => {
+    return res.send({ result: true, content: result });
   })
 })
 

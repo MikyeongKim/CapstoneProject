@@ -5,7 +5,7 @@ rem 매개변수2 인풋 txt파일명
 rem 실행방법 module.bat test a.txt
 title C Param Compile
 
-cd C:\gitFolder\CapstoneProject\batch
+cd C:\gitFolder\CapstoneProject\complieFolder/c
 
 setlocal EnableDelayedExpansion
 set /a count=0

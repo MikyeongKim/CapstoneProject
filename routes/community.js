@@ -104,15 +104,13 @@ router.route('/').get((req, res) => {
         //TODO : status 오류코드 보내기
         return res.redirect('/')
       });
-
     }
 
   })
   .post((req, res) => {
 
     if (!req.session.userinfo) {
-      //TODO : 비정상 경로로 접근 오류처리
-      res.redirect('/')
+      res.status(401).redirect('/')
     }
 
     return models.sequelize.transaction((t) => {
@@ -177,7 +175,7 @@ router.route('/:id').get((req, res) => {
       ]).spread((boardResult, updateResult, replyResult) => {
 
         if (!boardResult) {
-          return res.status(400).send('400 Bad Request')
+          return res.status(400).send('Bad Request')
         }
         return res.render('common/boardread', {
           readBoard: boardResult,
@@ -185,9 +183,7 @@ router.route('/:id').get((req, res) => {
           reply: replyResult
         })
       }).catch((err) => {
-        //TODO :: 에러처리
-
-        return res.status(503).send("503 Service Unavailable")
+        return res.status(500).send("500 Server error")
       });
 
     } else {
@@ -244,8 +240,7 @@ router.route('/:id').get((req, res) => {
           reply: replyResult
         })
       }).catch((err) => {
-        //TODO :: 에러처리
-        return res.status(503).send("503 Service Unavailable")
+        return res.status(505).send("505 Server error")
       });
 
     }
@@ -309,7 +304,6 @@ router.route('/:id/new')
     if (!req.session.userinfo) {
       res.status(401).redirect('/')
     }
-
     res.render('common/boardinsert')
   })
 
