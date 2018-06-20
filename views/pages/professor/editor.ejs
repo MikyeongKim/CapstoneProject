@@ -165,14 +165,17 @@
 
                           <div style="margin-bottom:3%;">
 
-                            <input type="radio"  id="r1" name="inType" value="1"><label for="r1">매개변수없음</label>
+                            <input type="radio"  id="r1" name="inType" value="1">
+                              <label id="r1t">매개변수없음</label>
                             </input>
 
-                            <input type="radio"  id="r2" name="inType" value="2"><label for="r2">파일입력</label>
-                                <input type="file" id="fileIn"/>
+                            <input type="radio"  id="r2" name="inType" value="2">
+                              <label id="r2t">파일입력</label>
+                              <input type="file" id="fileIn"/>
                             </input>
 
-                            <input type="radio"  id="r3" name="inType" value="3"><label for="r3" >Text입력</label>
+                            <input type="radio"  id="r3" name="inType" value="3">
+                              <label id="r3t">Text입력</label>
                               <input type="text" placeholder="입력값 작성" id="textIn"/>
                             </input>
 
@@ -215,19 +218,16 @@
 
     $('input[type=radio][name=inType]').on('change', function() {
 			var radioValue = $(this).val();
+
 			if (radioValue == "1") {
-        $('#fileIn, #textIn').attr("disabled", true);
+        $('#r2, #r3, #r2t, #r3t, #fileIn, #textIn').hide();
 			} else if (radioValue == "2") {
-        $('#fileIn').removeAttr("disabled");
-        $('#textIn').attr("disabled", true);
+        $('#r1, #r3, #r1t, #r3t, #textIn').hide();
 			} else if (radioValue == "3") {
-        $('#textIn').removeAttr("disabled");
-        $('#fileIn').attr("disabled", true);
+        $('#r1, #r2, #r1t, #r2t, #fileIn').hide();
       }
 		});
-    // $(this).hide();
-    $("#r1").attr("checked", true);
-    $('#fileIn, #textIn').attr("disabled", true);
+
 
     $('#lang').on('change', function() {
       const lang = $(this).children("option:selected").val();
@@ -253,6 +253,14 @@
     $('#run').click(function() {
       const target = document.getElementById("lang")
       const uri = "http://localhost:3000/editor/" + target.options[target.selectedIndex].value
+
+      var checkCnt = $("input[name=radioName]:checked").size();
+      alert(checkCnt);
+
+      if (checkCnt == 0) {
+        $("input[name=radioName]").eq(0).attr("checked", true);
+		  }
+
       $('#result').html('');
       $.ajax({
         url: uri,
