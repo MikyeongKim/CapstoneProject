@@ -22,7 +22,7 @@ router.route('/c').post((req, res) => {
     return res.status(401).send({ result: false });
   }*/
   const content = req.body.content;
-  const param = "10 20"
+  const param = req.body.params;
 
   editFunc.paramExecute(content,param, 1, 'c', result => {
     return res.send({ result: true, content: result });

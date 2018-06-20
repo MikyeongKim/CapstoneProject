@@ -31,6 +31,7 @@
     .cm-matchhighlight {
       background-color: lightgreen
     }
+
     .CodeMirror-selection-highlight-scrollbar {
       background-color: green
     }
@@ -72,12 +73,12 @@
                         </colgroup>
                         <tr>
                           <td colspan="4">
-                              해당과제명 읽어오기 (ex:자료구조 계산기만들기)
+                            해당과제명 읽어오기 (ex:자료구조 계산기만들기)
                           </td>
                           <td>
                             <!--과제제출 버튼-->
                             <input type="submit" value="과제제출">
-<!--                            <a href="#" class="fas fa-check-square fa-2x">submit</a>  -->
+                            <!--                            <a href="#" class="fas fa-check-square fa-2x">submit</a>  -->
                           </td>
 
                         </tr>
@@ -90,11 +91,11 @@
                           <td>
                             <!--언어선택할수 있는 옵션바-->
                             <select name="editor_lang" id="lang">
-                                               <!--value값은 디비 맞춰서 수정해주세요-->
-                                               <option value="c">C</option>
-                                               <option value="java">JAVA</option>
-                                               <option value="python">Python</option>
-                                           </select>
+                              <!--value값은 디비 맞춰서 수정해주세요-->
+                              <option value="c">C</option>
+                              <option value="java">JAVA</option>
+                              <option value="python">Python</option>
+                            </select>
                           </td>
 
                           <td>
@@ -128,20 +129,20 @@
                       <div class="6u 12u(mobile)" style="float: right;">
                         <div style="margin-bottom:3%;">
 
-                          <input type="radio"  id="r1" name="inType" value="1">
-                            <label id="r1t">매개변수없음</label>
+                          <input type="radio" id="r1" name="inType" value="1">
+                          <label id="r1t">매개변수없음</label>
                           </input>
 
-                          <input type="radio"  id="r2" name="inType" value="2">
-                            <label id="r2t">파일입력</label>
-                            <input type="file" id="fileIn" accept=".txt"/>
+                          <input type="radio" id="r2" name="inType" value="2">
+                          <label id="r2t">파일입력</label>
+
                           </input>
 
-                          <input type="radio"  id="r3" name="inType" value="3">
-                            <label id="r3t">Text입력</label>
-                            <input type="text" placeholder="입력값 작성" id="textIn"/>
+                          <input type="radio" id="r3" name="inType" value="3">
+                          <label id="r3t">Text입력</label>
+                          <input type="text" placeholder="입력값 작성" id="textIn" />
                           </input>
-
+                          <input type="file" id="fileIn" accept=".txt" />
                         </div>
                         <textarea id="result" rows="10" readonly></textarea>
                       </div>
@@ -181,24 +182,24 @@
     });
     editor.setValue(`#include <stdio.h>\n\nvoid main(){\n\n\tprintf("Hello World!");\n\n}`);
 
-    $('input[type=radio][name=inType]').on('change', function() {
-			var radioValue = $(this).val();
+    $('input[type=radio][name=inType]').on('change', function () {
+      var radioValue = $(this).val();
 
-			if (radioValue == "1") {
+      if (radioValue == "1") {
         $('#fileIn, #textIn').hide();
-			} else if (radioValue == "2") {
+      } else if (radioValue == "2") {
         $('#textIn').hide();
         $('#fileIn').show();
-			} else if (radioValue == "3") {
+      } else if (radioValue == "3") {
         $('#textIn').show();
         $('#fileIn').hide();
       }
-		});
+    });
     $('#r1').attr('checked', true);
     $('#fileIn, #textIn').hide();
 
 
-    $('#lang').on('change', function() {
+    $('#lang').on('change', function () {
       const lang = $(this).children("option:selected").val();
       switch (lang) {
         case 'c':
@@ -219,53 +220,60 @@
       }
     });
 
-    $('#run').click(function() {
+    $('#run').click(function () {
       const target = document.getElementById("lang")
       const uri = "http://localhost:3000/editor/" + target.options[target.selectedIndex].value
 
-      var params = false;
+      paramCheck(params => {
+        $('#result').html('');
+        $.ajax({
+          url: uri,
+          dataType: 'json',
+          type: 'POST',
+          data: {
+            'content': editor.getValue(),
+            'params': params
+          },
+          success: function (result) {
+            if (result['result'] == true) {
+              $('#result').html(result['content']);
+            }
+          }
+        });
+      })
+
+    })
+
+    function paramCheck(callback) {
+      let params;
       var radioValue = $("input[name=inType]:checked").val();
       switch (radioValue) {
+        case '1':
+          callback(false)
+          break
         case '2':
-
           let uploadfile = document.getElementById("fileIn");
           if (uploadfile.files.length === 0) {
             alert('파일을 업로드 시켜주세요.')
-            return
+            return;
           }
           textVal = textRead(uploadfile.files[0], result => {
             params = result;
-            console.log('11',params);
+            callback(params);
           })
-          break;
+          break
 
         case '3':
           params = $("#textIn").val();
-          break;
+          callback(params);
+          break
       }
-
-      console.log('22',params);
-      $('#result').html('');
-      $.ajax({
-        url: uri,
-        dataType: 'json',
-        type: 'POST',
-        data: {
-          'content': editor.getValue(),
-          'params': params
-        },
-        success: function(result) {
-          if (result['result'] == true) {
-            $('#result').html(result['content']);
-          }
-        }
-      });
-    })
+    }
 
     function textRead(file, callback) {
       var reader = new FileReader();
       reader.readAsText(file, "euc-kr");
-      reader.onload = function() {
+      reader.onload = function () {
         callback(reader.result)
       };
     }

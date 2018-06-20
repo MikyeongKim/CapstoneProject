@@ -11,14 +11,14 @@ module.exports = {
     , paramExecute: paramExecute
 };
 
-function logicExecute(content, userno, lang, callback) {
+function logicExecute(content, param,userno, lang, callback) {
     const filename = Date.now() + '-' + userno;
     let editlogNo;
 
     createLog(filename, userno, lang, editLog => {
         editlogNo = editLog;
     });
-    saveCode(filename, content, false, lang);
+    saveCode(filename, content, param, lang);
 
     if (lang == 'java') {
         javaCompile(editlogNo, callback)
