@@ -13,7 +13,7 @@
 		<% include ./header.ejs %>
 
 		<!-- Nav include -->
-		<%- include ./nav.ejs ,{subject_no:subject_no},{subject_list : subject_list} %>
+		<%- include ./nav.ejs %>
 
 
 		<!-- Main -->
@@ -56,13 +56,13 @@
 														<label>이름</label>
 													</td>
 													<td>
-														<%=name%>
+														<%=userinfo.user_name%>
 													</td>
 													<td class="even">
 														<label>연락처</label>
 													</td>
 													<td>
-														<%=phone%>
+														<%=userinfo.user_phone%>
 													</td>
 												</tr>
 												<tr>
@@ -70,13 +70,13 @@
 														<label>이메일</label>
 													</td>
 													<td>
-														<%=email%>
+														<%=userinfo.user_email%>
 													</td>
 													<td class="even">
 														<label></label>
 													</td>
 													<td>
-														<%= %>
+														
 													</td>
 												</tr>
                                             </tbody>

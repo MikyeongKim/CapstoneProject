@@ -1,38 +1,27 @@
 const express = require('express'),
   router = express.Router(),
   models = require('../models')
+  , service = require('./func/communityService')
 
 
 const community_category = 3
 
 router.route('/').get((req, res) => {
-
-  // 현재 페이지
+  let path;
   var currentPage = req.param('page');
-  // 만약 메인으로 접속했으면 1을 줘서 첫페이지 보여줌
   if (currentPage == null) {
     currentPage = 1;
   }
-  // 한 페이지 보여줄 게시물수
-  var limitList = 3;          // 임시로 3 설정
-  // 특정페이지번호로 접속시 그 전 게시물수들
+
+  var limitList = 3;
   var skipList = (currentPage - 1) * limitList;
-  // 하단에 보여줄 페이지번호수
-  var limitPage = 3;          // 임시로 3 설정
-  // 시작페이지 종료페이지
+  var limitPage = 3;
   var startPage = Math.floor((currentPage - 1) / limitPage) * limitPage + 1;
   var endPage = startPage + limitPage - 1;
 
-  if (!req.session.userinfo) {
+  {
 
-    models.Board.findAll({
-      where: {
-        board_category: community_category
-      },
-      order: [
-        ['created_at', 'DESC']
-      ]
-    }).then((result) => {
+    service.listAllCommunity(result => {
 
       // 총 게시물수
       var totalCount = result.length;
@@ -46,8 +35,14 @@ router.route('/').get((req, res) => {
       // 해당 페이지에 맞는 리스트 슬라이싱
       resultSet = result.slice(skipList, skipList + limitList)
 
+      if (!req.session.userinfo) {
+        path = 'common'
+      } else {
+        path = 'student'
+      }
+
       // 보낼 때 좀조잡하네...
-      return res.render('common/community', {
+      return res.render(`${path}/community`, {
         board_list: resultSet,
         skipList,
         startPage,
@@ -56,79 +51,24 @@ router.route('/').get((req, res) => {
         limitPage
       })
     })
-  } else {
-    models.Board.findAll({
-      where: {
-        board_category: community_category
-      },
-      order: [
-        ['created_at', 'DESC']
-      ]
-    }).then(result => {
-      // 총 게시물수
-      var totalCount = result.length;
-      // 총 페이지수
-      var pageNum = Math.ceil(totalCount / limitList);
-      // 총 페이지수는 종료 페이지수
-      if (endPage > pageNum) {
-        endPage = pageNum
-      }
-
-      // 해당 페이지에 맞는 리스트 슬라이싱
-      resultSet = result.slice(skipList, skipList + limitList)
-
-      return res.render('student/community', {
-        board_list: resultSet,
-        skipList,
-        startPage,
-        endPage,
-        pageNum,
-        limitPage
-      })
-    }).catch(function (err) {
-      //TODO : status 오류코드 보내기
-      return res.redirect('/')
-    });
   }
 })
 
 router.route('/').post((req, res) => {
 
-    if (!req.session.userinfo) {
-      res.status(401).redirect('/')
-    }
+  if (!req.session.userinfo) {
+    res.status(401).redirect('/')
+  }
+  const body = req.body;
+  const params = {
+    userno: req.session.userinfo[0], content: req.body.content
+    , title: req.body.title, board_department: req.body.board_department
+  }
 
-    return models.sequelize.transaction((t) => {
-      const body = req.body;
-
-      return models.User.find({
-        where: {
-          user_no: req.session.userinfo[0]
-        }
-      }, {
-          transaction: t
-        })
-        .then(user_result => {
-
-          return models.Board.create({
-            board_category: community_category,
-            board_title: req.body.title,
-            board_content: req.body.content,
-            board_department: req.body.board_department,
-            board_user_no: user_result.user_no,
-            board_writer: user_result.user_name
-          }, {
-              transaction: t
-            })
-        })
-    }).then((result) => {
-      res.redirect('/community')
-    }).catch((err) => {
-      //TODO : 글작성 실패시 작성내용 쿠키에 저장
-      console.log(err)
-      res.send(`${err}`)
-    })
+  service.createCommunity(params, (err,result) => {
+    res.redirect('/community')
   })
+})
 
 
 
@@ -136,31 +76,16 @@ router.route('/:id').get((req, res) => {
   const req_board_no = req.params.id
 
   if (!req.session.userinfo) {
-    models.sequelize.Promise.all([
-
-      models.Board.find({
-        where: { board_no: req_board_no }
-      }),
-
-      models.Board.update({
-        board_count: models.sequelize.literal('board_count+1')
-      }, {
-          where: { board_no: req_board_no }
-        }),
-
-      models.Reply.findAll({
-        where: { board_no: req_board_no }
-      })
-    ]).spread((boardResult, updateResult, replyResult) => {
-      return res.render('common/boardread', { readBoard: boardResult, writer: false, reply: replyResult })
-      if (!boardResult) {
+    service.readCommunity(req_board_no, (err, result) => {
+      if (err) {
+        return res.status(500).send(err)
+      }
+      if (result == false) {
         return res.status(400).send('Bad Request')
       }
-      return res.render('common/boardread', { readBoard: boardResult, writer: false, reply: replyResult })
-    }).catch((err) => {
-      return res.status(500).send(err)
-    });
-
+      return res.render('common/boardread'
+        , { readBoard: result.boardResult, reply: result.replyResult })
+    })
   }
   else {
     models.sequelize.Promise.all([
