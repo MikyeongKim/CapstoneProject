@@ -66,29 +66,7 @@
                                 <%= item.board_writer %>
                               </td>
                               <td>
-                                <% let date2 = new Date(item.created_at)
-                                  const year = date2.getFullYear();
-                                  let month = date2.getMonth() - 1;
-                                  let day = date2.getDate();
-                                  let hour = date2.getHours()
-                                  let min = date2.getMinutes()
-                                  if (month < 10) {
-                                      month = "0" + month
-                                  }
-                                  if (day < 10) {
-                                      day = "0" + day
-                                  }
-
-                                  if (hour < 10) {
-                                      hour = "0" + hour
-                                  }
-
-                                  if (min < 10) {
-                                      min = "0" + min
-                                  }
-                                  const temp = `${year}.${month}.${day} ${hour}:${min}`
-                                   %>
-                                  <%=temp%>
+                                <%=item.created_at %>
                               </td>
 
                               <td>

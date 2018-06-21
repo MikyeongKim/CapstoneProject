@@ -38,7 +38,7 @@
       <textarea name="content" class="summernote" id="content" required rows="30" autofocus cols="130"><%= data.board_content %></textarea>
     </table>
     <hr align="left" width="70%">
-    <button onclick="location.href='javascript:history.back()'">뒤로가기</button>
+    <button href='/community/<%= data.board_no %>'>뒤로가기</button>
     <input type="submit" id="subbtn" value="수정">
   </form>
 

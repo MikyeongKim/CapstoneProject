@@ -1,16 +1,21 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
+<!--st_community_page1.html 에서 main div 긁어오기-->
 <html>
 
 <head>
-   <!--헤드내용 include -->
-   <% include ../../partials/head.ejs %>  
+    <!--헤드내용 include -->
+    <% include ../../partials/head.ejs %>
 </head>
 
 <body class="homepage">
-    <div id="page-wrapper">
+	<div id="page-wrapper">
 
-       	<% include ./header.ejs %>
-		<%- include ./nav.ejs ,{subject_no:subject_no},{subject_list : subject_list} %>
+	    <!-- Header -->
+		<% include ./header.ejs %>
+
+		<!-- Nav include -->
+		<%- include ./nav.ejs %>
+
 
 		<!-- Main -->
 		<div id="main-wrapper">
@@ -18,7 +23,7 @@
 				<div class="row">
 					<div class="2u">
                     
-						<%- include ./blog_sidebar.ejs ,{subject_no:subject_no},{subject_list : subject_list} %>
+                            <% include ./blog_sidebar.ejs %>
 					</div>
 
 					<div class="10u 12u(mobile) important(mobile)">
@@ -31,44 +36,50 @@
 						 <div class="content content-right">
 							<article class="box page-content">
 								<header>
-									<h2 style="font-size:2.5em;"><a href="#">팀프로젝트</a></h2>
-                                    <h2 class="major"></h2>
+                                    <h2 style="font-size:2.5em;"><a href="#">공지사항</a></h2>
+                                    <!--목록으로 가게끔 연결하기-->
+                                     <!--공지사항 같은 경우는 학생이 등록할 수 없음!-->
+                                  
+                                     <h2 class="major"></h2>
 								</header>
-								<div>
+
+                                <div>
                                   
                                     <form method="POST">
                                         <table class="type06" style="vertical-align:middle; text-align:center;">
                                             <colgroup>
                                                 <col width="12%">
-                                                <col width="32%">
+                                                <col width="38%">
+                                                <col width="6%">
                                                 <col width="16%">
                                                 <col width="16%">
-                                                <col width="16%">
-                                                <col width="16%">
+                                                <col width="12%">
                                             </colgroup>
         
                                             <thead scope="row" class="even">
                                                 <tr>
                                                     <th>번호</th>
                                                     <th>제목</th>
-                                                    <th>제출방식</th>
-                                                    <th>마감일</th>
-                                                    <th>상태</th>
-                                                    <th>점수</th>
+                                                    <th>첨부</th>
+                                                    <th>작성자</th>
+                                                    <th>등록일</th>
+                                                    <th>조회수</th>
                                                 </tr>
                                             </thead>
                                             <tbody scope="row" style="text-align:center; ">
                                                 <!--바로 아래는 뷰짜려고 임시로 만든 <td>목록임-->
-
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>팀과제1 : linux시스템콜 사용 프로그램</td>
-                                                        <td>온라인</a></td>
-                                                        <td>2018-03-10 17:30</td>
-                                                        <td>평가완료</td>
-                                                        <td>90</td>
-                                                    </tr>
-                                               
+                                                        <tr>
+                                                            <td></td>
+                                                            <td style="text-align:left;">
+                                                                <a onclick="location = '/myclass/'+location.href.split('/')[4]+'/notice/read/" href="#">
+                                                                </td>
+                                                            <td>???</td>
+                                                            <td></td>
+                                                            <td></td>
+                                                            <td></td>
+                                                        </tr>
+        
+                                                
                                             </tbody>
         
                                             <tfoot>
@@ -112,7 +123,6 @@
                                 <div style="margin-top:5%;">
                                     <h2 class="major" ></h2>
                                 </div>
-
 							</article>
 						 </div>			
 					</div>
@@ -125,13 +135,14 @@
 
 
 	
-    <!-- Footer include  -->
+	<!-- Footer include -->
 	<% include ../../partials/footer.ejs %>
 
-    </div>
-    
-    <!-- Scripts -->
+	</div>
+
+	<!-- Scripts -->
 	<% include ../../partials/scripts.ejs %>
+
 </body>
 
 </html>
