@@ -5,8 +5,6 @@ const express = require('express'),
 
 const community_category = 3
 
-
-
 router.route('/').get((req, res) => {
 
     // 현재 페이지

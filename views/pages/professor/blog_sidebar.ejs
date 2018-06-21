@@ -1,85 +1,81 @@
-<div class="sidebar" >
+<div class="sidebar">
     <!--사이드바 입력-->
-    <section class="box feature" >
+    <section class="box feature">
         <h2 style="text-align:center;">· 강의과목 ·</h2>
 
         <div style="text-align:center;">
-        <table class="type06" style="display:inline; text-align:center; border:none;" >
-            <tr scope="row" class="even" >
+            <table class="type06" style="display:inline; text-align:center; border:none;">
+                <tr scope="row" class="even">
                     <td>
                         <!--학생이 수강중인 강의명 읽어오기-->
 
-                        
-                            <select id="category" name="sidebar_subject" onchange="location = '/myclass/' + this.options[this.selectedIndex].value;" style="width:120px; display:inline-block; ">
-                                <option>수강과목</option>
-                                
-                                    <% subject_list.forEach((item,index) => { %>
-                                        
-                                            <option value = <%= item.subject_no %> > <%= item.subject_title %> </option>
-                                        
-                                    <% }); %>
-                               
-                            </select>
-                            
 
-                          </td>
+                        <select id="category" name="sidebar_subject" onchange="location = '/myclass/' + this.options[this.selectedIndex].value;"
+                            style="width:120px; display:inline-block; ">
+                            <option>수강과목</option>
+                        </select>
 
-                    
+
+                    </td>
+
+
                 </tr>
-        </table>
+            </table>
         </div>
         <ul class="left-side">
             <li>
                 <!--<a onclick="location = '/myclass/'+location.href.split('/')[4]+'/plan'"></a>-->
-                <a onclick="location = '/myclass/'+location.href.split('/')[4]+'/plan'"href="#">강의계획서</a>
+                <a href='/myclass/plan/1'>강의계획서</a>
             </li>
             <li>
-                <a onclick="location = '/myclass/'+location.href.split('/')[4]+'/notice'"href="#">공지사항</a>  
+                <a href='/myclass/notice/1'>공지사항</a>
             </li>
             <li>
-                <a onclick="location = '/myclass/'+location.href.split('/')[4]+'/qna'"href="#">질의응답</a>
+                <a href='/myclass/qna/1'>질의응답</a>
             </li>
             <li>
-                <a onclick="location = '/myclass/'+location.href.split('/')[4]+'/ppt'"href="#">강의자료</a>
+                <a href='/myclass/ppt/1'>강의자료</a>
             </li>
             <li>
-                <a onclick="location = '/myclass/'+location.href.split('/')[4]+'/task'"href="#">과제</a>
+                <a href='/myclass/task/1'>과제</a>
             </li>
             <li>
-                <a onclick="location = '/myclass/'+location.href.split('/')[4]+'/team'"href="#">팀프로젝트</a>
+                <a href='/myclass/team/1'>팀프로젝트</a>
             </li>
             <li>
-                <a onclick="location = '/myclass/'+location.href.split('/')[4]+'/grade'"href="#">성적</a>
+                <a href='/myclass/grade/1'>성적</a>
             </li>
-           
+
+        </ul>
+
         </ul>
     </section>
 
-    
+
 </div>
-<div >
-        <ul class="mobile-sidebar">
-                <li>
-                        <a href="/myclass/plan">강의계획서</a>
-                    </li>
-                    <li>
-                        <a href="/myclass/notice">공지사항</a>
-                    </li>
-                    <li>
-                        <a href="/myclass/qna">질의응답</a>
-                    </li>
-                    <li>
-                        <a href="/myclass/ppt">강의자료</a>
-                    </li>
-                    <li>
-                        <a href="/myclass/task">과제</a>
-                    </li>
-                    <li>
-                        <a href="#">팀프로젝트</a>
-                    </li>
-                    <li>
-                        <a href="#">성적</a>
-                    </li>
-                    
-        </ul>
+<div>
+    <ul class="mobile-sidebar">
+        <li>
+            <a href="/myclass/plan">강의계획서</a>
+        </li>
+        <li>
+            <a href="/myclass/notice">공지사항</a>
+        </li>
+        <li>
+            <a href="/myclass/qna">질의응답</a>
+        </li>
+        <li>
+            <a href="/myclass/ppt">강의자료</a>
+        </li>
+        <li>
+            <a href="/myclass/task">과제</a>
+        </li>
+        <li>
+            <a href="#">팀프로젝트</a>
+        </li>
+        <li>
+            <a href="#">성적</a>
+        </li>
+
+    </ul>
 </div>

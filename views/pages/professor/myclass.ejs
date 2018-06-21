@@ -10,7 +10,7 @@
     <div id="page-wrapper">
 
        	<% include ./header.ejs %>
-		<%- include ./nav.ejs ,{subject_list : subject_list} %>
+		<% include ./nav.ejs  %>
 
 		<!-- Main -->
 		<div id="main-wrapper">
@@ -22,28 +22,33 @@
 						 <div class="content content-right">
 							<article class="box page-content">
 								<header>
-									<h2 style="font-size:2.5em;"><a href="#">수강 중인 강의목록</a></h2>
+									<h2 style="font-size:2.5em;"><a href="#">강의목록</a></h2>
 									<h2 class="major"></h2>
 								</header>
 
 								<form>
 								<div style="display:inline;">
 									<div style="float: left; width:48%; margin-right:2%;">
-											
-												<% subject_list.forEach((item,index) => { %>
+									<% myclass.forEach((item,index) => { %>
 														<table class="type06" style="text-align:center;">
 																<thead class="even" style="font-size:1.5em;">
-																	<th colspan="2">
-																		<a href="/myclass/<%= item.subject_no %>"><%= item.subject_title %></a>
+																	<th colspan="4">
+																	<a href='/myclass/main/<%=item.subject_no%>'><%= item.subject_name %></a>
 																	</th>
 																</thead>
 																<tbody>
-																	<tr>
-																		<td>교수명1</td> <td>강의시간정보</td>
-																	</tr>
+																<tr>
+																	<td>시간</td>
+																	<td>장소</td>
+																	<td>이수학점</td>
+																</tr>
+																<tr>
+																	<td><%= item.subject_time%></td> 
+																	<td><%= item.subject_place%></td>
+																	<td><%= item.subject_credit%></td>
+																</tr>
 																</tbody>
 															</table>
-														<tr>
 															<% }); %>
 																	
 									</div>

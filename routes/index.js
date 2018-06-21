@@ -44,24 +44,16 @@ router.route('/').get((req, res) => {
 
     } else {
         models.sequelize.Promise.all([
-
-            models.Signupsubject.findAll({
-                where: { signup_user_no : req.session.userinfo[0]}
-              }),
-              models.Subject.findAll({
-              }),
-              models.Blog.findAll({
-              }),
             models.Board.findAll({
                 where: { board_category: board_community },
                 limit: 5,
                 order: [['created_at', 'DESC']]
             })
         ])
-            .spread((returnSubject_no, returnSubject,result,returnCommunity) => {
+            .spread((returnCommunity) => {
                 if (req.session.userinfo[1] === student) {
                     return res.render('student/index' 
-                    , { subject_no: returnSubject_no, subject_list: returnSubject, blog_list: result, community: returnCommunity });
+                    , {community: returnCommunity });
                 } else {
                     return res.render('professor/index' 
                     , { community: returnCommunity });

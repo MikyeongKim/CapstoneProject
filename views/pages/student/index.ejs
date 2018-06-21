@@ -15,7 +15,7 @@
 		<% include ./header.ejs %>
 
 		<!-- Nav include -->
-		<%- include ./nav.ejs ,{subject_no:subject_no},{subject_list : subject_list} %>
+		<%- include ./nav.ejs %>
 		
 		<!-- Main -->
 		<div id="main-wrapper">
@@ -37,17 +37,6 @@
 											<section class="box feature">
 												<h2 class="major"><span>수강과목</span></h2>
                                                 
-                                                <ul>
-													<% subject_no.forEach((item1,index) => { %>
-														<% subject_list.forEach((item2,index) => { %>
-															<% if(item1.signup_subject_no == item2.subject_no){ %>
-																<li>
-																	<a href="/myclass/<%= item2.subject_no %>"><%= item2.subject_title %></a>
-																</li>
-															<%}%>
-														<% }); %>
-													<% }); %>
-                                                </ul>
 											</section>
 										</div>
 

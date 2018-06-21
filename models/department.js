@@ -15,6 +15,7 @@ module.exports = (sequelize, DataTypes) => {
         });
     Department.associate = function (models) {
         Department.hasMany(models.User, { foreignKey: 'department_no', sourceKey: 'department_no' });
+        Department.hasMany(models.subject, { foreignKey: 'department_no', sourceKey: 'department_no' });
         //Department.hasMany(models.Board, { foreignKey: 'board_department', sourceKey: 'department_no' });
     };
     return Department;

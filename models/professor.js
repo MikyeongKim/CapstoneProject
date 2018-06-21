@@ -13,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
         })
     Professor.associate = function (models) {
         Professor.belongsTo(models.User, { foreignKey: 'professor_no' });
+        Professor.hasMany(models.subject, { sourceKey: 'professor_no' , foreignKey: 'professor_no' });
     };
     return Professor;
 };

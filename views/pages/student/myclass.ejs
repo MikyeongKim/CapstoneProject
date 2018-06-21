@@ -2,74 +2,75 @@
 <html>
 
 <head>
-   <!--헤드내용 include -->
-   <% include ../../partials/head.ejs %>  
+	<!--헤드내용 include -->
+	<% include ../../partials/head.ejs %>
 </head>
 
 <body class="homepage">
-    <div id="page-wrapper">
+	<div id="page-wrapper">
 
-       	<% include ./header.ejs %>
-		<%- include ./nav.ejs ,{subject_no:subject_no},{subject_list : subject_list} %>
+		<% include ./header.ejs %>
+			<% include ./nav.ejs , %>
 
-		<!-- Main -->
-		<div id="main-wrapper">
-			<div id="main" class="container">
-				<div class="row">
-					
-					<div class="12u 12u(mobile) important(mobile)">
+				<!-- Main -->
+				<div id="main-wrapper">
+					<div id="main" class="container">
+						<div class="row">
 
-						 <div class="content content-right">
-							<article class="box page-content">
-								<header>
-									<h2 style="font-size:2.5em;"><a href="#">수강 중인 강의목록</a></h2>
-									<h2 class="major"></h2>
-								</header>
+							<div class="12u 12u(mobile) important(mobile)">
 
-								<form>
-								<div style="display:inline;">
-									<div style="float: left; width:48%; margin-right:2%;">
-											<% subject_no.forEach((item1,index) => { %>
-												<% subject_list.forEach((item2,index) => { %>
-													<% if(item1.signup_subject_no == item2.subject_no){ %>
-														<table class="type06" style="text-align:center;">
-																<thead class="even" style="font-size:1.5em;">
-																	<th colspan="2">
-																		<a href="/myclass/<%= item2.subject_no %>"><%= item2.subject_title %></a>
-																	</th>
-																</thead>
-																<tbody>
-																	<tr>
-																		<td>교수명1</td> <td>강의시간정보</td>
-																	</tr>
-																</tbody>
-															</table>
+								<div class="content content-right">
+									<article class="box page-content">
+										<header>
+											<h2 style="font-size:2.5em;">
+												<a href="#">수강 중인 강의목록</a>
+											</h2>
+											<h2 class="major"></h2>
+										</header>
+
+										<form>
+											<div style="display:inline;">
+												<div style="float: left; width:48%; margin-right:2%;">
+												<% myclass.forEach((item,index) => { %>
+													<table class="type06" style="text-align:center;">
+														<thead class="even" style="font-size:1.5em;">
+															<th colspan="4">
+																<a href='/myclass/main/<%=item.subject_no%>'><%= item.subject_name %></a>
+															</th>
+														</thead>
+														<tbody>
 														<tr>
-													<%}%>
-												<% }); %>
-											<% }); %>
-										
-									</div>
-									
+														<td>교수</td>
+														<td>시간</td>
+														<td>장소</td>
+														<td>이수학점</td>
+														</tr>
+															<tr>
+																<td><%= item.sub_pro_name %></td>
+																<td><%= item.subject_time%></td>
+																<td><%= item.subject_place%></td>
+																<td><%= item.subject_credit%></td>
+															</tr>
+														</tbody>
+													</table>
+													<% }); %>
+												</div>
+											</div>
+										</form>
+									</article>
 								</div>
-								</form>
-							</article>
-						 </div>			
+							</div>
+						</div>
 					</div>
 				</div>
-			</div>
-		</div>
 
+				<!-- Footer include  -->
+				<% include ../../partials/footer.ejs %>
 
-	
-    <!-- Footer include  -->
-	<% include ../../partials/footer.ejs %>
+	</div>
 
-    </div>
-    
-    <!-- Scripts -->
+	<!-- Scripts -->
 	<% include ../../partials/scripts.ejs %>
 </body>
 
 </html>
-
