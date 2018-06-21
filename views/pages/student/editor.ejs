@@ -130,24 +130,23 @@
                         <div style="margin-bottom:3%;">
 
                           <input type="radio" id="r1" name="inType" value="1">
-                          <label id="r1t">매개변수없음</label>
+                          <label id="r1t">학생매개변수없음</label>
                           </input>
 
                           <input type="radio" id="r2" name="inType" value="2">
                           <label id="r2t">파일입력</label>
-
                           </input>
 
                           <input type="radio" id="r3" name="inType" value="3">
                           <label id="r3t">Text입력</label>
                           <input type="text" placeholder="입력값 작성" id="textIn" />
                           </input>
+
                           <input type="file" id="fileIn" accept=".txt" />
                         </div>
                         <textarea id="result" rows="10" readonly></textarea>
                       </div>
                     </div>
-
                   </form>
                 </div>
               </section>
@@ -160,12 +159,9 @@
   <script>
     // 텍스트하이라이트, 오토컴플릿, 단축키기능, 자동 줄맞춤 및 정렬
     // 디폴트설정은 C
-    // $("#r1").attr( "disabled" )
-    // $("#r2").removeAttr( "disabled" )
-    // $("input:radio[name={inType}]:checked").val()
     var editor = CodeMirror.fromTextArea(document.getElementById("content"), {
       lineNumbers: true, // 라인넘버ㄱ
-      tabsize: 6, // 탭크기 6
+      tabsize: 4, // 탭크기 6
       mode: "text/x-csrc", // 작성언어 C,C++,C#
       //theme: "dracula", // 테마는 드라큘라 추가기능으로 추가예정
       extraKeys: {
@@ -182,7 +178,7 @@
     });
     editor.setValue(`#include <stdio.h>\n\nvoid main(){\n\n\tprintf("Hello World!");\n\n}`);
 
-    $('input[type=radio][name=inType]').on('change', function () {
+    $('input[type=radio][name=inType]').on('change', function() {
       var radioValue = $(this).val();
 
       if (radioValue == "1") {
@@ -198,8 +194,7 @@
     $('#r1').attr('checked', true);
     $('#fileIn, #textIn').hide();
 
-
-    $('#lang').on('change', function () {
+    $('#lang').on('change', function() {
       const lang = $(this).children("option:selected").val();
       switch (lang) {
         case 'c':
@@ -220,7 +215,7 @@
       }
     });
 
-    $('#run').click(function () {
+    $('#run').click(function() {
       const target = document.getElementById("lang")
       const uri = "http://localhost:3000/editor/" + target.options[target.selectedIndex].value
 
@@ -234,14 +229,13 @@
             'content': editor.getValue(),
             'params': params
           },
-          success: function (result) {
+          success: function(result) {
             if (result['result'] == true) {
               $('#result').html(result['content']);
             }
           }
         });
       })
-
     })
 
     function paramCheck(callback) {
@@ -249,7 +243,8 @@
       var radioValue = $("input[name=inType]:checked").val();
       switch (radioValue) {
         case '1':
-          callback(false)
+          params = false
+          callback(params)
           break
         case '2':
           let uploadfile = document.getElementById("fileIn");
@@ -259,12 +254,20 @@
           }
           textVal = textRead(uploadfile.files[0], result => {
             params = result;
+            if (params === '') {
+              alert('파일 내용을 작성 해주세요.')
+              return;
+            }
             callback(params);
           })
           break
 
         case '3':
           params = $("#textIn").val();
+          if (params === '') {
+            alert('입력값을 작성 해주세요.')
+            return;
+          }
           callback(params);
           break
       }
@@ -273,7 +276,7 @@
     function textRead(file, callback) {
       var reader = new FileReader();
       reader.readAsText(file, "euc-kr");
-      reader.onload = function () {
+      reader.onload = function() {
         callback(reader.result)
       };
     }

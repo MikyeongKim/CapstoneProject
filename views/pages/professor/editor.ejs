@@ -31,6 +31,7 @@
     .cm-matchhighlight {
       background-color: lightgreen
     }
+
     .CodeMirror-selection-highlight-scrollbar {
       background-color: green
     }
@@ -93,7 +94,7 @@
                             </td>
                             <td style="text-align:left;">
                               <!--학생과제 평가점수 저장 버튼 / DB에 들어가는거 처리해주세요-->
-                              <input type="submit" value="저장"  class="fas fa-save fa-2x">
+                              <input type="submit" value="저장" class="fas fa-save fa-2x">
                             </td>
 
                             <td style="text-align:right;">
@@ -123,9 +124,9 @@
                               <!--언어선택할수 있는 옵션바-->
                               <select name="editor_lang" id="lang">
                                                     <!--value값은 디비 맞춰서 수정해주세요-->
-                                                    <option value="C">C</option>
-                                                    <option value="JAVA">JAVA</option>
-                                                    <option value="PYTHON">Python</option>
+                                                    <option value="c">C</option>
+                                                    <option value="java">JAVA</option>
+                                                    <option value="python">Python</option>
                                                 </select>
                             </td>
 
@@ -154,38 +155,30 @@
 
                       <div class="6u 12u(mobile)" style="float: left;">
 
-                        <% if(readcode)  { %>
-                        <textarea id="content" rows="20"><%= code_content %></textarea>
-                        <% }else { %>
                         <textarea id="content" rows="20"></textarea>
-                        <% } %>
                       </div>
 
                       <div class="6u 12u(mobile)" style="float: right;">
+                        <div style="margin-bottom:3%;">
 
-                          <div style="margin-bottom:3%;">
+                          <input type="radio" id="r1" name="inType" value="1">
+                          <label id="r1t">교수매개변수없음</label>
+                          </input>
 
-                            <input type="radio"  id="r1" name="inType" value="1">
-                              <label id="r1t">매개변수없음</label>
-                            </input>
+                          <input type="radio" id="r2" name="inType" value="2">
+                          <label id="r2t">파일입력</label>
+                          </input>
 
-                            <input type="radio"  id="r2" name="inType" value="2">
-                              <label id="r2t">파일입력</label>
-                              <input type="file" id="fileIn"/>
-                            </input>
+                          <input type="radio" id="r3" name="inType" value="3">
+                          <label id="r3t">Text입력</label>
+                          <input type="text" placeholder="입력값 작성" id="textIn" />
+                          </input>
 
-                            <input type="radio"  id="r3" name="inType" value="3">
-                              <label id="r3t">Text입력</label>
-                              <input type="text" placeholder="입력값 작성" id="textIn"/>
-                            </input>
-
+                          <input type="file" id="fileIn" accept=".txt" />
                         </div>
                         <textarea id="result" rows="10" readonly></textarea>
                       </div>
-
                     </div>
-
-
                   </form>
                 </div>
               </section>
@@ -200,9 +193,9 @@
     // 디폴트설정은 C
     var editor = CodeMirror.fromTextArea(document.getElementById("content"), {
       lineNumbers: true, // 라인넘버
-      tabsize: 6, // 탭크기 6
+      tabsize: 4, // 탭크기 6
       mode: "text/x-csrc", // 작성언어 C,C++,C#
-      theme: "dracula", // 테마는 드라큘라 추가기능으로 추가예정
+      // theme: "dracula", // 테마는 드라큘라 추가기능으로 추가예정
       extraKeys: {
         "Ctrl-Space": "autocomplete" // 컨트롤+스페이스로 오토컴플릿 실행
       },
@@ -215,19 +208,23 @@
       },
       styleActiveLine: true
     });
+    editor.setValue(`#include <stdio.h>\n\nvoid main(){\n\n\tprintf("Hello World!");\n\n}`);
 
     $('input[type=radio][name=inType]').on('change', function() {
-			var radioValue = $(this).val();
+      var radioValue = $(this).val();
 
-			if (radioValue == "1") {
-        $('#r2, #r3, #r2t, #r3t, #fileIn, #textIn').hide();
-			} else if (radioValue == "2") {
-        $('#r1, #r3, #r1t, #r3t, #textIn').hide();
-			} else if (radioValue == "3") {
-        $('#r1, #r2, #r1t, #r2t, #fileIn').hide();
+      if (radioValue == "1") {
+        $('#fileIn, #textIn').hide();
+      } else if (radioValue == "2") {
+        $('#textIn').hide();
+        $('#fileIn').show();
+      } else if (radioValue == "3") {
+        $('#textIn').show();
+        $('#fileIn').hide();
       }
-		});
-
+    });
+    $('#r1').attr('checked', true);
+    $('#fileIn, #textIn').hide();
 
     $('#lang').on('change', function() {
       const lang = $(this).children("option:selected").val();
@@ -249,54 +246,96 @@
           break;
       }
     });
-    $('#')
+
+
     $('#run').click(function() {
       const target = document.getElementById("lang")
       const uri = "http://localhost:3000/editor/" + target.options[target.selectedIndex].value
 
-      var checkCnt = $("input[name=radioName]:checked").size();
-      alert(checkCnt);
-
-      if (checkCnt == 0) {
-        $("input[name=radioName]").eq(0).attr("checked", true);
-		  }
-
-      $('#result').html('');
-      $.ajax({
-        url: uri,
-        dataType: 'json',
-        type: 'POST',
-        data: {
-          'content': editor.getValue()
-        },
-        success: function(result) {
-          if (result['result'] == true) {
-            $('#result').html(result['content']);
-          } else {
-            window.location.replace("http://localhost:3000/login");
+      paramCheck(params => {
+        $('#result').html('');
+        $.ajax({
+          url: uri,
+          dataType: 'json',
+          type: 'POST',
+          data: {
+            'content': editor.getValue(),
+            'params': params
+          },
+          success: function(result) {
+            if (result['result'] == true) {
+              $('#result').html(result['content']);
+            }
           }
-        }
-      });
+        });
+      })
     })
+
+    function paramCheck(callback) {
+      let params;
+      var radioValue = $("input[name=inType]:checked").val();
+      switch (radioValue) {
+        case '1':
+          params = false
+          callback(params)
+          break
+        case '2':
+          let uploadfile = document.getElementById("fileIn");
+          if (uploadfile.files.length === 0) {
+            alert('파일을 업로드 시켜주세요.')
+            return;
+          }
+          textVal = textRead(uploadfile.files[0], result => {
+            params = result;
+            if (params === '') {
+              alert('파일 내용을 작성 해주세요.')
+              return;
+            }
+            callback(params);
+          })
+          break
+
+        case '3':
+          params = $("#textIn").val();
+          if (params === '') {
+            alert('입력값을 작성 해주세요.')
+            return;
+          }
+          callback(params);
+          break
+      }
+    }
+
+    function textRead(file, callback) {
+      var reader = new FileReader();
+      reader.readAsText(file, "euc-kr");
+      reader.onload = function() {
+        callback(reader.result)
+      };
+    }
   </script>
 
-  <% if (!readcode) { %>
-    <script>
-      editor.setValue(`#include <stdio.h>\n\nvoid main(){\n\n\tprintf("Hello World!");\n\n}`);
-    </script>
-    <% } else { %>
-    <script>
-    $("#lang").val('<%= code_lang %>').prop("selected", true);
-    </script>
-    <% } %>
 
-      <!-- Footer include  -->
-      <% include ../../partials/footer.ejs %>
+  <!-- Footer include  -->
+  <% include ../../partials/footer.ejs %>
 
-        </div>
+    </div>
 
-        <!-- Scripts -->
-        <% include ../../partials/scripts.ejs %>
+    <!-- Scripts -->
+    <% include ../../partials/scripts.ejs %>
 </body>
 
 </html>
+
+
+
+
+<!-- <% if (!readcode) { %>
+<script>
+editor.setValue(`#include <stdio.h>\n\nvoid main(){\n\n\tprintf("Hello World!");\n\n}`);
+</script>
+<% } else { %>
+<script>
+$("#lang").val('<%= code_lang %>').prop("selected", true);
+</script>
+<% } %> -->

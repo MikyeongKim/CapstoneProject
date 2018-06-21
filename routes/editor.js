@@ -24,27 +24,31 @@ router.route('/c').post((req, res) => {
   const content = req.body.content;
   const param = req.body.params;
 
-  editFunc.paramExecute(content,param, 1, 'c', result => {
-    return res.send({ result: true, content: result });
-  })
-  /*
-  editFunc.logicExecute(content, 1, 'c', result => {
-    return res.send({ result: true, content: result });
-  })
-*/
+  if (param == 'false') {
+    editFunc.logicExecute(content, 1, 'c', result => {
+      return res.send({ result: true, content: result });
+    })
+  }else {
+    editFunc.paramExecute(content, param, 1, 'c', result => {
+      return res.send({ result: true, content: result });
+    })
+  }
+
 })
 
 router.route('/java').post((req, res) => {
   const content = req.body.content
-  const date = new Date()
-  const filename = Date.now() + '-' + 1;
-  //const filename = Date.now() + '-' + req.session.userinfo[0];
-  let editlogNo;
+  const param = req.body.params;
 
-  editFunc.logicExecute(content, 1, 'java', result => {
-   
-    return res.send({ result: true, content: result });
-  })
+  if (param == 'false') {
+    editFunc.logicExecute(content, 1, 'java', result => {
+      return res.send({ result: true, content: result });
+    })
+  }else {
+    editFunc.paramExecute(content, param, 1, 'java', result => {
+      return res.send({ result: true, content: result });
+    })
+  }
 })
 
 router.route('/python').post((req, res) => {
@@ -52,11 +56,18 @@ router.route('/python').post((req, res) => {
   if (!req.session.userinfo) {
     return res.send({ result: false });
   }*/
-  const content = req.body.content;
+  const content = req.body.content
+  const param = req.body.params;
 
-  editFunc.logicExecute(content, 1, 'python', result => {
-    return res.send({ result: true, content: result });
-  })
+  if (param == 'false') {
+    editFunc.logicExecute(content, 1, 'python', result => {
+      return res.send({ result: true, content: result });
+    })
+  }else {
+    editFunc.paramExecute(content, param, 1, 'python', result => {
+      return res.send({ result: true, content: result });
+    })
+  }
 })
 
 /*
