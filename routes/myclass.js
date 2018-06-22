@@ -4,7 +4,15 @@ const express = require('express')
   , models = require('../models')
 
 const Student = 1
-  , Professor = 2
+  , Professor = 2;
+
+router.all('*', (req, res, next) => {
+  if (!req.session.userinfo) {
+    return res.status(401).redirect('/login')
+  }
+  next('route')
+})
+
 
 router.route('/').get((req, res) => {
 
@@ -32,10 +40,6 @@ router.route('/').get((req, res) => {
 router.route(['/main/:id', '/plan/:id']).get((req, res) => {
   const class_no = req.params.id
 
-  if (!req.session.userinfo) {
-    return res.status(401).redirect('/login')
-  }
-
   const userGrade = req.session.userinfo[1];
   const userno = req.session.userinfo[0];
 
@@ -52,43 +56,43 @@ router.route(['/main/:id', '/plan/:id']).get((req, res) => {
 
 
 router.route('/notice/:id').get((req, res) => {
-    const class_no = req.params.id
-    return res.render('professor/blog_notice')
+  const class_no = req.params.id
+  return res.render('professor/blog_notice')
 
-  })
+})
 
 
 
 
 router.route('/qna/:id').get((req, res) => {
-    const class_no = req.params.id
-    return res.render('student/blog_qna')
+  const class_no = req.params.id
+  return res.render('student/blog_qna')
 
-  })
+})
 
 router.route('/ppt/:id').get((req, res) => {
-    const class_no = req.params.id
-    return res.render('student/blog_ppt')
+  const class_no = req.params.id
+  return res.render('student/blog_ppt')
 
-  })
+})
 
 router.route('/task/:id').get((req, res) => {
-    const class_no = req.params.id
-    return res.render('student/blog_hw')
+  const class_no = req.params.id
+  return res.render('student/blog_hw')
 
-  })
+})
 
 router.route('/team/:id').get((req, res) => {
-    const class_no = req.params.id
-    return res.render('student/blog_team')
+  const class_no = req.params.id
+  return res.render('student/blog_team')
 
-  })
+})
 
 router.route('/grade/:id').get((req, res) => {
-    const class_no = req.params.id
-    return res.render('student/blog_grade')
+  const class_no = req.params.id
+  return res.render('student/blog_grade')
 
-  })
+})
 
 
 module.exports = router;

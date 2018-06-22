@@ -1,7 +1,7 @@
 @echo off
 title C Param Compile
 
-cd C:\Users\KimTaeKyeong\dev\CapstoneProject\complieFolder\c
+cd C:\gitFolder\CapstoneProject\complieFolder\c
 
 setlocal EnableDelayedExpansion
 set /a count=0

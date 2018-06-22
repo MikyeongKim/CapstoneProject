@@ -1,8 +1,10 @@
 node_modules/
 .vscode/
 config/
-uploads/*
-complieFolder/*
+uploads/
+complieFolder/
 task/
 tmp/
 submit/
+batch/
+*.gitignore/

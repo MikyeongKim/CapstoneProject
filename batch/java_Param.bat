@@ -1,7 +1,7 @@
 @echo off
 title Java Compile
 
-cd C:\Users\KimTaeKyeong\dev\CapstoneProject\complieFolder\java
+cd C:\gitFolder\CapstoneProject\complieFolder\java
 
 setlocal EnableDelayedExpansion
 set /a count=0

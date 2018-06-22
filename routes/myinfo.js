@@ -2,14 +2,14 @@ const express = require('express')
     , router = express.Router()
     , models = require('../models');
 
-
-router.route('/').get((req, res) => {
-
-
+router.all('*', (req, res, next) => {
     if (!req.session.userinfo) {
-        //todo : 잘못된 경로로 접근함.. 알림.
         return res.redirect('/login');
     }
+    next('route')
+})
+
+router.route('/').get((req, res) => {
 
     const user_no = req.session.userinfo[0];
 

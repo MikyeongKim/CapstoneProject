@@ -230,9 +230,12 @@
             'params': params
           },
           success: function(result) {
-            if (result['result'] == true) {
+            if (result.result) {
               $('#result').html(result['content']);
-            }
+            } },
+          error : function(result) {
+            alert('세션이 끊겼습니다,')
+            window.location.href = "/login";
           }
         });
       })
