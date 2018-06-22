@@ -3,18 +3,14 @@ const express = require('express'),
   models = require('../models')
   , service = require('./func/communityService')
 
-
-const community_category = 3
-
 router.route('/').get((req, res) => {
   let path;
-  let currpage = req.param('page');
-  if (currpage == null) {
-    currpage = 1;
-  }
+  let curPage = req.param('page');
 
-  service.listAllCommunity(result => {
-    resultSet = BoardPaging(currpage, result)
+  service.listAllCommunity(curPage, (err,result) => {
+    if(err) {
+      return res.send('community list error 이것좀 작업해 종화야 에러처리 등록해라.!')
+    }
 
     if (!req.session.userinfo) {
       path = 'common'
@@ -23,7 +19,7 @@ router.route('/').get((req, res) => {
     }
 
     return res.render(`${path}/community`, {
-      board_list: resultSet
+      board_list: result
     })
   })
 })
@@ -33,15 +29,23 @@ router.route('/').post((req, res) => {
   if (!req.session.userinfo) {
     res.status(401).redirect('/')
   }
+
   const body = req.body;
   const params = {
     userno: req.session.userinfo[0], content: req.body.content
     , title: req.body.title, board_department: req.body.board_department
   }
 
-  service.createCommunity(params, (err,result) => {
-    res.redirect('/community')
+  service.createCommunity(params, (err, result) => {
+    return res.redirect('/community')
   })
+})
+
+router.route('/new').get((req, res) => {
+  if (!req.session.userinfo) {
+    res.status(401).redirect('/')
+  }
+  res.render('common/boardinsert')
 })
 
 router.route('/:id').get((req, res) => {
@@ -127,75 +131,67 @@ router.route('/:id').put((req, res) => {
       return res.status(503).send("503 Service Unavailable")
     })
 })
-  .delete((req, res) => {
+router.route('/:id').delete((req, res) => {
 
-    models.Board.find({
-      where: {
-        board_no: req.params.id
-      }
-    }).then((result) => {
-
-      if (!result) {
-        return res.status(400).send('400 Bad Request')
-      }
-
-      if (result.board_user_no != req.session.userinfo[0]) {
-        return res.render('/')
-      }
-
-      models.Board.destroy({
-        where: {
-          board_no: result.board_no
-        }
-      }).then((result) => {
-        res.send({
-          result: true
-        })
-      }).catch((err) => {
-        return res.status(503).send("503 Service Unavailable")
-      })
-    })
-  })
-
-
-router.route('/:id/new')
-  .get((req, res) => {
-
-    if (!req.session.userinfo) {
-      res.status(401).redirect('/')
+  models.Board.find({
+    where: {
+      board_no: req.params.id
     }
-    res.render('common/boardinsert')
-  })
+  }).then((result) => {
 
-router.route('/:id/edit')
-  .get((req, res) => {
+    if (!result) {
+      return res.status(400).send('400 Bad Request')
+    }
 
-    models.Board.find({
+    if (result.board_user_no != req.session.userinfo[0]) {
+      return res.render('/')
+    }
+
+    models.Board.destroy({
       where: {
-        board_no: req.params.id
+        board_no: result.board_no
       }
     }).then((result) => {
-
-      if (!result) {
-        return res.status(400).send('400 Bad Request')
-      }
-
-      if (!req.session.userinfo) {
-        return res.status(401).redirect('/community')
-      }
-
-      if (result.board_user_no != req.session.userinfo[0]) {
-        return res.status(401).redirect('/community')
-      }
-
-      res.render('common/boardedit', {
-        data: result
+      res.send({
+        result: true
       })
     }).catch((err) => {
-      return res.status(400).redirect('/community')
+      return res.status(503).send("503 Service Unavailable")
     })
-
   })
+})
+
+
+
+
+router.route('/:id/edit').get((req, res) => {
+
+  models.Board.find({
+    where: {
+      board_no: req.params.id
+    }
+  }).then((result) => {
+
+    if (!result) {
+      return res.status(400).send('400 Bad Request')
+    }
+
+    if (!req.session.userinfo) {
+      return res.status(401).redirect('/community')
+    }
+
+    if (result.board_user_no != req.session.userinfo[0]) {
+      return res.status(401).redirect('/community')
+    }
+
+    res.render('common/boardedit', {
+      data: result
+    })
+  }).catch((err) => {
+    return res.status(400).redirect('/community')
+  })
+
+})
 
 function IsWriter(data, id) {
   const length = data.length
@@ -206,28 +202,5 @@ function IsWriter(data, id) {
   }
 }
 
-function BoardPaging(currentPage, result){
-  var limitList = 10;
-  var skipList = (currentPage - 1) * limitList;
-  var limitPage = 10;
-  var startPage = Math.floor((currentPage - 1) / limitPage) * limitPage + 1;
-  var endPage = startPage + limitPage - 1;
-  var prevPage = startPage - limitPage
-
-  var totalCount = result.length;
-  var pageNum = Math.ceil(totalCount / limitList);
-  if (endPage > pageNum) {
-    endPage = pageNum
-  }
-
-  resultSet = result.slice(skipList, skipList + limitList)
-  resultSet.skip = skipList
-  resultSet.startp= startPage
-  resultSet.endp= endPage
-  resultSet.lastp= pageNum
-  resultSet.prevp= prevPage
-
-  return resultSet
-}
 
 module.exports = router

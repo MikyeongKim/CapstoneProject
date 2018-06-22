@@ -28,10 +28,6 @@ router.route('/').get((req, res) => {
 })
 
 router.route('/c').post((req, res) => {
-  /*
-  if (!req.session.userinfo) {
-    return res.status(401).send({ result: false });
-  }*/
   const content = req.body.content;
   const param = req.body.params;
 
@@ -63,10 +59,6 @@ router.route('/java').post((req, res) => {
 })
 
 router.route('/python').post((req, res) => {
-  /*
-  if (!req.session.userinfo) {
-    return res.send({ result: false });
-  }*/
   const content = req.body.content
   const param = req.body.params;
 

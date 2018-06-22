@@ -16,7 +16,9 @@ function listAllCommunity(callback) {
             ['created_at', 'DESC']
         ]
     }).then((result) => {
-        return callback(result);
+        return callback(null,result);
+    }).catch(err => {
+        return callback(err);
     })
 }
 
