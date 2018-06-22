@@ -2,7 +2,10 @@ const models = require('../../models');
 module.exports = {
     listAllCommunity: listAllCommunity
     , createCommunity: createCommunity
-    , readCommunity : readCommunity
+    , readCommunity: readCommunity
+    , findBoard: findBoard
+    , updateCommunity: updateCommunity
+    , deleteCommunity: deleteCommunity
 }
 const community_category = 3
 
@@ -16,7 +19,7 @@ function listAllCommunity(callback) {
             ['created_at', 'DESC']
         ]
     }).then((result) => {
-        return callback(null,result);
+        return callback(null, result);
     }).catch(err => {
         return callback(err);
     })
@@ -44,12 +47,14 @@ function createCommunity(params, callback) {
                         transaction: t
                     })
             }).then(result => {
-                callback(result)
+                callback(null, result)
+            }).catch(err => {
+                callback(err)
             })
     })
 }
 
-function readCommunity(board_no , callback) {
+function readCommunity(board_no, callback) {
     models.sequelize.Promise.all([
         models.Board.find({
             where: { board_no: board_no }
@@ -64,12 +69,54 @@ function readCommunity(board_no , callback) {
             where: { board_no: board_no }
         })
     ]).spread((boardResult, updateResult, replyResult) => {
-        let result = {boardResult : boardResult , updateResult: updateResult , replyResult : replyResult}
+        let result = { boardResult: boardResult, updateResult: updateResult, replyResult: replyResult }
         if (!boardResult) {
-            return callback(null,false)
+            return callback(null, false)
         }
-        return callback(null , result)
+        return callback(null, result)
     }).catch((err) => {
         return callback(err)
     });
+}
+
+function findBoard(board_no, callback) {
+    models.Board.find({
+        where: {
+            board_no: board_no
+        }
+    }).then(result => {
+        if (!result) {
+            return callback(err)
+        }
+        return callback(null, result)
+    }).catch(err => {
+        return callback(err)
+    })
+}
+
+function updateCommunity(body, board_no, callback) {
+
+    models.Board.update({
+        board_title: body.title,
+        board_content: body.content,
+        board_department: body.board_department
+    }, {
+            where: { board_no: board_no }
+        }).then(result => {
+            callback(null, result)
+        }).catch(err => {
+            callback(err)
+        })
+}
+
+function deleteCommunity(board_no, callback) {
+    models.Board.destroy({
+        where: {
+            board_no: board_no
+        }
+    }).then(result => {
+        callback(null, result)
+    }).catch(err => {
+        callback(err)
+    })
 }

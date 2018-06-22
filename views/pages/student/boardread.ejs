@@ -224,6 +224,10 @@
                   if (result['result']) {
                     window.location.href = '/community';
                   }
+                },
+                error : function(result) {
+                  alert('세션이 종료되었습니다.')
+                  window.location.href = "/login";
                 }
               })
             })

@@ -11,7 +11,7 @@
 </head>
 
 <body>
-  <form method="post" action="/community/<%= data.board_no %>" id="form_edit">
+  <form method="get" action="/community/<%= data.board_no %>" id="form_edit">
     <table>
       <label>게시판 </label>
       <!-- TODO : SELECT값 data.board_department 로 지정하기 -->
@@ -38,7 +38,7 @@
       <textarea name="content" class="summernote" id="content" required rows="30" autofocus cols="130"><%= data.board_content %></textarea>
     </table>
     <hr align="left" width="70%">
-    <button href='/community/<%= data.board_no %>'>뒤로가기</button>
+    <button href="/community/<%= data.board_no %>">뒤로가기</button>
     <input type="submit" id="subbtn" value="수정">
   </form>
 
@@ -57,15 +57,20 @@
 
 
     $('#form_edit').submit(() => {
+      let url = `/community/<%= data.board_no %>`
       $.ajax({
         type: 'PUT',
-        url: "/community/<%= data.board_no %>",
+        url: url,
         data: $('#form_edit').serialize(),
         success: (result) => {
           if (result['result']) {
-            window.location.href = "/community/<%= data.board_no %>";
+            window.location.href = url;
           }
-        }
+        },
+        error : function(result) {
+            alert('세션이 종료되었습니다.')
+            window.location.href = "/login";
+          }
       })
     })
 

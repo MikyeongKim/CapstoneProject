@@ -1,14 +1,14 @@
 const express = require('express'),
   router = express.Router(),
   models = require('../models')
-  , service = require('./func/communityService')
+  , service = require('./service/communityService')
 
 router.route('/').get((req, res) => {
   let path;
   let curPage = req.param('page');
 
-  service.listAllCommunity(curPage, (err,result) => {
-    if(err) {
+  service.listAllCommunity(curPage, (err, result) => {
+    if (err) {
       return res.send('community list error 이것좀 작업해 종화야 에러처리 등록해라.!')
     }
 
@@ -37,6 +37,10 @@ router.route('/').post((req, res) => {
   }
 
   service.createCommunity(params, (err, result) => {
+    if (err) {
+      return res.send('community list error 이것좀 작업해 종화야 에러처리 등록해라.!')
+    }
+
     return res.redirect('/community')
   })
 })
@@ -54,153 +58,84 @@ router.route('/:id').get((req, res) => {
   if (!req.session.userinfo) {
     service.readCommunity(req_board_no, (err, result) => {
       if (err) {
-        return res.status(500).send(err)
+        return res.send('community list error 이것좀 작업해 종화야 에러처리 등록해라.!')
       }
-      if (result == false) {
-        return res.status(400).send('Bad Request')
-      }
+
       return res.render('common/boardread'
         , { readBoard: result.boardResult, reply: result.replyResult })
     })
   }
   else {
-    models.sequelize.Promise.all([
-      models.Board.find({
-        where: {
-          board_no: req_board_no
-        }
-      }),
-
-      models.Board.update({
-        board_count: models.sequelize.literal('board_count+1')
-      }, {
-          where: {
-            board_no: req_board_no
-          }
-        }),
-
-      models.Reply.findAll({
-        where: {
-          board_no: req_board_no
-        }
-      })
-    ]).spread((boardResult, updateResult, replyResult) => {
-
-      if (!boardResult) {
-        return res.status(400).send('400 Bad Request')
+    const user_no = req.session.userinfo[0];
+    service.readCommunityAuth(req_board_no, user_no, (err, result) => {
+      if (err) {
+        return res.send('community list error 이것좀 작업해 종화야 에러처리 등록해라.!')
       }
-      IsWriter(replyResult, req.session.userinfo[0])
-
-      if (boardResult.board_user_no == req.session.userinfo[0]) {
-        return res.render('student/boardread', {
-          readBoard: boardResult,
-          writer: true,
-          reply: replyResult
-        })
-      }
-
       return res.render('student/boardread', {
-        readBoard: boardResult,
-        writer: false,
-        reply: replyResult
+        readBoard: result.readBoard,
+        writer: result.writer,
+        reply: result.reply
       })
-    }).catch((err) => {
-      return res.status(505).send("505 Server error")
-    });
+    })
   }
 })
 
 router.route('/:id').put((req, res) => {
-  const paramId = req.params.id
+  if (!req.session.userinfo) {
+    return res.status(401).json({ massage: '비정상적인 접근' });
+  }
+
+  const board_no = req.params.id
   const body = req.body
+  const user_no = req.session.userinfo[0]
 
-  models.Board.update({
-    board_title: req.body.title,
-    board_content: req.body.content,
-    board_department: req.body.board_department
-  }, {
-      where: {
-        board_no: paramId
-      }
-    }).then((result) => {
-      res.send({
-        result: true
-      })
-    }).catch((err) => {
-      console.log("에러러러러")
-      return res.status(503).send("503 Service Unavailable")
-    })
-})
-router.route('/:id').delete((req, res) => {
 
-  models.Board.find({
-    where: {
-      board_no: req.params.id
-    }
-  }).then((result) => {
-
-    if (!result) {
-      return res.status(400).send('400 Bad Request')
+  service.updateCommunity(body, board_no, user_no, (err, result) => {
+    if (err) {
+      return res.send('community list error 이것좀 작업해 종화야 에러처리 등록해라.!')
     }
 
-    if (result.board_user_no != req.session.userinfo[0]) {
-      return res.render('/')
-    }
+    return res.json({ result: true })
 
-    models.Board.destroy({
-      where: {
-        board_no: result.board_no
-      }
-    }).then((result) => {
-      res.send({
-        result: true
-      })
-    }).catch((err) => {
-      return res.status(503).send("503 Service Unavailable")
-    })
   })
 })
 
+router.route('/:id').delete((req, res) => {
+
+  if (!req.session.userinfo) {
+    return res.status(401).json({ massage: '비정상적인 접근' });
+  }
+
+  const board_no = req.params.id
+  const user_no = req.session.userinfo[0]
 
 
+  service.deleteCommunity(board_no, user_no, (err, result) => {
+    if (err) {
+      return res.send('community list error 이것좀 작업해 종화야 에러처리 등록해라.!')
+    }
+
+    return res.json({ result: true })
+  })
+
+})
 
 router.route('/:id/edit').get((req, res) => {
 
-  models.Board.find({
-    where: {
-      board_no: req.params.id
-    }
-  }).then((result) => {
+  if (!req.session.userinfo) {
+    return res.status(401).redirect('/community')
+  }
 
-    if (!result) {
-      return res.status(400).send('400 Bad Request')
-    }
+  const board_no = req.params.id
+  const user_no = req.session.userinfo[0]
 
-    if (!req.session.userinfo) {
-      return res.status(401).redirect('/community')
+  service.updateFormCommunity(board_no, user_no, (err, result) => {
+    if (err) {
+      return res.send('community list error 이것좀 작업해 종화야 에러처리 등록해라.!')
     }
-
-    if (result.board_user_no != req.session.userinfo[0]) {
-      return res.status(401).redirect('/community')
-    }
-
-    res.render('common/boardedit', {
-      data: result
-    })
-  }).catch((err) => {
-    return res.status(400).redirect('/community')
+    return res.render('common/boardedit', { data: result })
   })
 
 })
-
-function IsWriter(data, id) {
-  const length = data.length
-  for (let i = 0; i < length; i++) {
-    if (data[i].board_user_no === id) {
-      data[i].isWriter = true
-    }
-  }
-}
-
 
 module.exports = router

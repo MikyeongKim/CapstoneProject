@@ -1,6 +1,6 @@
 const express = require('express')
   , router = express.Router()
-  , classFunc = require('./func/classFunc')
+  , classFunc = require('./service/myclassService')
   , models = require('../models')
 
 const Student = 1
