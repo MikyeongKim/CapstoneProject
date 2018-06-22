@@ -8,50 +8,24 @@ const community_category = 3
 
 router.route('/').get((req, res) => {
   let path;
-  var currentPage = req.param('page');
-  if (currentPage == null) {
-    currentPage = 1;
+  let currpage = req.param('page');
+  if (currpage == null) {
+    currpage = 1;
   }
 
-  var limitList = 3;
-  var skipList = (currentPage - 1) * limitList;
-  var limitPage = 3;
-  var startPage = Math.floor((currentPage - 1) / limitPage) * limitPage + 1;
-  var endPage = startPage + limitPage - 1;
+  service.listAllCommunity(result => {
+    resultSet = BoardPaging(currpage, result)
 
-  {
+    if (!req.session.userinfo) {
+      path = 'common'
+    } else {
+      path = 'student'
+    }
 
-    service.listAllCommunity(result => {
-
-      // 총 게시물수
-      var totalCount = result.length;
-      // 총 페이지수
-      var pageNum = Math.ceil(totalCount / limitList);
-      // 총 페이지수는 종료 페이지수
-      if (endPage > pageNum) {
-        endPage = pageNum
-      }
-
-      // 해당 페이지에 맞는 리스트 슬라이싱
-      resultSet = result.slice(skipList, skipList + limitList)
-
-      if (!req.session.userinfo) {
-        path = 'common'
-      } else {
-        path = 'student'
-      }
-
-      // 보낼 때 좀조잡하네...
-      return res.render(`${path}/community`, {
-        board_list: resultSet,
-        skipList,
-        startPage,
-        endPage,
-        pageNum,
-        limitPage
-      })
+    return res.render(`${path}/community`, {
+      board_list: resultSet
     })
-  }
+  })
 })
 
 router.route('/').post((req, res) => {
@@ -69,8 +43,6 @@ router.route('/').post((req, res) => {
     res.redirect('/community')
   })
 })
-
-
 
 router.route('/:id').get((req, res) => {
   const req_board_no = req.params.id
@@ -232,6 +204,30 @@ function IsWriter(data, id) {
       data[i].isWriter = true
     }
   }
+}
+
+function BoardPaging(currentPage, result){
+  var limitList = 10;
+  var skipList = (currentPage - 1) * limitList;
+  var limitPage = 10;
+  var startPage = Math.floor((currentPage - 1) / limitPage) * limitPage + 1;
+  var endPage = startPage + limitPage - 1;
+  var prevPage = startPage - limitPage
+
+  var totalCount = result.length;
+  var pageNum = Math.ceil(totalCount / limitList);
+  if (endPage > pageNum) {
+    endPage = pageNum
+  }
+
+  resultSet = result.slice(skipList, skipList + limitList)
+  resultSet.skip = skipList
+  resultSet.startp= startPage
+  resultSet.endp= endPage
+  resultSet.lastp= pageNum
+  resultSet.prevp= prevPage
+
+  return resultSet
 }
 
 module.exports = router
