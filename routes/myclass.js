@@ -16,21 +16,23 @@ router.all('*', (req, res, next) => {
 
 router.route('/').get((req, res) => {
 
-  if (!req.session.userinfo) {
-    return res.status(401).redirect('/login')
-  }
-
   const userGrade = req.session.userinfo[1];
   const userno = req.session.userinfo[0];
 
   if (userGrade === Student) {
 
-    classFunc.findClassByStu(userno, result => {
+    classFunc.findClassByStu(userno, (err, result) => {
+      if (err) {
+        return res.send('Myclass error 이것좀 작업해 종화야 에러처리 등록해라.!');
+      }
       return res.render('student/myclass', { myclass: result })
     })
 
   } else {
-    classFunc.findClassByPro(userno, result => {
+    classFunc.findClassByPro(userno, (err, result) => {
+      if (err) {
+        return res.send('Myclass error 이것좀 작업해 종화야 에러처리 등록해라.!');
+      }
       return res.render('professor/myclass', { myclass: result })
     })
   }
@@ -43,17 +45,18 @@ router.route(['/main/:id', '/plan/:id']).get((req, res) => {
   const userGrade = req.session.userinfo[1];
   const userno = req.session.userinfo[0];
 
+  let path = 'professor';
   if (userGrade === Student) {
-    classFunc.findPlanByAll(class_no, result => {
-      return res.render('student/blog_plan', { plan: result })
-    })
-  } else {
-    classFunc.findPlanByAll(class_no, result => {
-      return res.render('professor/blog_plan', { plan: result })
-    })
+    path = 'student'
   }
-})
 
+  classFunc.findPlanByAll(class_no, (err, result) => {
+    if (err) {
+      return res.send('Myclass error 이것좀 작업해 종화야 에러처리 등록해라.!');
+    }
+    return res.render(`${path}/blog_plan`, { plan: result })
+  })
+})
 
 router.route('/notice/:id').get((req, res) => {
   const class_no = req.params.id

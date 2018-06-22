@@ -1,4 +1,4 @@
-const models = require('../../models');
+const myclassDAO = require('../Repository/Repo_myclass');
 
 module.exports = {
     findClassByStu: findClassByStu
@@ -7,48 +7,32 @@ module.exports = {
 }
 
 function findClassByStu(userno, callback) {
-
-    models.Student.findAll({
-        where: { student_no: userno },
-        attributes: [],
-        limit: 1,
-        include: [{
-            model: models.subject,
-            attributes: ['subject_no', 'subject_name', 'subject_place', 'subject_credit', 'subject_time', 'sub_pro_name']
-            , through: {
-                attributes: [],
-            },
-        }]
-    }).then(result => {
-        callback(result[0]['subjects'])
+    myclassDAO.findClassByStu(userno, (err, result) => {
+        if (err) {
+            return callback(err)
+        }
+        return callback(null, result)
     })
 }
 
 
 function findClassByPro(userno, callback) {
 
-    models.subject.findAll({
-        where: { professor_no: userno },
-    }).then(result => {
-        callback(result)
+    myclassDAO.findClassByPro(userno, (err, result) => {
+        if (err) {
+            return callback(err)
+        }
+        return callback(null, result)
     })
-
 }
 
 function findPlanByAll(class_no, callback) {
-    models.subject.findAll({
-        where: { subject_no: class_no },
-        include: [{
-            model: models.subjectType
-            , attributes: ['subjectType_name'],
-        }, {
-            model: models.Department
-            , attributes: ['department_name'],
-        }]
-    }).then(result => {
-        callback(result[0])
+    myclassDAO.findPlanByAll(class_no, (err, result) => {
+        if (err) {
+            return callback(err)
+        }
+        return callback(null, result)
     })
-
 }
 
 
