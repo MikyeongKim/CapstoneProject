@@ -4,6 +4,7 @@ module.exports = {
     , findClassByPro: findClassByPro
     , findPlanByAll: findPlanByAll
     , createNotice: createNotice
+    , findAllNotice: findAllNotice
 }
 
 const NOTICE = 5
@@ -59,51 +60,33 @@ function findPlanByAll(subject_no, callback) {
 
 }
 
-function createNotice(body,user_name, callback) {
-      console.log('여기까진오냥!!!!!!!');
-      models.blog.create({
-        blog_title : body.title,
+function createNotice(body, user_name, callback) {
+    models.blog.create({
+        blog_title: body.title,
         blog_content: body.content,
-        blog_writer : user_name,
+        blog_writer: user_name,
         blog_ispublic: body.ispublic,
-        blog_user_no : body.user_no,
-        blog_category : NOTICE ,
-        subject_no : body.subject_no,
+        blog_user_no: body.user_no,
+        blog_category: NOTICE,
+        subject_no: body.subject_no,
     }).then(result => {
-        return callback(null,true)
+        return callback(null, true)
     }).catch(err => {
         return callback(err)
     })
 }
 
-
-
-
-
-
-
-//이거 보존하기
-function temp(subject_no, callback) {
-    models.Student.findAll({
-        where: { student_no: 1 },
-        attributes: [],
-        limit: 1,
-        include: [{
-            model: models.subject
-            , where: { subject_no: subject_no }
-            , include: [{
-                model: models.subjectType
-                , attributes: ['subjectType_name'],
-            }, {
-                model: models.Department
-                , attributes: ['department_name'],
-            }]
-            , through: {
-                attributes: [],
-            },
-        }]
+function findAllNotice(subject_no, callback) {
+    models.blog.findAll({
+        where: {
+            blog_category: NOTICE,
+            subject_no: subject_no
+        },
+        //limit: 5,
+        order: [['created_at', 'DESC']]
     }).then(result => {
-        callback(result[0]['subjects'][0])
-    })
-
+        return callback(null,result);
+    }).catch(err => {
+        return callback(err)
+    });
 }

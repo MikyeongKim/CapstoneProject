@@ -6,6 +6,7 @@ module.exports = {
     , findClassByPro: findClassByPro
     , findPlanByAll: findPlanByAll
     , createNotice: createNotice
+    , listAllNotice: listAllNotice
 }
 
 function findClassByStu(userno, callback) {
@@ -51,5 +52,13 @@ function createNotice(body, callback) {
             return callback(null, result)
         })
     })
+}
 
+function listAllNotice(subject_no, callback) {
+    myclassDAO.findAllNotice(subject_no, (err,result) => {
+        if(err) {
+            return callback(err)
+        }
+        return callback(null, result)
+    })
 }

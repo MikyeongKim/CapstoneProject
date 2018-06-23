@@ -50,34 +50,34 @@
                                             <colgroup>
                                                 <col width="12%">
                                                 <col width="38%">
-                                                <col width="6%">
                                                 <col width="16%">
                                                 <col width="16%">
                                                 <col width="12%">
+                                                <col width="6%">                                                
                                             </colgroup>
 
                                             <thead scope="row" class="even">
                                                 <tr>
                                                     <th>번호</th>
                                                     <th>제목</th>
-                                                    <th>첨부</th>
                                                     <th>작성자</th>
                                                     <th>등록일</th>
                                                     <th>조회수</th>
+                                                    <th>공개여부</th>
                                                 </tr>
                                             </thead>
                                             <tbody scope="row" style="text-align:center; ">
                                                 <!--바로 아래는 뷰짜려고 임시로 만든 <td>목록임-->
-
+                                                <% board.forEach((item,index) => { %>
                                                     <tr>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td><a href="#" style="margin:0;" class="icono-bookmarkEmpty" ></a></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
+                                                        <td><%= index+1 %></td>
+                                                        <td><a href="/mysql/<%=subject_no%>/notice/<%=item.board_no%>"><%= item.blog_title %></td>
+                                                        <td><%= item.blog_writer %></td>
+                                                        <td><%= item.created_at %></td>
+                                                        <td><%= item.blog_count %></td>
+                                                        <td><%= item.blog_ispublic %></td>
                                                     </tr>
-
+                                                <% }); %>
                                                 <!--td갯수는 최대15개로 fix해야함, 16번글부터는 2번째 페이지로 아웃
                                                     아래 코드는 /community.ejs 긁어온거라서 DB에 맞게 수정해야함!
                                                         <tr>

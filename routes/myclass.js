@@ -68,9 +68,14 @@ router.route('/:id/notice/new').get((req, res) => {
 })
 
 
-router.route('/:id/notice/').get((req, res) => {
+router.route('/:id/notice').get((req, res) => {
   const subject_no = req.params.id
-  return res.render('professor/2notice/index', {subject_no:subject_no})
+  service.listAllNotice(subject_no,(err,result) => {
+    if(err) {
+      return res.send(`listAllNotice Error\n ${err}`)
+    }
+    return res.render('professor/2notice/index', {subject_no: subject_no , board:result})
+  })
 })
 
 router.route('/:id/notice/').post((req, res) => {
