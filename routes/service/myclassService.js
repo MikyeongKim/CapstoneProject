@@ -5,11 +5,12 @@ module.exports = {
     findClassByStu: findClassByStu
     , findClassByPro: findClassByPro
     , findPlanByAll: findPlanByAll
-    , createNotice: createNotice
-    , listAllNotice: listAllNotice
-    , readNotice: readNotice
+    , createBlog: createBlog
+    , listAllBlog: listAllBlog
+    , readBlog: readBlog
 }
 
+// 니넨 붙어있어라
 function findClassByStu(userno, callback) {
     myclassDAO.findClassByStu(userno, (err, result) => {
         if (err) {
@@ -18,8 +19,6 @@ function findClassByStu(userno, callback) {
         return callback(null, result)
     })
 }
-
-
 function findClassByPro(userno, callback) {
 
     myclassDAO.findClassByPro(userno, (err, result) => {
@@ -29,7 +28,6 @@ function findClassByPro(userno, callback) {
         return callback(null, result)
     })
 }
-
 function findPlanByAll(subject_no, callback) {
     myclassDAO.findPlanByAll(subject_no, (err, result) => {
         if (err) {
@@ -40,13 +38,17 @@ function findPlanByAll(subject_no, callback) {
 }
 
 
-function createNotice(body, callback) {
+
+
+
+// notice,qna 글작성
+function createBlog(body, category, callback) {
     userDAO.findUserNameByNo(body.user_no, (err, result) => {
         if (err) {
             return callback(err)
         }
 
-        myclassDAO.createNotice(body, result.user_name, (err, result) => {
+        myclassDAO.createBlog(body, result.user_name, category, (err, result) => {
             if (err) {
                 return callback(err)
             }
@@ -54,18 +56,18 @@ function createNotice(body, callback) {
         })
     })
 }
-
-function listAllNotice(subject_no, callback) {
-    myclassDAO.findAllNotice(subject_no, (err, result) => {
+// notice,qna 게시글찾기
+function listAllBlog(subject_no, category, callback) {
+    myclassDAO.findAllBlog(subject_no, category, (err, result) => {
         if (err) {
             return callback(err)
         }
         return callback(null, result)
     })
 }
-
-function readNotice(subject_no, blog_no, callback) {
-    myclassDAO.readNotice(subject_no,blog_no,(err,result) => {
+// notice,qna 글읽기
+function readBlog(subject_no, blog_no, callback) {
+    myclassDAO.readBlog(subject_no,blog_no,(err,result) => {
         if(err) {
             return callback(err)
         }

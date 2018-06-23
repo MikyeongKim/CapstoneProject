@@ -3,15 +3,12 @@ module.exports = {
     findClassByStu: findClassByStu
     , findClassByPro: findClassByPro
     , findPlanByAll: findPlanByAll
-    , createNotice: createNotice
-    , findAllNotice: findAllNotice
-    , readNotice: readNotice
+    , createBlog: createBlog
+    , findAllBlog: findAllBlog
+    , readBlog: readBlog
 }
 
-const NOTICE = 5
-const QNA = 6
-const PPT = 7
-const TASK = 8
+
 
 function findClassByStu(userno, callback) {
     models.Student.findAll({
@@ -61,14 +58,18 @@ function findPlanByAll(subject_no, callback) {
 
 }
 
-function createNotice(body, user_name, callback) {
+
+
+
+// notice, qna 글작성
+function createBlog(body, user_name, category, callback) {
     models.blog.create({
         blog_title: body.title,
         blog_content: body.content,
         blog_writer: user_name,
         blog_ispublic: body.ispublic,
         blog_user_no: body.user_no,
-        blog_category: NOTICE,
+        blog_category: category,
         subject_no: body.subject_no,
     }).then(result => {
         return callback(null, true)
@@ -76,11 +77,11 @@ function createNotice(body, user_name, callback) {
         return callback(err)
     })
 }
-
-function findAllNotice(subject_no, callback) {
+// notice, qna 게시글나열
+function findAllBlog(subject_no, category, callback) {
     models.blog.findAll({
         where: {
-            blog_category: NOTICE,
+            blog_category: category,
             subject_no: subject_no
         },
         //limit: 5,
@@ -91,8 +92,8 @@ function findAllNotice(subject_no, callback) {
         return callback(err)
     });
 }
-
-function readNotice(subject_no, blog_no, callback) {
+// notice, qna 글읽기
+function readBlog(subject_no, blog_no, callback) {
     models.blog.find({
         where: {
             blog_no: blog_no,

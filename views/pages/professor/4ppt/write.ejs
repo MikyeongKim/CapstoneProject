@@ -4,144 +4,151 @@
 
 <head>
 	<!--헤드내용 include -->
-	
-    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css"> 
-    <% include ../../../partials/head.ejs %>
-    <link rel="stylesheet" href="/stylesheets/summernote.css">
+	<link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+	<% include ../../../partials/head.ejs %>
+		<link rel="stylesheet" href="/stylesheets/summernote.css">
 </head>
 
 <body class="homepage">
 	<div id="page-wrapper">
 
-	    <!-- Header -->
+		<!-- Header -->
 		<% include ./../header.ejs %>
 
-		<!-- Nav include -->
-		<% include ./../nav.ejs %>
+			<!-- Nav include -->
+			<% include ./../nav.ejs %>
 
 
-		<!-- Main -->
-		<div id="main-wrapper">
-			<div id="main" class="container">
-				<div class="row">
-					<div class="2u">
-                    
-                        <% include ./../blog_sidebar.ejs %>
-					</div>
+				<!-- Main -->
+				<div id="main-wrapper">
+					<div id="main" class="container">
+						<div class="row">
+							<div class="2u">
 
-					<div class="10u 12u(mobile) important(mobile)">
+								<% include ./../blog_sidebar.ejs %>
+							</div>
 
-						<!--
-							
+							<div class="10u 12u(mobile) important(mobile)">
+
+								<!--
+
 							section class= box feature 중간정렬
 							section class= box features 왼쪽정렬
 						 -->
-						 <div class="content content-right">
-							<article class="box page-content">
-								<header>
-                                    <h2 style="font-size:2.5em;"><a href="#">강의자료 올리기</a></h2>
-                                    <a style="float:right; margin:2% 0; font-size:1em;" href="#" class="button">목록보기</a>
-									
-									<h2 class="major"></h2>
-								</header>
-                              
-								<div>
-                  
-										<form action="#" method="POST">
-											<div>
-												<table class="type06" style="margin:0;">
-													<colgroup>
-														<col width="25%"/>
-														<col width="75%"/>
-													</colgroup>
-																									
-													<tr>
-														<th scope="row" class="even">
-															<label for="blog-in-title">제목</label>
-														</th>
-														<td>
-															<input type="text" id="blog-in-title"/>
-														</td>
-													</tr>
-													<tr>
-														<th scope="row" class="even">
-															<label for="blog-in-opening">공개유무</label>
-														</th>
-														<td>
-															<input type="radio" id="blog-in-opening" name="opening" value="open" />공개
-															<input type="radio" name="opening" value="close"/>비공개
-															
-														</td>
-													</tr>
-													<tr>
-														<th scope="row" class="even">
-															<label for="blog-in-date">공개기간</label>
-														</th>
-														<td>
-															<input type="radio" id="blog-in-date" name="setdate" value="default"/>설정안함
-															<input type="radio" name="setdate" value="set"/>설정   
-															<input type="date" name="setdate" id="blog-in-opendate" />
-															~
-															<input type="date" name="setdate"  id="blog-in-closedate"/>
-															<input type="time" name="setdate"  id="blog-in-closetime" value="23:59"/>
-															
-														</td>
-													</tr>
-													<tr>
-														<td colspan="2" >
-															<textarea name="content" class="summernote" id="content" required rows="30" autofocus cols="130"></textarea>
-                                                     
-														</td>
-													</tr>
-													<tr>
-														<th scope="row" class="even">
-															<label for="blog-in-upload">첨부파일</label>
-														</th>
-														<td>
+								<div class="content content-right">
+									<article class="box page-content">
+										<header>
+											<h2 style="font-size:2.5em;"><a href="#">강의자료</a>
+											</h2>
+											<!--목록으로 가게끔 연결하기-->
+
+											<h2 class="major"></h2>
+										</header>
+
+										<div>
+
+											<form action="/myclass/<%=subject_no%>/ppt" method="POST">
+												<div>
+													<table class="type06" style="margin:0;">
+														<colgroup>
+															<col width="25%" />
+															<col width="75%" />
+														</colgroup>
+
+														<tr>
+															<th scope="row" class="even">
+																<label for="blog-in-title">제목</label>
+															</th>
+															<td>
+																<input type="text" id="blog-in-title" name='title' />
+															</td>
+														</tr>
+														<tr>
+															<th scope="row" class="even">
+																<label for="blog-in-opening">공개유무</label>
+															</th>
+															<td>
+																<input type="radio" id="blog-in-opening" name="ispublic" value="1" checked="checked" />공개
+																<input type="radio" name="ispublic" value="0" />비공개
+															</td>
+														</tr>
+
+														<!-- 공개기간 설정해야함  -->
+														<tr>
+															<th scope="row" class="even">
+																<label for="blog-in-date">공개기간</label>
+															</th>
+															<td>
+																<input type="radio" id="blog-in-date" name="setdate" value="default" />설정안함
+																<input type="radio" name="setdate" value="set" />설정
+																<input type="date" name="setdate" id="blog-in-opendate" /> ~
+																<input type="date" name="setdate" id="blog-in-closedate" />
+																<input type="time" name="setdate" id="blog-in-closetime" value="23:59" />
+
+															</td>
+														</tr>
+
+														<tr>
+															<td colspan="2">
+																<textarea name="content" class="summernote" id="content" required rows="30" autofocus cols="130"></textarea>
+
+															</td>
+														</tr>
+
+
+														<tr>
+															<th scope="row" class="even">
+																<label for="blog-in-upload">첨부파일</label>
+															</th>
+															<td>
 																<input type="file" />
-														</td>
-													</tr>
-													<tr>
-														<td colspan="2" style="text-align:center; padding:0.5em 1.5em; margin:1%;">
-		
-															<input type="submit" value="올리기" />
-															<input type="reset" value="취소"/>				
-														</td>
-													</tr>
-												</table>
-											</div>
-										</form>
-									</div>
-							</article>
-						 </div>			
+															</td>
+														</tr>
+
+														<tr>
+															<td colspan="2" style="text-align:center; padding:0.5em 1.5em; margin:1%;">
+
+																<input type="button" id="subbtn" value="글작성">
+                                <button class="button" onclick="location.href='javascript:history.back()'">뒤로가기
+																</button>
+															</td>
+														</tr>
+													</table>
+												</div>
+											</form>
+										</div>
+
+										<div style="margin-top:5%;">
+											<h2 class="major"></h2>
+										</div>
+									</article>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
-			</div>
-		</div>
 
-
-	
-	<!-- Footer include -->
-	<% include ../../../partials/footer.ejs %>
+				<!-- Footer include -->
+				<% include ../../../partials/footer.ejs %>
 
 	</div>
 
 	<!-- Scripts -->
 	<% include ../../../partials/scripts.ejs %>
-<!-- summernote 에딧창 추가 -->
-  <script>
-    $(document).ready(function() {
-      $('.summernote').summernote({
-        height: 300,
-        tabsize: 2,
-        focus: true
-      });
-      $('#subbtn').on('click', function() {
-        $('textarea[name="content"]').val($('.summernote').summernote('code'));
-        $('form').submit();
-      });
-    });
-  </script>
+		<!-- summernote 에딧창 추가 -->
+		<script>
+			$(document).ready(function() {
+				$('.summernote').summernote({
+					height: 300,
+					tabsize: 2,
+					focus: true
+				});
+				$('#subbtn').on('click', function() {
+					$('textarea[name="content"]').val($('.summernote').summernote('code'));
+					$('form').submit();
+				});
+			});
+		</script>
 </body>
 
 </html>
