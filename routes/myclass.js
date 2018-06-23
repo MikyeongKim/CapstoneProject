@@ -7,7 +7,7 @@ const Student = 1
   , Professor = 2;
 
 router.all('*', (req, res, next) => {
-  req.session.userinfo = [1, 1];
+  req.session.userinfo = [6, 2];
   /*
   if (!req.session.userinfo) {
     return res.status(401).redirect('/login')
@@ -107,6 +107,42 @@ router.route('/:id/notice/').post((req, res) => {
   //return res.render('professor/2notice/index' , {subject_no:subject_no})
 })
 
+router.route('/:id/task/new').get((req, res) => {
+  const subject_no = req.params.id
+  return res.render('professor/5task/write', { subject_no: subject_no })
+})
+
+router.route('/:id/task/').get((req, res) => {
+  const subject_no = req.params.id
+  return res.render('professor/5task/index', { subject_no: subject_no })
+})
+
+router.route('/:id/task/:no').get((req, res) => {
+  const subject_no = req.params.id;
+  const blog_no = req.params.no;
+
+  return res.render('professor/5task/read', { subject_no: subject_no })
+})
+
+
+router.route('/:id/task/').post((req, res) => {
+  let subject_no = req.params.id;
+  req.body.subject_no = subject_no
+  req.body.user_no = req.session.userinfo[0]
+
+  service.createNotice(req.body, (err, result) => {
+    if (err) {
+      return res.send(err)
+    }
+
+    return res.redirect(`/myclass/${subject_no}/notice`)
+  })
+  //return res.render('professor/2notice/index' , {subject_no:subject_no})
+})
+
+
+
+
 router.route('/:id/qna/new').get((req, res) => {
   return res.render('professor/3qna/write')
 
@@ -128,16 +164,6 @@ router.route('/:id/ppt').get((req, res) => {
   const subject_no = req.params.id
   return res.render('professor/4ppt/index', { subject_no: subject_no })
 
-})
-
-router.route('/:id/task/new').get((req, res) => {
-  const subject_no = req.params.id
-  return res.render('professor/5task/write', { subject_no: subject_no })
-})
-
-router.route('/:id/task/').get((req, res) => {
-  const subject_no = req.params.id
-  return res.render('professor/5task/index', { subject_no: subject_no })
 })
 
 router.route('/:id/team').get((req, res) => {

@@ -4,7 +4,7 @@
 
 <head>
     <!--헤드내용 include -->
-    <% include ../../partials/head.ejs %>
+    <% include ../../../partials/head.ejs %>
 </head>
 
 <body class="homepage">
@@ -57,7 +57,7 @@
                                                         <label for="blog-in-title">제목</label>
                                                     </th>
                                                     <td>
-                                                        <p style="margin:0;"> <%= readTask.task_title %> </p>
+                                                        <p style="margin:0;"> </p>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -65,7 +65,7 @@
                                                         <label for="blog-in-submit">제출방식</label>
                                                     </th>
                                                     <td>
-                                                        <p style="margin:0;"><%= readTask.task_method %></p>
+                                                        <p style="margin:0;"></p>
                                                     </td>
                                                 </tr>
         
@@ -74,7 +74,7 @@
                                                         <label for="blog-in-loadday">게시일</label>
                                                     </th>
                                                     <td>
-                                                        <p style="margin:0;"><%= readTask.created_at %></p>
+                                                        <p style="margin:0;"></p>
                                                         
                                                     </td>
                                                 </tr>
@@ -85,7 +85,7 @@
                                                         <label for="blog-in-dday">마감일</label>
                                                     </th>
                                                     <td>
-                                                        <p style="margin:0;"><%= readTask.task_deadline %></p>
+                                                        <p style="margin:0;"></p>
                                                         
                                                     </td>
                                                 </tr>
@@ -95,7 +95,6 @@
                                                         
                                                         <p style="height:20px; padding:8px;" >
                                                         <!--썸머노트에 저장되었던 내용-->
-                                                        <%= readTask.task_content %>
                                                         </p>
                                                     </td>
                                                 </tr>
@@ -105,26 +104,17 @@
                                                         <label for="blog-in-upload">첨부파일(n개)</label>
                                                     </th>
                                                     <td>
-                                                        <a onclick = "location = '/myclass/download/task/'+'<%=readTask.task_fileup%>'"href="#" ><%=readTask.task_fileup%></a>
+                                                        <a href="#" ></a>
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="2" style="text-align: center; " >
                                                         <a style="margin:2% 0; font-size:1em;" href="#" class="button">수정하기</a>
-                                            
                                                     </td>
                                                 </tr>
-                                                
                                             </table>
-                                    
-                                       
                                         </div>
-        
-                                        
                                         <div>
-                                            
-        
-        
                                             <!-- 학생들 목록 읽어와서 제출했음/안했음 표시하는 테이블//  -->
                                             <!--아래div는 제출한 경우 (수정이 가능하게끔 수정버튼 남겨둠)-->
                                             <div>

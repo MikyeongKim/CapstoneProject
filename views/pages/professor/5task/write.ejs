@@ -47,7 +47,7 @@
                                         
                                         <div>
                           
-                                                <form id="myForm" name="myForm" action="#" method="POST" enctype="multipart/form-data">
+                                                <form id="myForm" name="myForm" action="/myclass/<%=subject_no%>/task" method="POST" enctype="multipart/form-data">
                                                     <div>
                                                         <table class="type06" style="margin:0;">
                                                             <colgroup>
@@ -65,24 +65,30 @@
                                                             </tr>
                                                             <tr>
                                                                 <th scope="row" class="even">
+                                                                    <label for="hw-taskname">과제명</label>
+                                                                </th>
+                                                                <td>
+                                                                    <input type="text" id="blog-taskname" name="taskName"/>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row" class="even">
                                                                     <label for="hw-type">제출방식</label>
                                                                 </th>
                                                                 <td>
-                                                                    <input type="radio" id="hw-how" name="how" value="온라인" />온라인
+                                                                    <input type="radio" id="hw-how" name="how" value="온라인제출" checked="checked"/>온라인
                                                                     <input type="radio" name="how" value="강의실제출"/>강의실제출
                                                                 </td>
                                                             </tr>
                                                             
                                                             <tr>
         
-                                                                <!--디비에는 글작성되는 시간도 저장해야해요-->
                                                                 <th scope="row" class="even">
                                                                     <label for="hw-dday">마감일</label>
                                                                 </th>
                                                                 <td>
                                                                     <input type="date" name="setdate1"  id="hw-dday"/>
                                                                     <input type="time" name="setdate2"  id="hw-ddaytime" value="23:59"/>
-                                                                    
                                                                 </td>
                                                             </tr>
                                                 
