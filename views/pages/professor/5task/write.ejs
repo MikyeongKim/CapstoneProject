@@ -4,9 +4,7 @@
 
 <head>
     <!--헤드내용 include -->
-    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css"> 
     <% include ../../../partials/head.ejs %>
-    <link rel="stylesheet" href="/stylesheets/summernote.css">
 </head>
 
 <body class="homepage">
@@ -25,7 +23,7 @@
 				<div class="row">
 					<div class="2u">
                     
-                        <%- include ./blog_sidebar.ejs ,{subject_list : subject_list} %>
+                        <% include ./../blog_sidebar.ejs %>
 					</div>
 
 					<div class="10u 12u(mobile) important(mobile)">
@@ -92,7 +90,7 @@
                                                                 <td colspan="2" >
                                                                     
                                                                 <div>
-                                                                    <textarea name="content" class="summernote" id="content" required rows="30" autofocus cols="130"></textarea>
+                                                                    <textarea name="content" id="content" required rows="30" autofocus cols="130"></textarea>
                                                                 </div>
             
                                                                 </td>
@@ -138,26 +136,13 @@
 
 	
 	<!-- Footer include -->
-	<% include ../../partials/footer.ejs %>
+	<% include ../../../partials/footer.ejs %>
 
 	</div>
 
 	<!-- Scripts -->
-	<% include ../../partials/scripts.ejs %>
-<!-- summernote 에딧창 추가 -->
-  <script>
-    $(document).ready(function() {
-      $('.summernote').summernote({
-        height: 300,
-        tabsize: 2,
-        focus: true
-      });
-      $('#subbtn').on('click', function() {
-        $('textarea[name="content"]').val($('.summernote').summernote('code'));
-        $('form').submit();
-      });
-    });
-  </script>
+	<% include ../../../partials/scripts.ejs %>
+
 </body>
 
 </html>

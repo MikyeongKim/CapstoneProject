@@ -1,9 +1,11 @@
 const myclassDAO = require('../Repository/Repo_myclass');
+const userDAO = require('../Repository/Repo_user');
 
 module.exports = {
     findClassByStu: findClassByStu
     , findClassByPro: findClassByPro
     , findPlanByAll: findPlanByAll
+    , createNotice: createNotice
 }
 
 function findClassByStu(userno, callback) {
@@ -36,29 +38,19 @@ function findPlanByAll(class_no, callback) {
 }
 
 
+function createNotice(body, callback) {
+    userDAO.findUserNameByNo(body.user_no, (err, result) => {
+        if(err) {
+            return callback(err)
+        }
 
-//이거 보존하기
-function temp(class_no, callback) {
-    models.Student.findAll({
-        where: { student_no: 1 },
-        attributes: [],
-        limit: 1,
-        include: [{
-            model: models.subject
-            , where: { subject_no: class_no }
-            , include: [{
-                model: models.subjectType
-                , attributes: ['subjectType_name'],
-            }, {
-                model: models.Department
-                , attributes: ['department_name'],
-            }]
-            , through: {
-                attributes: [],
-            },
-        }]
-    }).then(result => {
-        callback(result[0]['subjects'][0])
+        myclassDAO.createNotice(body, result.user_name ,(err, result) => {
+            if (err) {
+                return callback(err)
+            }
+            return callback(null, result)
+        })
     })
 
 }
+

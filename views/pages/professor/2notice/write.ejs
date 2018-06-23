@@ -4,7 +4,10 @@
 
 <head>
     <!--헤드내용 include -->
+    
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css"> 
     <% include ../../../partials/head.ejs %>
+    <link rel="stylesheet" href="/stylesheets/summernote.css">
 </head>
 
 <body class="homepage">
@@ -45,7 +48,7 @@
                                 
                                 <div>
                   
-                                    <form action="#" method="POST">
+                                    <form action="/myclass/<%=class_no%>/notice" method="POST">
                                         <div>
                                             <table class="type06" style="margin:0;">
                                                 <colgroup>
@@ -58,7 +61,7 @@
                                                         <label for="blog-in-title">제목</label>
                                                     </th>
                                                     <td>
-                                                        <input type="text" id="blog-in-title"/>
+                                                        <input type="text" id="blog-in-title" name='title'/>
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -66,32 +69,15 @@
                                                         <label for="blog-in-opening">공개유무</label>
                                                     </th>
                                                     <td>
-                                                        <input type="radio" id="blog-in-opening" name="opening" value="open" />공개
-                                                        <input type="radio" name="opening" value="close"/>비공개
-                                                        
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row" class="even">
-                                                        <label for="blog-in-date">공개기간</label>
-                                                    </th>
-                                                    <td>
-                                                        <input type="radio" id="blog-in-date" name="setdate" value="default"/>설정안함
-                                                        <input type="radio" name="setdate" value="set"/>설정   
-                                                        <input type="date" name="setdate" id="blog-in-opendate" />
-                                                        ~
-                                                        <input type="date" name="setdate"  id="blog-in-closedate"/>
-                                                        <input type="time" name="setdate"  id="blog-in-closetime" value="23:59"/>
-                                                        
+                                                        <input type="radio" id="blog-in-opening" name="ispublic" value="1" checked="checked"/>공개
+                                                        <input type="radio" name="ispublic" value="0"/>비공개
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="2" >
-                                                        썸머노트 들어갈 자리임
-                                                    <div>
-                                                    <!--여기에 썸머노트 붙이기-->
-                                                    </div>
-
+                                                      
+                                                        <textarea name="content" class="summernote" id="content" required rows="30" autofocus cols="130"></textarea>
+                                                     
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -139,7 +125,20 @@
 
 	<!-- Scripts -->
 	<% include ../../../partials/scripts.ejs %>
-
+<!-- summernote 에딧창 추가 -->
+  <script>
+    $(document).ready(function() {
+      $('.summernote').summernote({
+        height: 300,
+        tabsize: 2,
+        focus: true
+      });
+      $('#subbtn').on('click', function() {
+        $('textarea[name="content"]').val($('.summernote').summernote('code'));
+        $('form').submit();
+      });
+    });
+  </script>
 </body>
 
 </html>

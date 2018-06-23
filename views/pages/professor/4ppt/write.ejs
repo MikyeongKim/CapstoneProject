@@ -3,8 +3,11 @@
 <html>
 
 <head>
-    <!--헤드내용 include -->
+	<!--헤드내용 include -->
+	
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css"> 
     <% include ../../../partials/head.ejs %>
+    <link rel="stylesheet" href="/stylesheets/summernote.css">
 </head>
 
 <body class="homepage">
@@ -86,11 +89,8 @@
 													</tr>
 													<tr>
 														<td colspan="2" >
-															썸머노트 들어갈 자리임
-														<div>
-														<!--여기에 썸머노트 붙이기-->
-														</div>
-	
+															<textarea name="content" class="summernote" id="content" required rows="30" autofocus cols="130"></textarea>
+                                                     
 														</td>
 													</tr>
 													<tr>
@@ -128,7 +128,20 @@
 
 	<!-- Scripts -->
 	<% include ../../../partials/scripts.ejs %>
-
+<!-- summernote 에딧창 추가 -->
+  <script>
+    $(document).ready(function() {
+      $('.summernote').summernote({
+        height: 300,
+        tabsize: 2,
+        focus: true
+      });
+      $('#subbtn').on('click', function() {
+        $('textarea[name="content"]').val($('.summernote').summernote('code'));
+        $('form').submit();
+      });
+    });
+  </script>
 </body>
 
 </html>
