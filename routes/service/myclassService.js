@@ -7,6 +7,7 @@ module.exports = {
     , findPlanByAll: findPlanByAll
     , createNotice: createNotice
     , listAllNotice: listAllNotice
+    , readNotice: readNotice
 }
 
 function findClassByStu(userno, callback) {
@@ -41,11 +42,11 @@ function findPlanByAll(subject_no, callback) {
 
 function createNotice(body, callback) {
     userDAO.findUserNameByNo(body.user_no, (err, result) => {
-        if(err) {
+        if (err) {
             return callback(err)
         }
 
-        myclassDAO.createNotice(body, result.user_name ,(err, result) => {
+        myclassDAO.createNotice(body, result.user_name, (err, result) => {
             if (err) {
                 return callback(err)
             }
@@ -55,10 +56,20 @@ function createNotice(body, callback) {
 }
 
 function listAllNotice(subject_no, callback) {
-    myclassDAO.findAllNotice(subject_no, (err,result) => {
-        if(err) {
+    myclassDAO.findAllNotice(subject_no, (err, result) => {
+        if (err) {
             return callback(err)
         }
         return callback(null, result)
+    })
+}
+
+function readNotice(subject_no, blog_no, callback) {
+    myclassDAO.readNotice(subject_no,blog_no,(err,result) => {
+        if(err) {
+            return callback(err)
+        }
+
+        return callback(null,result)
     })
 }

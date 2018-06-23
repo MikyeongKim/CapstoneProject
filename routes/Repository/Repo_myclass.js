@@ -5,6 +5,7 @@ module.exports = {
     , findPlanByAll: findPlanByAll
     , createNotice: createNotice
     , findAllNotice: findAllNotice
+    , readNotice: readNotice
 }
 
 const NOTICE = 5
@@ -85,8 +86,21 @@ function findAllNotice(subject_no, callback) {
         //limit: 5,
         order: [['created_at', 'DESC']]
     }).then(result => {
-        return callback(null,result);
+        return callback(null, result);
     }).catch(err => {
         return callback(err)
     });
+}
+
+function readNotice(subject_no, blog_no, callback) {
+    models.blog.find({
+        where: {
+            blog_no: blog_no,
+            subject_no: subject_no
+        }
+    }).then(result => {
+        return callback(null, result);
+    }).catch(err => {
+        return callback(err);
+    })
 }

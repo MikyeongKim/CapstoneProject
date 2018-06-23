@@ -71,9 +71,9 @@
                                                 <% board.forEach((item,index) => { %>
                                                     <tr>
                                                         <td><%= index+1 %></td>
-                                                        <td><a href="/mysql/<%=subject_no%>/notice/<%=item.board_no%>"><%= item.blog_title %></td>
+                                                        <td><a href="/myclass/<%=subject_no%>/notice/<%=item.blog_no%>"><%= item.blog_title %></td>
                                                         <td><%= item.blog_writer %></td>
-                                                        <td><%= item.created_at %></td>
+                                                        <td>이따함</td>
                                                         <td><%= item.blog_count %></td>
                                                         <td><%= item.blog_ispublic %></td>
                                                     </tr>
