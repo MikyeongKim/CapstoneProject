@@ -7,9 +7,11 @@ const Student = 1
   , Professor = 2;
 
 router.all('*', (req, res, next) => {
+  req.session.userinfo= [1,1];
+  /*
   if (!req.session.userinfo) {
     return res.status(401).redirect('/login')
-  }
+  }*/
   next('route')
 })
 
@@ -58,31 +60,49 @@ router.route(['/main/:id', '/plan/:id']).get((req, res) => {
   })
 })
 
+
+router.route('/notice/new').get((req, res) => {
+  //return res.render('professor/notice/write.ejs')
+  return res.render('professor/2notice/write')
+})
+
+
 router.route('/notice/:id').get((req, res) => {
   const class_no = req.params.id
-  return res.render('professor/blog_notice')
+  return res.render('professor/2notice/index')
+
+})
+
+router.route('/qna/new').get((req, res) => {
+  return res.render('professor/3qna/write')
 
 })
 
 
-
-
 router.route('/qna/:id').get((req, res) => {
   const class_no = req.params.id
-  return res.render('student/blog_qna')
+  return res.render('professor/3qna/index')
+})
+
+router.route('/ppt/new').get((req, res) => {
+
+  return res.render('professor/4ppt/write')
 
 })
 
 router.route('/ppt/:id').get((req, res) => {
   const class_no = req.params.id
-  return res.render('student/blog_ppt')
+  return res.render('professor/4ppt/index')
 
+})
+
+router.route('/task/new').get((req, res) => {
+  return res.render('professor/5task/write')
 })
 
 router.route('/task/:id').get((req, res) => {
   const class_no = req.params.id
-  return res.render('student/blog_hw')
-
+  return res.render('professor/5task/index')
 })
 
 router.route('/team/:id').get((req, res) => {
