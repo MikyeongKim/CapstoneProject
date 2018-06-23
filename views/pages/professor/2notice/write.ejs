@@ -4,8 +4,8 @@
 
 <head>
     <!--헤드내용 include -->
-    
-    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css"> 
+
+    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
     <% include ../../../partials/head.ejs %>
     <link rel="stylesheet" href="/stylesheets/summernote.css">
 </head>
@@ -25,14 +25,14 @@
 			<div id="main" class="container">
 				<div class="row">
 					<div class="2u">
-                    
+
                         <% include ./../blog_sidebar.ejs %>
 					</div>
 
 					<div class="10u 12u(mobile) important(mobile)">
 
 						<!--
-							
+
 							section class= box feature 중간정렬
 							section class= box features 왼쪽정렬
 						 -->
@@ -42,20 +42,20 @@
                                     <h2 style="font-size:2.5em;"><a href="#">공지사항</a></h2>
                                     <!--목록으로 가게끔 연결하기-->
                                      <a style="float:right; margin:2% 0; font-size:1em;" href="#" class="button">글쓰기</a>
-									
+
                                      <h2 class="major"></h2>
                                 </header>
-                                
+
                                 <div>
-                  
-                                    <form action="/myclass/<%=class_no%>/notice" method="POST">
+
+                                    <form action="/myclass/<%=subject_no%>/notice" method="POST">
                                         <div>
                                             <table class="type06" style="margin:0;">
                                                 <colgroup>
                                                     <col width="25%"/>
                                                     <col width="75%"/>
                                                 </colgroup>
-                                                                                                
+
                                                 <tr>
                                                     <th scope="row" class="even">
                                                         <label for="blog-in-title">제목</label>
@@ -75,9 +75,9 @@
                                                 </tr>
                                                 <tr>
                                                     <td colspan="2" >
-                                                      
+
                                                         <textarea name="content" class="summernote" id="content" required rows="30" autofocus cols="130"></textarea>
-                                                     
+
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -90,12 +90,12 @@
                                                 </tr>
                                                 <tr>
                                                     <td colspan="2" style="text-align:center; padding:0.5em 1.5em; margin:1%;">
-    
+
                                                         <input type="submit" value="올리기" />
-                                                        <input type="reset" value="취소"/>				
+                                                        <input type="reset" value="취소"/>
                                                     </td>
                                                 </tr>
-                                                
+
 
                                             </table>
                                         </div>
@@ -107,7 +107,7 @@
                                     <h2 class="major" ></h2>
                                 </div>
 							</article>
-						 </div>			
+						 </div>
 					</div>
 
 				</div>
@@ -117,7 +117,7 @@
 		</div>
 
 
-	
+
 	<!-- Footer include -->
 	<% include ../../../partials/footer.ejs %>
 

@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
         blog_count: { type: DataTypes.INTEGER, allowNull: false, defaultValue: '0' },
         blog_writer: { type: DataTypes.STRING, allowNull: false },
         blog_ispublic : {type: DataTypes.BOOLEAN, allowNull: false , defaultValue: '1'}
-    }, {
+          }, {
             freezeTableName: true,
             tableName: "tbl_blog",
             underscored: true,

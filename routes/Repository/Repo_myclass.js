@@ -6,7 +6,7 @@ module.exports = {
     , createNotice: createNotice
 }
 
-const NOTICE = 5 
+const NOTICE = 5
 const QNA = 6
 const PPT = 7
 const TASK = 8
@@ -41,9 +41,9 @@ function findClassByPro(userno, callback) {
     })
 }
 
-function findPlanByAll(class_no, callback) {
+function findPlanByAll(subject_no, callback) {
     models.subject.findAll({
-        where: { subject_no: class_no },
+        where: { subject_no: subject_no },
         include: [{
             model: models.subjectType
             , attributes: ['subjectType_name'],
@@ -60,7 +60,8 @@ function findPlanByAll(class_no, callback) {
 }
 
 function createNotice(body,user_name, callback) {
-    models.blog.create({
+      console.log('여기까진오냥!!!!!!!');
+      models.blog.create({
         blog_title : body.title,
         blog_content: body.content,
         blog_writer : user_name,
@@ -82,14 +83,14 @@ function createNotice(body,user_name, callback) {
 
 
 //이거 보존하기
-function temp(class_no, callback) {
+function temp(subject_no, callback) {
     models.Student.findAll({
         where: { student_no: 1 },
         attributes: [],
         limit: 1,
         include: [{
             model: models.subject
-            , where: { subject_no: class_no }
+            , where: { subject_no: subject_no }
             , include: [{
                 model: models.subjectType
                 , attributes: ['subjectType_name'],

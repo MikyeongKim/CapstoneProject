@@ -42,7 +42,7 @@ router.route('/').get((req, res) => {
 })
 
 router.route(['/:id/main/', '/:id/plan/']).get((req, res) => {
-  const class_no = req.params.id
+  const subject_no = req.params.id
 
   const userGrade = req.session.userinfo[1];
   const userno = req.session.userinfo[0];
@@ -52,7 +52,7 @@ router.route(['/:id/main/', '/:id/plan/']).get((req, res) => {
     path = 'student'
   }
 
-  service.findPlanByAll(class_no, (err, result) => {
+  service.findPlanByAll(subject_no, (err, result) => {
     if (err) {
       return res.send('Myclass error 이것좀 작업해 종화야 에러처리 등록해라.!');
     }
@@ -62,21 +62,23 @@ router.route(['/:id/main/', '/:id/plan/']).get((req, res) => {
 
 
 router.route('/:id/notice/new').get((req, res) => {
-  const class_no = req.params.id
+  const subject_no = req.params.id
   //return res.render('professor/notice/write.ejs')
-  return res.render('professor/2notice/write' , {class_no:class_no})
+  return res.render('professor/2notice/write' , {subject_no:subject_no})
 })
 
 
 router.route('/:id/notice/').get((req, res) => {
-  const class_no = req.params.id
-  return res.render('professor/2notice/index', {class_no:class_no})
+  const subject_no = req.params.id
+  return res.render('professor/2notice/index', {subject_no:subject_no})
 })
 
 router.route('/:id/notice/').post((req, res) => {
   let subject_no = req.params.id;
   req.body.subject_no = subject_no
   req.body.user_no = req.session.userinfo[0]
+  console.log(req.body.ispublic);
+
   service.createNotice(req.body,(err , result) => {
     if(err) {
       return res.send(err)
@@ -84,8 +86,7 @@ router.route('/:id/notice/').post((req, res) => {
 
     return res.redirect(`/myclass/${subject_no}/notice`)
   })
-  
-  //return res.render('professor/2notice/index' , {class_no:class_no})
+  //return res.render('professor/2notice/index' , {subject_no:subject_no})
 })
 
 router.route('/:id/qna/new').get((req, res) => {
@@ -95,41 +96,41 @@ router.route('/:id/qna/new').get((req, res) => {
 
 
 router.route('/:id/qna').get((req, res) => {
-  const class_no = req.params.id
-  return res.render('professor/3qna/index', {class_no:class_no})
+  const subject_no = req.params.id
+  return res.render('professor/3qna/index', {subject_no:subject_no})
 })
 
 router.route('/:id/ppt/new').get((req, res) => {
 
-  return res.render('professor/4ppt/write', {class_no:class_no})
+  return res.render('professor/4ppt/write', {subject_no:subject_no})
 
 })
 
 router.route('/:id/ppt').get((req, res) => {
-  const class_no = req.params.id
-  return res.render('professor/4ppt/index', {class_no:class_no})
+  const subject_no = req.params.id
+  return res.render('professor/4ppt/index', {subject_no:subject_no})
 
 })
 
 router.route('/:id/task/new').get((req, res) => {
-  const class_no = req.params.id
-  return res.render('professor/5task/write' , {class_no:class_no})
+  const subject_no = req.params.id
+  return res.render('professor/5task/write' , {subject_no:subject_no})
 })
 
 router.route('/:id/task/').get((req, res) => {
-  const class_no = req.params.id
-  return res.render('professor/5task/index', {class_no:class_no})
+  const subject_no = req.params.id
+  return res.render('professor/5task/index', {subject_no:subject_no})
 })
 
 router.route('/:id/team').get((req, res) => {
-  const class_no = req.params.id
-  return res.render('student/blog_team', {class_no:class_no})
+  const subject_no = req.params.id
+  return res.render('student/blog_team', {subject_no:subject_no})
 
 })
 
 router.route('/:id/grade/').get((req, res) => {
-  const class_no = req.params.id
-  return res.render('student/blog_grade' , {class_no:class_no})
+  const subject_no = req.params.id
+  return res.render('student/blog_grade' , {subject_no:subject_no})
 
 })
 

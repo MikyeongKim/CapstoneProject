@@ -28,8 +28,8 @@ function findClassByPro(userno, callback) {
     })
 }
 
-function findPlanByAll(class_no, callback) {
-    myclassDAO.findPlanByAll(class_no, (err, result) => {
+function findPlanByAll(subject_no, callback) {
+    myclassDAO.findPlanByAll(subject_no, (err, result) => {
         if (err) {
             return callback(err)
         }
@@ -53,4 +53,3 @@ function createNotice(body, callback) {
     })
 
 }
-
