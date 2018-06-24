@@ -6,8 +6,8 @@
   <!--헤드내용 include -->
   <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
   <% include ../../../partials/head.ejs %>
-  <link rel="stylesheet" href="/stylesheets/summernote.css">
-  <% include ../../../partials/scripts.ejs %>
+    <link rel="stylesheet" href="/stylesheets/summernote.css">
+    <% include ../../../partials/scripts.ejs %>
 </head>
 
 <body class="homepage">
@@ -132,21 +132,21 @@
   <!-- Scripts -->
   <% include ../../../partials/scripts.ejs %>
 
-  <script>
-    $(document).ready(function() {
-      $('.summernote').summernote({
-        height: 300,
-        tabsize: 2,
-        focus: true,
-        airMode: true,
-        disableDragAndDrop: true,
-        popover: {
-          air: []
-        }
+    <script>
+      $(document).ready(function() {
+        $('.summernote').summernote({
+          height: 300,
+          tabsize: 2,
+          focus: true,
+          airMode: true,
+          disableDragAndDrop: true,
+          popover: {
+            air: []
+          }
+        });
+        $('.summernote').summernote('disable');
       });
-      $('.summernote').summernote('disable');
-    });
-  </script>
+    </script>
 
 </body>
 

@@ -1,23 +1,85 @@
-	<!-- Nav 수정할 경우, 각 연결 페이지 확인 수정 -->
-    <nav id="nav">
-        <ul>
-            <li class="current">
-                <a href="/">Codit Class</a>
-            </li>
-            <li>
-                <a href="/editor">Editor</a>
-            </li>
-            <li>
-                <a href="/myclass">My class</a>
-            </li>
-            <li>
-                <a href="/community">Community</a>
-            </li>
-            <li>
-                <a href="/myinfo">My Info</a>
-            </li>
-            <li>
-                <a href="/logout">Logout</a>
-            </li>
-        </ul>
-    </nav>
+<nav id="nav">
+  <ul>
+    <li id="homelink">
+      <script>
+        var pathn = window.location.pathname;
+        if (pathn == "/") {
+          document.getElementById("homelink").setAttribute("class", "current");
+        }
+      </script>
+      <a href="/">Codit Class</a>
+    </li>
+    <li>
+      <a href="/editor" id="edi">Editor
+                    <script>
+                    var pathn=window.location.pathname;
+                    if(pathn.includes("/editor")){
+                        document.getElementById("edi").setAttribute("style","background:#44688d");
+                        document.getElementById("edi").style.color="white";
+                    }
+                    </script>
+                </a>
+    </li>
+    <li>
+      <a href="/myclass" id="myc">My class
+                    <script>
+                    var pathn=window.location.pathname;
+                    if(pathn.includes("/myclass")){
+                        document.getElementById("myc").setAttribute("style","background:#44688d");
+                        document.getElementById("myc").style.color="white";
+                    }
+                    </script>
+                </a>
+    </li>
+    <li>
+      <a href="/community" id="commu">Community
+                    <script>
+                    var pathn=window.location.pathname;
+                    if(pathn.includes("/community")){
+                        document.getElementById("commu").setAttribute("style","background:#44688d");
+                        document.getElementById("commu").style.color="white";
+                    }
+                    </script>
+                </a>
+    </li>
+    <li>
+      <a href="/myinfo" id="info">Myifno
+                    <script>
+                    var pathn=window.location.pathname;
+                    if(pathn.includes("/myinfo")){
+                        document.getElementById("info").setAttribute("style","background:#44688d");
+                        document.getElementById("info").style.color="white";
+                    }
+                    </script>
+                </a>
+    </li>
+    <li>
+      <a href="/logout">Logout</a>
+    </li>
+  </ul>
+</nav>
+
+
+<!--
+<nav id="nav">
+  <ul>
+    <li class="current">
+      <a href="/">Codit Class</a>
+    </li>
+    <li>
+      <a href="/editor">Editor</a>
+    </li>
+    <li>
+      <a href="/myclass">My class</a>
+    </li>
+    <li>
+      <a href="/community">Community</a>
+    </li>
+    <li>
+      <a href="/myinfo">My Info</a>
+    </li>
+    <li>
+      <a href="/logout">Logout</a>
+    </li>
+  </ul>
+</nav> -->

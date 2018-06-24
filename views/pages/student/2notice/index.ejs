@@ -14,7 +14,7 @@
     <% include ./../header.ejs %>
 
       <!-- Nav include -->
-      <% include ./../nav.ejs %>
+      <%- include ./../nav.ejs %>
 
 
         <!-- Main -->
@@ -23,7 +23,7 @@
             <div class="row">
               <div class="2u">
 
-                <%- include ./../blog_sidebar.ejs %>
+                <% include ./../blog_sidebar.ejs %>
               </div>
 
               <div class="10u 12u(mobile) important(mobile)">
@@ -36,9 +36,9 @@
                 <div class="content content-right">
                   <article class="box page-content">
                     <header>
-                      <h2 style="font-size:2.5em;"><a href="#">과제</a></h2>
+                      <h2 style="font-size:2.5em;"><a href="#">공지사항</a></h2>
                       <!--목록으로 가게끔 연결하기-->
-                      <a style="float:right; margin:2% 0; font-size:1em;" href="/myclass/<%=subject_no%>/task/new" class="button">글쓰기</a>
+                      <!--공지사항 같은 경우는 학생이 등록할 수 없음!-->
 
                       <h2 class="major"></h2>
                     </header>
@@ -48,38 +48,48 @@
                       <form method="POST">
                         <table class="type06" style="vertical-align:middle; text-align:center;">
                           <colgroup>
-                            <col width="8%">
-                            <col width="32%">
+                            <col width="12%">
+                            <col width="38%">
                             <col width="16%">
                             <col width="16%">
-                            <col width="16%">
-                            <col width="20%">
+                            <col width="12%">
+                            <col width="6%">
                           </colgroup>
 
                           <thead scope="row" class="even">
                             <tr>
                               <th>번호</th>
                               <th>제목</th>
-                              <th>제출방식</th>
-                              <th>마감일</th>
-                              <th>제출인원</th>
-                              <th>평균점수</th>
-                              <!--세부내용 디비에 맞게 수정해도되요-->
+                              <th>작성자</th>
+                              <th>등록일</th>
+                              <th>조회수</th>
+                              <th>공개여부</th>
                             </tr>
                           </thead>
                           <tbody scope="row" style="text-align:center; ">
                             <!--바로 아래는 뷰짜려고 임시로 만든 <td>목록임-->
+                            <% board.forEach((item,index) => { %>
+                              <tr>
+                                <td>
+                                  <%= index+1 %>
+                                </td>
+                                <td>
+                                  <a href="/myclass/<%=subject_no%>/notice/<%=item.blog_no%>">
+                                    <%= item.blog_title %>
+                                </td>
+                                <td>
+                                  <%= item.blog_writer %>
+                                </td>
+                                <td>이따함</td>
+                                <td>
+                                  <%= item.blog_count %>
+                                </td>
+                                <td>
+                                  <%= item.blog_ispublic %>
+                                </td>
+                              </tr>
+                              <% }); %>
 
-                            <tr>
-                              <td></td>
-                              <td style="text-align:left;">
-                                <a href="myclass/task/new">
-                              </td>
-                              <td></td>
-                              <td></td>
-                              <td>submit로 구현해야함</td>
-                              <td>점수</td>
-                            </tr>
                           </tbody>
 
                           <tfoot>
@@ -99,11 +109,11 @@
                             <tr>
                               <td scope="row" class="even" colspan="6">
                                 <select id="category" style="width:60px; display:inline-block;">
-                                                                        <option selected="selected">제목</option>
-                                                                        <option>내용</option>
-                                                                        <option>작성자</option>
-                                                                        <option>등록일</option>
-                                                                    </select>
+                                                                <option selected="selected">제목</option>
+                                                                <option>내용</option>
+                                                                <option>작성자</option>
+                                                                <option>등록일</option>
+                                                            </select>
                                 <input type="search" id="search" />
                                 <!--검색버튼 눌렀을때 목록중에서 쏘팅해주는거 코드짜야함-->
                                 <input type="submit" value="검색" style="padding:0.4em 1.5em; font-weight:initial; font-size:1em;" />
@@ -123,9 +133,6 @@
                     <div style="margin-top:5%;">
                       <h2 class="major"></h2>
                     </div>
-
-
-
                   </article>
                 </div>
               </div>

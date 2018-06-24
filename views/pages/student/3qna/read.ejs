@@ -8,7 +8,6 @@
   <% include ../../../partials/head.ejs %>
     <link rel="stylesheet" href="/stylesheets/summernote.css">
     <% include ../../../partials/scripts.ejs %>
-
 </head>
 
 <body class="homepage">
@@ -33,15 +32,16 @@
               <div class="10u 12u(mobile) important(mobile)">
 
                 <!--
+
 							section class= box feature 중간정렬
 							section class= box features 왼쪽정렬
 						 -->
                 <div class="content content-right">
                   <article class="box page-content">
                     <header>
-                      <h2 style="font-size:2.5em;"><a href="#">공지사항</a></h2>
-                      <!--목록으로 가게끔 연결하기-->
-                      <!--공지사항 같은 경우는 학생이 등록할 수 없음!-->
+                      <h2 style="font-size:2.5em;">
+                        <a href="#">질의응답</a>
+                      </h2>
                       <h2 class="major"></h2>
                     </header>
 
@@ -92,18 +92,21 @@
                         <tr>
                           <td colspan="4" style="padding:40px 20px;">
                             <textarea class="summernote">
-                                            <%= board.blog_content %>
-                                          </textarea>
+                              <%= board.blog_content %>
+                            </textarea>
                           </td>
                         </tr>
 
-                        <th scope="row" class="even">
-                          <!--첨부파일 갯수 저장해서 n개 표시-->
-                          <label for="blog-in-upload">첨부파일(n개)</label>
-                        </th>
-                        <td>
-                          <a href="#">클릭하면 첨부파일 다운로드가능 하게 만들기</a>
-                        </td>
+                        <tr>
+                          <th scope="row" class="even">
+                            <!--첨부파일 갯수 저장해서 n개 표시-->
+                            <label for="blog-in-upload">첨부파일(n개)</label>
+                          </th>
+                          <td>
+                            <a href="#">클릭하면 첨부파일 다운로드가능 하게 만들기</a>
+                          </td>
+                        </tr>
+
 
                       </table>
 

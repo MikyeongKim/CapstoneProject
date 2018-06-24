@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <!--헤드내용 include -->
+   <% include ../../partials/head.ejs %>  
+</head>
+
+<body class="homepage">
+    <div id="page-wrapper">
+
+       	<% include ./header.ejs %>
+		<%- include ./nav.ejs ,{subject_no:subject_no},{subject_list : subject_list} %>
+
+		<!-- Main -->
+		<div id="main-wrapper">
+			<div id="main" class="container">
+				<div class="row">
+					<div class="2u">
+                    
+						<%- include ./blog_sidebar.ejs ,{subject_no:subject_no},{subject_list : subject_list} %>
+					</div>
+
+					<div class="10u 12u(mobile) important(mobile)">
+
+						<!--
+							
+							section class= box feature 중간정렬
+							section class= box features 왼쪽정렬
+						 -->
+						 <div class="content content-right">
+							<article class="box page-content">
+								<header>
+									<h2 style="font-size:2.5em;"><a href="#">팀프로젝트 내용보기</a></h2>
+                                    
+                                    <a style="float:right; margin:2% 0; font-size:1em;" href="#" class="button">목록보기</a>
+                                    <h2 class="major"></h2>
+								</header>
+
+								<div>
+                                  
+                  
+									<table class="type06" style="margin:0;">
+										<colgroup>
+											<col width="25%"/>
+											<col width="75%"/>
+										</colgroup>
+																						
+										<tr>
+											<th scope="row" class="even">
+												<label for="blog-in-title">제목</label>
+											</th>
+											<td>
+												<p style="margin:0;"> 게시글 제목 읽어와주세요 </p>
+											</td>
+										</tr>
+										<tr>
+											<th scope="row" class="even">
+												<label for="blog-in-submit">제출방식</label>
+											</th>
+											<td>
+												<p style="margin:0;">온라인 또는 강의실제출 </p>
+											</td>
+										</tr>
+
+										<tr>
+											<th scope="row" class="even">
+												<label for="blog-in-loadday">게시일</label>
+											</th>
+											<td>
+												<p style="margin:0;">yyyy-mm-dd 오전/오후 xx:xx까지 공개</p>
+												
+											</td>
+										</tr>
+									  
+										<!--여기 아래 부분은 교수가 설정안함을 선택했으면 안보이고, 기간을 설정했으면 보여줌-->
+										<tr>
+											<th scope="row" class="even">
+												<label for="blog-in-dday">마감일</label>
+											</th>
+											<td>
+												<p style="margin:0;">yyyy-mm-dd 오전/오후 xx:xx까지 공개</p>
+												
+											</td>
+										</tr>
+										<tr>
+											<th scope="row" class="even">
+												<label for="blog-in-submit">지각제출</label>
+											</th>
+											<td>
+												<p style="margin:0;">불허 </p>
+											</td>
+										</tr>
+
+										<tr>
+											<th scope="row" class="even">
+												<label for="blog-in-team">팀원 선정방식</label>
+											</th>
+											<td>
+												<!--교수가 지정한 방식대로읽어오고-->
+												<p style="margin:0;">학생자율 (3명)</p>
+												<!--만약 교수지정방식이었다면 같은팀원들 이름만 뜨게-->
+												<p style="margin:0;">교수지정 (3명)</p>
+												<p style="margin:0;">2012150001 김길동</p>
+												<p style="margin:0;">2012150003 손길동</p>
+												<p style="margin:0;">2012140003 홍길동</p>
+											</td>
+										</tr>
+
+										<tr>
+											<td colspan="2" >
+												
+												<p style="height:20px; padding:8px;" >
+												<!--썸머노트에 저장되었던 내용-->
+												썸머노트에 저장되었던 내용 가져오기
+												</p>
+											</td>
+										</tr>
+										<tr>
+											<th scope="row" class="even">
+												<!--첨부파일 갯수 저장해서 n개 표시-->
+												<label for="blog-in-upload">첨부파일(n개)</label>
+											</th>
+											<td>
+												<a href="#" >클릭하면 첨부파일 다운로드가능 하게 만들기</a>
+											</td>
+										</tr>
+										
+									</table>
+							
+							   
+								</div>
+
+								
+								<div>
+								<!-- 과제 제출했으면 제출한 내용이 보이고 // 안했으면 제출하러가는 버튼 -->
+
+									<!--아래div는 제출 안했을 경우-->
+									<div>
+											<div style="margin-top:5%;">
+													<h2 class="major" ></h2>
+												</div>
+										<a style="float:right; margin:2% 2%; font-size:1em;" href="#" class="button">회의하기</a>
+										<a style="float:right; margin:2% 0; font-size:1em;" href="#" class="button">제출하기</a>
+										<table class="type06" style="margin:0;">
+												
+										<tr style="text-align:center;">
+											<td>
+												<p style="margin:0;">제출한 과제가 없습니다. 기한 내 제출 바랍니다.</p>
+											</td>
+										</tr>
+										</table>
+									</div>
+
+
+									<!--아래div는 제출한 경우 (수정이 가능하게끔 수정버튼 남겨둠)-->
+									<div>
+											<div style="margin-top:5%;">
+													<h2 class="major" ></h2>
+												</div>
+												<a style="float:right; margin:2% 2%; font-size:1em;" href="#" class="button">회의하기</a>
+												<a style="float:right; margin:2% 0; font-size:1em;" href="#" class="button">수정하기</a>
+										<table class="type06" style="margin:0;">
+											<colgroup>
+												<col width="25%"/>
+												<col width="75%"/>
+											</colgroup>
+											<tr>
+												<th scope="row" class="even">
+													<label for="blog-in-submit-team">팀번호</label>
+												</th>
+												<td>
+													<p style="margin:0;">1</p>
+													
+												</td>
+											</tr>
+											<tr>
+												<th scope="row" class="even">
+													<label for="blog-in-submit-title">제출일</label>
+												</th>
+												<td>
+													<p style="margin:0;">yyyy-mm-dd 오전/오후 xx:xx</p>
+													
+												</td>
+											</tr>
+
+											<tr>
+												<td colspan="2">
+													<p style="height:20px; padding:8px;" >
+															<!--썸머노트에 저장되었던 내용-->
+															썸머노트에 저장되었던 내용 가져오기
+															</p>
+												</td>
+											</tr>
+											<tr>
+													<th scope="row" class="even">
+														<!--첨부파일 갯수 저장해서 n개 표시-->
+														<label for="blog-in-upload">첨부파일(n개)</label>
+													</th>
+													<td>
+														<a href="#" >클릭하면 첨부파일 다운로드가능 하게 만들기</a>
+													</td>
+											</tr>
+											<tr>
+												<th scope="row" class="even">
+													<label for="blog-in-submit-title">평가결과</label>
+												</th>
+												<td>
+													<!-- 교수가 평가했으면 점수가 뜨고, 평가 전일경우 메세지띄우기-->
+													<p style="margin:0; font-weight:bold; color:rgb(192, 0, 0);">85점 또는 평가 전 상태</p>
+													
+												</td>
+											</tr>
+										
+										</table>
+										
+									</div>
+								</div>
+								
+							</article>
+						 </div>			
+					</div>
+
+				</div>
+
+
+			</div>
+		</div>
+
+
+	
+    <!-- Footer include  -->
+	<% include ../../partials/footer.ejs %>
+
+    </div>
+    
+    <!-- Scripts -->
+	<% include ../../partials/scripts.ejs %>
+</body>
+
+</html>
