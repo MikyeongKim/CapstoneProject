@@ -19,7 +19,7 @@ const Student = 1
   , Professor = 2;
 
 router.all('*', (req, res, next) => {
-  req.session.userinfo = [6, 2];
+  req.session.userinfo = [1, 1];
 
   /*
   if (!req.session.userinfo) {
@@ -137,10 +137,7 @@ router.route('/:id/notice/').post((req, res) => {
 // 3qna 글쓰기
 router.route('/:id/qna/new').get((req, res) => {
   const subject_no = req.params.id
-
-  if (req.session.userinfo[1] === Student) {
-    return res.redirect(`/myclass/${subject_no}/qna/`);
-  }
+  
   return res.render('professor/3qna/write', { subject_no: subject_no })
 })
 // 3qna 접속
@@ -253,11 +250,6 @@ router.route('/:id/grade/').get((req, res) => {
   return res.render('student/7grade/blog_grade', { subject_no: subject_no })
 
 })
-
-
-
-
-
 
 
 router.route('/:id/task/new').get((req, res) => {
