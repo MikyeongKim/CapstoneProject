@@ -3,112 +3,150 @@
 <html>
 
 <head>
-    <!--헤드내용 include -->
-    <% include ../../partials/head.ejs %>
+  <!--헤드내용 include -->
+  <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+  <% include ../../../partials/head.ejs %>
+    <link rel="stylesheet" href="/stylesheets/summernote.css">
+    <% include ../../../partials/scripts.ejs %>
 </head>
 
 <body class="homepage">
-	<div id="page-wrapper">
+  <div id="page-wrapper">
 
-	    <!-- Header -->
-		<% include ./header.ejs %>
+    <!-- Header -->
+    <% include ./../header.ejs %>
 
-		<!-- Nav include -->
-		<%- include ./nav.ejs ,{subject_no:subject_no},{subject_list : subject_list} %>
+      <!-- Nav include -->
+      <% include ./../nav.ejs %>
 
 
-		<!-- Main -->
-		<div id="main-wrapper">
-			<div id="main" class="container">
-				<div class="row">
-					<div class="2u">
-                    
-                            <%- include ./blog_sidebar.ejs ,{subject_no:subject_no},{subject_list : subject_list} %>
-					</div>
+        <!-- Main -->
+        <div id="main-wrapper">
+          <div id="main" class="container">
+            <div class="row">
+              <div class="2u">
 
-					<div class="10u 12u(mobile) important(mobile)">
+                <% include ./../blog_sidebar.ejs %>
+              </div>
 
-						<!--
-							
+              <div class="10u 12u(mobile) important(mobile)">
+
+                <!--
+
 							section class= box feature 중간정렬
 							section class= box features 왼쪽정렬
 						 -->
-						 <div class="content content-right">
-							<article class="box page-content">
-								<header>
-									<h2 style="font-size:2.5em;"><a href="#">질의응답</a></h2>
-									<h2 class="major"></h2>
-								</header>
+                <div class="content content-right">
+                  <article class="box page-content">
+                    <header>
+                      <h2 style="font-size:2.5em;">
+                        <a href="#">질의응답</a>
+                      </h2>
+                      <h2 class="major"></h2>
+                    </header>
 
-                                <div>
-                                  
-                  
-                                    <table class="type06" style="margin:0;">
-                                        <colgroup>
-                                            <col width="25%"/>
-                                            <col width="75%"/>
-                                        </colgroup>
-                                                                                        
-                                        <tr>
-                                            <th scope="row" class="even">
-                                                <label for="blog-in-title">제목</label>
-                                            </th>
-                                            <td>
-                                                <p style="margin:0;"> <%= readBlog.blog_title %> </p>
-                                            </td>
-                                        </tr>
-                                     
-                                        <tr>
-                                            <td colspan="2" >
-                                                
-                                                <p style="height:20px; padding:8px;" >
-                                                <!--썸머노트에 저장되었던 내용-->
-                                                <%= readBlog.blog_content %>
-                                                </p>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th scope="row" class="even">
-                                                <!--첨부파일 갯수 저장해서 n개 표시-->
-                                                <label for="blog-in-upload">첨부파일(n개)</label>
-                                            </th>
-                        
-                                                <% file_list.forEach((item,index) => { %>
-                                                <td>
-                                                    <a onclick="location = '/myclass/download/'+'<%=item.Upload_title%>'" href="#"><%=item.Upload_title%></a>
-                                                </td>
-                                                <% }); %>
-                        
-                                        </tr>
-                                        
-                                    </table>
-                            
-                               
-                        </div>
-
-                        <div style="margin-top:5%;">
-                            <h2 class="major" ></h2>
-                        </div>
-
-							</article>
-						 </div>			
-					</div>
-
-				</div>
+                    <div>
 
 
-			</div>
-		</div>
+                      <table class="type06" style="margin:0;">
+                        <colgroup>
+                          <col width="25%" />
+                          <col width="75%" />
+                        </colgroup>
+
+                        <tr>
+                          <th scope="row" class="even">
+                            <label for="blog-in-title">제목</label>
+                          </th>
+                          <td>
+                            <p style="margin:0;">
+                              <%= board.blog_title %>
+                            </p>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <th scope="row" class="even">
+                            <label for="blog-in-date">작성자</label>
+                          </th>
+                          <td>
+                            <p style="margin:0;">
+                              <%= board.blog_writer %>
+                            </p>
+
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <th scope="row" class="even">
+                            <label for="blog-in-date">등록일</label>
+                          </th>
+                          <td>
+                            <p style="margin:0;">
+                              <%= board.created_at %>
+                            </p>
+
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td colspan="4" style="padding:40px 20px;">
+                            <textarea class="summernote">
+                              <%= board.blog_content %>
+                            </textarea>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <th scope="row" class="even">
+                            <!--첨부파일 갯수 저장해서 n개 표시-->
+                            <label for="blog-in-upload">첨부파일(n개)</label>
+                          </th>
+                          <td>
+                            <a href="#">클릭하면 첨부파일 다운로드가능 하게 만들기</a>
+                          </td>
+                        </tr>
+
+                      </table>
 
 
-	
-	<!-- Footer include -->
-	<% include ../../partials/footer.ejs %>
+                    </div>
 
-	</div>
+                    <div style="margin-top:5%;">
+                      <h2 class="major"></h2>
+                    </div>
+                  </article>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-	<!-- Scripts -->
-	<% include ../../partials/scripts.ejs %>
+
+
+        <!-- Footer include -->
+        <% include ../../../partials/footer.ejs %>
+
+  </div>
+
+  <!-- Scripts -->
+  <% include ../../../partials/scripts.ejs %>
+
+    <script>
+      $(document).ready(function() {
+        $('.summernote').summernote({
+          height: 300,
+          tabsize: 2,
+          focus: true,
+          airMode: true,
+          disableDragAndDrop: true,
+          popover: {
+            air: []
+          }
+        });
+        $('.summernote').summernote('disable');
+      });
+    </script>
 
 </body>
 

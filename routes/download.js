@@ -8,7 +8,7 @@ router.route('/').get((req, res) => {
 
 router.route('/:id').get((req, res) => {
 module.exports = router
-    return res.download(`${__dirname}/../uploads/notice/${req.params.id}`)
+    return res.download(`${__dirname}/../uploads/task/${req.params.id}`)
 })
 
 

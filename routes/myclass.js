@@ -6,7 +6,7 @@ const express = require('express')
 
 const _notice_storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/notice')
+    cb(null, 'uploads/task')
   },
   filename: function (req, file, cb) {
     cb(null, `${req.session.userinfo[0]}-${Date.now()}-${file.originalname}`);
@@ -19,7 +19,7 @@ const Student = 1
   , Professor = 2;
 
 router.all('*', (req, res, next) => {
-  req.session.userinfo = [1, 1];
+  req.session.userinfo = [6, 2];
 
   /*
   if (!req.session.userinfo) {
@@ -67,7 +67,7 @@ router.route(['/:id/main/', '/:id/plan/']).get((req, res) => {
     if (err) {
       return res.send('Myclass error 이것좀 작업해 종화야 에러처리 등록해라.!');
     }
-    return res.render(`${path}/blog_plan`, { plan: result })
+    return res.render(`${path}/blog_plan`, { subject_no: result.subject_no,plan: result })
   })
 })
 
@@ -273,6 +273,13 @@ router.route('/:id/task/').get((req, res) => {
     }
     return res.render('professor/5task/index', { subject_no: subject_no, board: result })
   })
+})
+
+router.route('/:id/task/submit').get((req, res) => {
+  const subject_no = req.params.id;
+  const blog_no = req.params.no;
+
+  return res.render('student/5task/task_write')
 })
 
 // 5task 게시글 읽기

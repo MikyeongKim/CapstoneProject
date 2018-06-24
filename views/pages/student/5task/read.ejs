@@ -34,81 +34,102 @@
 							section class= box features 왼쪽정렬
 						 -->
 						 <div class="content content-right">
-							<article class="box page-content">
-								<header>
-                                    <h2 style="font-size:2.5em;"><a href="#">과제</a></h2>
-                                    <a style="float:right; margin:2% 0; font-size:1em;" href="/myclass/<%=subject_no%>/task/" class="button">목록보기</a>
-									
-                                    <h2 class="major"></h2>
+                                    <article class="box page-content">
+                                        <header>
+                                            <h2 style="font-size:2.5em;">
+                                                <a href="#">과제</a>
+                                            </h2>
+                                            <a style="float:right; margin:2% 0; font-size:1em;" href="/myclass/<%=subject_no%>/task/" class="button">목록보기</a>
+                                            <a style="float:right; margin:2% 0; font-size:1em;" href="#" class="button">수정하기</a>
+                                            <h2 class="major"></h2>
+                                        </header>
 
-								</header>
+                                        <div>
 
-								<div>
-                                  
-                  
-										<table class="type06" style="margin:0;">
-											<colgroup>
-												<col width="25%"/>
-												<col width="75%"/>
-											</colgroup>
-																							
-											<tr>
-											<th scope="row" class="even">
-												<label for="blog-in-title">제목</label>
-											</th>
-											<td>
-												<p style="margin:0;"><%= board.blog_title%></p>
-											</td>
-										</tr>
-										<tr>
-											<th scope="row" class="even">
-												<label for="blog-in-submit">제출방식</label>
-											</th>
-											<td>
-												<p style="margin:0;"><%= board.taskinfo.taskinfo_method%> </p>
-											</td>
-										</tr>
 
-										<tr>
-											<th scope="row" class="even">
-												<label for="blog-in-loadday">등록일</label>
-											</th>
-											<td>
-												<p style="margin:0;"><%= board.created_at%></p>
-												
-											</td>
-										</tr>
-									  
-										<!--여기 아래 부분은 교수가 설정안함을 선택했으면 안보이고, 기간을 설정했으면 보여줌-->
-										<tr>
-											<th scope="row" class="even">
-												<label for="blog-in-dday">마감일</label>
-											</th>
-											<td>
-												<p style="margin:0;"><%= board.taskinfo.taskinfo_period %></p>
-												
-											</td>
-										</tr>
-									
-										<tr>
-											<td colspan="2" >
-												
-												<p style="height:20px; padding:8px;" >
-												<%= board.blog_content%>
-												</p>
-											</td>
-										</tr>
-										<tr>
-											<th scope="row" class="even">
-												<!--첨부파일 갯수 저장해서 n개 표시-->
-												<label for="blog-in-upload">첨부파일(n개)</label>
-											</th>
-											<td>
-												<a href="#" ></a>
-											</td>
-										</tr>
-											
-										</table>
+                                            <table class="type06" style="margin:0;">
+                                                <colgroup>
+                                                    <col width="25%" />
+                                                    <col width="75%" />
+                                                </colgroup>
+
+                                                <tr>
+                                                    <th scope="row" class="even">
+                                                        <label for="blog-in-title">제목</label>
+                                                    </th>
+                                                    <td>
+                                                        <p style="margin:0;">
+                                                            <%= board.blog_title%>
+                                                        </p>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <th scope="row" class="even">
+                                                        <label for="blog-in-submit">제출방식</label>
+                                                    </th>
+                                                    <td>
+                                                        <p style="margin:0;">
+                                                            <%= board.taskinfo.taskinfo_method%>
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th scope="row" class="even">
+                                                        <label for="blog-in-name">과제명</label>
+                                                    </th>
+                                                    <td>
+                                                        <p style="margin:0;">
+                                                            <%= board.taskinfo.taskinfo_name%>
+                                                        </p>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <th scope="row" class="even">
+                                                        <label for="blog-in-loadday">등록일</label>
+                                                    </th>
+                                                    <td>
+                                                        <p style="margin:0;">
+                                                            <%= board.created_at%>
+                                                        </p>
+
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <th scope="row" class="even">
+                                                        <label for="blog-in-dday">마감일</label>
+                                                    </th>
+                                                    <td>
+                                                        <p style="margin:0;">
+                                                            <%= board.taskinfo.taskinfo_period %>
+                                                        </p>
+                                                    </td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td colspan="2">
+
+                                                        <p style="height:20px; padding:8px;">
+                                                            <%= board.blog_content%>
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                                <% board.files.forEach((item,index) => { %>
+                                                    <tr>
+                                                        <th scope="row" class="even">
+                                                            <label for="blog-in-title">파일</label>
+                                                        </th>
+                                                        <td>
+                                                            <a href="/download/<%= item.file_save_name %>">
+                                                                <%= item.file_origin_name %>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    <% }) %>
+
+                                            </table>
 								
 								   
 									</div>
@@ -123,7 +144,7 @@
 														<h2 class="major" ></h2>
 													</div>
 											
-											<a style="float:right; margin:2% 0; font-size:1em;" onclick="location = '/myclass/'+location.href.split('/')[4]+'/task/'+location.href.split('/')[7]+'/submit'" class="button">제출하기</a>
+											<a style="float:right; margin:2% 0; font-size:1em;" href="/myclass/<%=subject_no%>/task/submit" class="button">제출하기</a>
 											<table class="type06" style="margin:0;">
 													
 											<tr style="text-align:center;">

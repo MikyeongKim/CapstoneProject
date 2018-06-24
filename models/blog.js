@@ -21,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
         blog.belongsTo(models.subject, { foreignKey: 'subject_no' });
         blog.hasOne(models.taskinfo, { foreignKey: 'blog_no', sourceKey: 'blog_no' });
         blog.hasMany(models.file, { foreignKey: 'blog_no', sourceKey: 'blog_no' });
+        blog.hasMany(models.task_submit, { foreignKey: 'blog_no', sourceKey: 'blog_no' });
     };
     return blog;
 };
