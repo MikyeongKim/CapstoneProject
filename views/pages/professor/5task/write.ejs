@@ -8,146 +8,127 @@
 </head>
 
 <body class="homepage">
-	<div id="page-wrapper">
+    <div id="page-wrapper">
 
-	    <!-- Header -->
-		<% include ./../header.ejs %>
+        <!-- Header -->
+        <% include ./../header.ejs %>
 
-		<!-- Nav include -->
-		<% include ./../nav.ejs %>
+            <!-- Nav include -->
+            <% include ./../nav.ejs %>
 
 
-		<!-- Main -->
-		<div id="main-wrapper">
-			<div id="main" class="container">
-				<div class="row">
-					<div class="2u">
-                    
-                        <% include ./../blog_sidebar.ejs %>
-					</div>
+                <!-- Main -->
+                <div id="main-wrapper">
+                    <div id="main" class="container">
+                        <div class="row">
+                            <div class="2u">
 
-					<div class="10u 12u(mobile) important(mobile)">
+                                <% include ./../blog_sidebar.ejs %>
+                            </div>
 
-						<!--
+                            <div class="10u 12u(mobile) important(mobile)">
+
+                                <!--
 							
 							section class= box feature 중간정렬
 							section class= box features 왼쪽정렬
 						 -->
-						 <div class="content content-right">
-                        
-                                <article class="box page-content">
+                                <div class="content content-right">
+
+                                    <article class="box page-content">
                                         <header>
-                                            <h2 style="font-size:2.5em;"><a href="#">과제 등록하기</a></h2>
-                                               <!--목록으로 가게끔 연결하기-->
-                                               <!--공지사항 같은 경우는 학생이 등록할 수 없음!-->
-                                               <a style="float:right; margin:2% 0; font-size:1em;" href="#" class="button">목록보기</a>
-                                            
+                                            <h2 style="font-size:2.5em;">
+                                                <a href="#">과제 등록하기</a>
+                                            </h2>
+                                            <!--목록으로 가게끔 연결하기-->
+                                            <!--공지사항 같은 경우는 학생이 등록할 수 없음!-->
+                                            <a style="float:right; margin:2% 0; font-size:1em;" href="/myclass/<%=subject_no%>/task" class="button">목록보기</a>
+
                                             <h2 class="major"></h2>
                                         </header>
-                                        
+
                                         <div>
-                          
-                                                <form id="myForm" name="myForm" action="/myclass/<%=subject_no%>/task" method="POST" enctype="multipart/form-data">
-                                                    <div>
-                                                        <table class="type06" style="margin:0;">
-                                                            <colgroup>
-                                                                <col width="25%"/>
-                                                                <col width="75%"/>
-                                                            </colgroup>
-                                                                                                            
-                                                            <tr>
-                                                                <th scope="row" class="even">
-                                                                    <label for="hw-title">제목</label>
-                                                                </th>
-                                                                <td>
-                                                                    <input type="text" id="blog-in-title" name="title"/>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th scope="row" class="even">
-                                                                    <label for="hw-taskname">과제명</label>
-                                                                </th>
-                                                                <td>
-                                                                    <input type="text" id="blog-taskname" name="taskName"/>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th scope="row" class="even">
-                                                                    <label for="hw-type">제출방식</label>
-                                                                </th>
-                                                                <td>
-                                                                    <input type="radio" id="hw-how" name="how" value="온라인제출" checked="checked"/>온라인
-                                                                    <input type="radio" name="how" value="강의실제출"/>강의실제출
-                                                                </td>
-                                                            </tr>
-                                                            
-                                                            <tr>
-        
-                                                                <th scope="row" class="even">
-                                                                    <label for="hw-dday">마감일</label>
-                                                                </th>
-                                                                <td>
-                                                                    <input type="date" name="setdate1"  id="hw-dday"/>
-                                                                    <input type="time" name="setdate2"  id="hw-ddaytime" value="23:59"/>
-                                                                </td>
-                                                            </tr>
-                                                
-                                                            <tr>
-                                                                <td colspan="2" >
-                                                                    
+
+                                            <form action="/myclass/<%=subject_no%>/task" method="POST">
+                                                <div>
+                                                    <table class="type06" style="margin:0;">
+                                                        <colgroup>
+                                                            <col width="25%" />
+                                                            <col width="75%" />
+                                                        </colgroup>
+
+                                                        <tr>
+                                                            <th scope="row" class="even">
+                                                                <label for="hw-title">제목</label>
+                                                            </th>
+                                                            <td>
+                                                                <input type="text" id="blog-in-title" name="title" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row" class="even">
+                                                                <label for="hw-taskname">과제명</label>
+                                                            </th>
+                                                            <td>
+                                                                <input type="text" id="blog-taskname" name="taskName" />
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row" class="even">
+                                                                <label for="hw-type">제출방식</label>
+                                                            </th>
+                                                            <td>
+                                                                <input type="radio" id="hw-how" name="how" value="온라인제출" checked="checked" />온라인
+                                                                <input type="radio" name="how" value="강의실제출" />강의실제출
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <th scope="row" class="even">
+                                                                <label for="hw-dday">마감일</label>
+                                                            </th>
+                                                            <td>
+                                                                <input type="date" name="yymmdd" id="hw-dday" />
+                                                                <input type="time" name="hhmm" id="hw-ddaytime" value="23:59" />
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td colspan="2">
                                                                 <div>
                                                                     <textarea name="content" id="content" required rows="30" autofocus cols="130"></textarea>
                                                                 </div>
-            
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <th scope="row" class="even">
-                                                                    <label for="blog-in-upload">첨부파일</label>
-                                                                </th>
-                                                                <td>
-                                                                    <input type = "file" class="inputFile" id = "uploadFile" name = "uploadFile">
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td colspan="2" style="text-align:center; padding:0.5em 1.5em; margin:1%;">
-                
-                                                                    <input type="submit" value="저장" />
-                                                                    <input type="reset" value="취소"/>				
-                                                                </td>
-                                                            </tr>
-                                                            
-            
-                                                        </table>
-                                                    </div>
-            
-                                                </form>
-                                            </div>
-            
-        
-        
-                                    
-        
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th scope="row" class="even">
+                                                                <label for="blog-in-upload">첨부파일</label>
+                                                            </th>
+                                                            <td>
+                                                                <input type="file" class="inputFile" id="uploadFile" name="uploadFile">
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="2" style="text-align:center; padding:0.5em 1.5em; margin:1%;">
+                                                                <input type="submit" value="저장" />
+                                                                <input type="reset" value="취소" />
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </article>
-                        </div>			
-
-					</div>
-
-				</div>
-
-
-			</div>
-		</div>
-
-
-	
-	<!-- Footer include -->
-	<% include ../../../partials/footer.ejs %>
-
-	</div>
-
-	<!-- Scripts -->
-	<% include ../../../partials/scripts.ejs %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Footer include -->
+                <% include ../../../partials/footer.ejs %>
+    </div>
+    <!-- Scripts -->
+    <% include ../../../partials/scripts.ejs %>
 
 </body>
 

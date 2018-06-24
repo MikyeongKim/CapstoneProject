@@ -19,6 +19,8 @@ module.exports = (sequelize, DataTypes) => {
         blog.belongsTo(models.User, { foreignKey: 'blog_user_no' });
         blog.belongsTo(models.Category, { foreignKey: 'blog_category' });
         blog.belongsTo(models.subject, { foreignKey: 'subject_no' });
+        blog.hasOne(models.taskinfo, { foreignKey: 'blog_no', sourceKey: 'blog_no' });
+        blog.hasMany(models.file, { foreignKey: 'blog_no', sourceKey: 'blog_no' });
     };
     return blog;
 };

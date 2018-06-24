@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<!--st_community_page1.html 에서 main div 긁어오기-->
+<html>
+
+<head>
+    <!--헤드내용 include -->
+    <% include ../../partials/head.ejs %>
+</head>
+
+<body class="homepage">
+	<div id="page-wrapper">
+
+	    <!-- Header -->
+		<% include ./header.ejs %>
+
+		<!-- Nav include -->
+		<%- include ./nav.ejs ,{subject_no:subject_no},{subject_list : subject_list} %>
+
+
+		<!-- Main -->
+		<div id="main-wrapper">
+			<div id="main" class="container">
+				<div class="row">
+					<div class="2u">
+                    
+							<%- include ./blog_sidebar.ejs ,{subject_no:subject_no},{subject_list : subject_list} %>
+					</div>
+
+					<div class="10u 12u(mobile) important(mobile)">
+
+						<!--
+							
+							section class= box feature 중간정렬
+							section class= box features 왼쪽정렬
+						 -->
+						 <div class="content content-right">
+							<article class="box page-content">
+								<header>
+                                    <h2 style="font-size:2.5em;"><a href="#">강의자료 세부내용</a></h2>
+                                    <a style="float:right; margin:2% 0; font-size:1em;" href="#" class="button">목록보기</a>
+									
+									<h2 class="major"></h2>
+								</header>
+                              
+                                <div>
+                                  
+                  
+										<table class="type06" style="margin:0;">
+											<colgroup>
+												<col width="25%"/>
+												<col width="75%"/>
+											</colgroup>
+																							
+											<tr>
+												<th scope="row" class="even">
+													<label for="blog-in-title">제목</label>
+												</th>
+												<td>
+													<p style="margin:0;"> <%= readBlog.blog_title %> </p>
+												</td>
+											</tr>
+										  
+											<!--여기 아래 부분은 교수가 설정안함을 선택했으면 안보이고, 기간을 설정했으면 보여줌-->
+											<tr>
+												<th scope="row" class="even">
+													<label for="blog-in-date">공개기간</label>
+												</th>
+												<td>
+													<p style="margin:0;">yyyy-mm-dd 오전/오후 xx:xx까지 공개</p>
+													
+												</td>
+											</tr>
+											<tr>
+												<td colspan="2" >
+													
+													<p style="height:20px; padding:8px;" >
+													<!--썸머노트에 저장되었던 내용-->
+													썸머노트에 저장되었던 내용 가져오기
+													</p>
+												</td>
+											</tr>
+											<tr>
+												<th scope="row" class="even">
+													<!--첨부파일 갯수 저장해서 n개 표시-->
+													<label for="blog-in-upload">첨부파일(n개)</label>
+												</th>
+												<td>
+													<a href="#" >클릭하면 첨부파일 다운로드가능 하게 만들기</a>
+												</td>
+											</tr>
+											
+										</table>
+								
+								   
+						    	</div>
+                                <div style="margin-top:5%;">
+                                    <h2 class="major" ></h2>
+                                </div>
+							</article>
+						 </div>			
+					</div>
+
+				</div>
+
+
+			</div>
+		</div>
+
+
+	
+	<!-- Footer include -->
+	<% include ../../partials/footer.ejs %>
+
+	</div>
+
+	<!-- Scripts -->
+	<% include ../../partials/scripts.ejs %>
+
+</body>
+
+</html>

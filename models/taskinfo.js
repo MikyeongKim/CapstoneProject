@@ -9,13 +9,15 @@ module.exports = (sequelize, DataTypes) => {
         taskinfo_name : {
             type: DataTypes.STRING , allowNull : false },
         taskinfo_period: {
-            type: DataTypes.DATE, allowNull: false }
-          }, {
+            type: DataTypes.DATE, allowNull: false
+        }
+    }, {
             freezeTableName: true,
             tableName: "tbl_taskinfo",
             underscored: true,
             timestamps: true
         });
+
     taskinfo.associate = function (models) {
         taskinfo.belongsTo(models.blog, { foreignKey: 'blog_no' });
     };

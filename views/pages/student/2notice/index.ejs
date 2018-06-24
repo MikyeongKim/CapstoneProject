@@ -3,155 +3,145 @@
 <html>
 
 <head>
-  <!--헤드내용 include -->
-  <% include ../../../partials/head.ejs %>
+    <!--헤드내용 include -->
+    <% include ../../../partials/head.ejs %>
 </head>
 
 <body class="homepage">
-  <div id="page-wrapper">
+	<div id="page-wrapper">
 
-    <!-- Header -->
-    <% include ./../header.ejs %>
+	    <!-- Header -->
+		<% include ./../header.ejs %>
 
-      <!-- Nav include -->
-      <%- include ./../nav.ejs %>
+		<!-- Nav include -->
+		<%- include ./../nav.ejs %>
 
 
-        <!-- Main -->
-        <div id="main-wrapper">
-          <div id="main" class="container">
-            <div class="row">
-              <div class="2u">
+		<!-- Main -->
+		<div id="main-wrapper">
+			<div id="main" class="container">
+				<div class="row">
+					<div class="2u">
+                    
+                            <% include ./../blog_sidebar.ejs %>
+					</div>
 
-                <% include ./../blog_sidebar.ejs %>
-              </div>
+					<div class="10u 12u(mobile) important(mobile)">
 
-              <div class="10u 12u(mobile) important(mobile)">
-
-                <!--
-
+						<!--
+							
 							section class= box feature 중간정렬
 							section class= box features 왼쪽정렬
 						 -->
-                <div class="content content-right">
-                  <article class="box page-content">
-                    <header>
-                      <h2 style="font-size:2.5em;"><a href="#">공지사항</a></h2>
-                      <!--목록으로 가게끔 연결하기-->
-                      <!--공지사항 같은 경우는 학생이 등록할 수 없음!-->
+						 <div class="content content-right">
+							<article class="box page-content">
+								<header>
+                                    <h2 style="font-size:2.5em;"><a href="#">공지사항</a></h2>
+                                    <!--목록으로 가게끔 연결하기-->
+                                     <!--공지사항 같은 경우는 학생이 등록할 수 없음!-->
+                                  
+                                     <h2 class="major"></h2>
+								</header>
 
-                      <h2 class="major"></h2>
-                    </header>
-
-                    <div>
-
-                      <form method="POST">
-                        <table class="type06" style="vertical-align:middle; text-align:center;">
-                          <colgroup>
-                            <col width="12%">
-                            <col width="38%">
-                            <col width="16%">
-                            <col width="16%">
-                            <col width="12%">
-                            <col width="6%">
-                          </colgroup>
-
-                          <thead scope="row" class="even">
-                            <tr>
-                              <th>번호</th>
-                              <th>제목</th>
-                              <th>작성자</th>
-                              <th>등록일</th>
-                              <th>조회수</th>
-                              <th>공개여부</th>
-                            </tr>
-                          </thead>
-                          <tbody scope="row" style="text-align:center; ">
-                            <!--바로 아래는 뷰짜려고 임시로 만든 <td>목록임-->
-                            <% board.forEach((item,index) => { %>
-                              <tr>
-                                <td>
-                                  <%= index+1 %>
-                                </td>
-                                <td>
-                                  <a href="/myclass/<%=subject_no%>/notice/<%=item.blog_no%>">
-                                    <%= item.blog_title %>
-                                </td>
-                                <td>
-                                  <%= item.blog_writer %>
-                                </td>
-                                <td>이따함</td>
-                                <td>
-                                  <%= item.blog_count %>
-                                </td>
-                                <td>
-                                  <%= item.blog_ispublic %>
-                                </td>
-                              </tr>
-                              <% }); %>
-
-                          </tbody>
-
-                          <tfoot>
-                            <tr>
-                              <td scope="row" class="even" colspan="6">
-
-                                <!--이전,다음 페이지로 넘어가는 값 구하기-->
-                                <!--현재페이지 값도-->
-                                <a href="#" class="icono-caretLeft"></a>
-                                <a href="#">1</a>
-                                <a href="#">2</a>
-                                <a href="#" class="icono-caretRight"></a>
-
-                              </td>
-
-                            </tr>
-                            <tr>
-                              <td scope="row" class="even" colspan="6">
-                                <select id="category" style="width:60px; display:inline-block;">
+                                <div>
+                                  
+                                    <form method="POST">
+                                        <table class="type06" style="vertical-align:middle; text-align:center;">
+                                            <colgroup>
+                                            <col width="12%">
+                                            <col width="38%">
+                                            <col width="16%">
+                                            <col width="16%">
+                                            <col width="12%">
+                                            <col width="6%">  
+                                            </colgroup>
+        
+                                            <thead scope="row" class="even">
+                                                <tr>
+                                                <th>번호</th>
+                                                <th>제목</th>
+                                                <th>작성자</th>
+                                                <th>등록일</th>
+                                                <th>조회수</th>
+                                                <th>공개여부</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody scope="row" style="text-align:center; ">
+                                                <!--바로 아래는 뷰짜려고 임시로 만든 <td>목록임-->
+                                                <% board.forEach((item,index) => { %>
+                                                <tr>
+                                                    <td><%= index+1 %></td>
+                                                    <td><a href="/myclass/<%=subject_no%>/notice/<%=item.blog_no%>"><%= item.blog_title %></td>
+                                                    <td><%= item.blog_writer %></td>
+                                                    <td>이따함</td>
+                                                    <td><%= item.blog_count %></td>
+                                                    <td><%= item.blog_ispublic %></td>
+                                                </tr>
+                                            <% }); %>
+        
+                                                
+                                            </tbody>
+        
+                                            <tfoot>
+                                                <tr>
+                                                    <td scope="row" class="even" colspan="6">
+        
+                                                        <!--이전,다음 페이지로 넘어가는 값 구하기-->
+                                                        <!--현재페이지 값도-->
+                                                        <a href="#" class="icono-caretLeft"></a>
+                                                        <a href="#">1</a>
+                                                        <a href="#">2</a>
+                                                        <a href="#" class="icono-caretRight"></a>
+                                                        
+                                                    </td>
+                                                    
+                                                </tr>
+                                                <tr>
+                                                    <td scope="row" class="even" colspan="6">
+                                                            <select id="category" style="width:60px; display:inline-block;">
                                                                 <option selected="selected">제목</option>
                                                                 <option>내용</option>
                                                                 <option>작성자</option>
                                                                 <option>등록일</option>
                                                             </select>
-                                <input type="search" id="search" />
-                                <!--검색버튼 눌렀을때 목록중에서 쏘팅해주는거 코드짜야함-->
-                                <input type="submit" value="검색" style="padding:0.4em 1.5em; font-weight:initial; font-size:1em;" />
+                                                            <input type="search" id="search"/>
+                                                            <!--검색버튼 눌렀을때 목록중에서 쏘팅해주는거 코드짜야함-->
+                                                            <input type="submit" value="검색" style="padding:0.4em 1.5em; font-weight:initial; font-size:1em;" />
+        
+                                                            <!--안되면 table바로 밖으로 form태그 추가-->
+                                                    </td>
+                                                    
+                                                </tr>
+                                                
+                                            </tfoot>
+                                        </table>
+                                        </form>
+                                    
+                                       
+                                </div>
 
-                                <!--안되면 table바로 밖으로 form태그 추가-->
-                              </td>
+                                <div style="margin-top:5%;">
+                                    <h2 class="major" ></h2>
+                                </div>
+							</article>
+						 </div>			
+					</div>
 
-                            </tr>
-
-                          </tfoot>
-                        </table>
-                      </form>
-
-
-                    </div>
-
-                    <div style="margin-top:5%;">
-                      <h2 class="major"></h2>
-                    </div>
-                  </article>
-                </div>
-              </div>
-
-            </div>
-
-
-          </div>
-        </div>
+				</div>
 
 
+			</div>
+		</div>
 
-        <!-- Footer include -->
-        <% include ../../../partials/footer.ejs %>
 
-  </div>
+	
+	<!-- Footer include -->
+	<% include ../../../partials/footer.ejs %>
 
-  <!-- Scripts -->
-  <% include ../../../partials/scripts.ejs %>
+	</div>
+
+	<!-- Scripts -->
+	<% include ../../../partials/scripts.ejs %>
 
 </body>
 
