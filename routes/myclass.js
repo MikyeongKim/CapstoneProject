@@ -1,6 +1,7 @@
 const express = require('express')
   , router = express.Router()
   , service = require('./service/myclassService')
+  , taskService = require('./service/taskService')
   , multer = require('multer');
 
 const _notice_storage = multer.diskStorage({
@@ -13,6 +14,7 @@ const _notice_storage = multer.diskStorage({
 });
 
 const noticeFile = multer({ storage: _notice_storage })
+
 const Student = 1
   , Professor = 2;
 
@@ -240,9 +242,24 @@ router.route('/:id/ppt/').post((req, res) => {
 })
 
 
+router.route('/:id/team').get((req, res) => {
+  const subject_no = req.params.id
+  return res.render('student/6team/blog_team', { subject_no: subject_no })
+
+})
+
+router.route('/:id/grade/').get((req, res) => {
+  const subject_no = req.params.id
+  return res.render('student/7grade/blog_grade', { subject_no: subject_no })
+
+})
 
 
-// 5task 글쓰기
+
+
+
+
+
 router.route('/:id/task/new').get((req, res) => {
   const subject_no = req.params.id
 
@@ -251,11 +268,11 @@ router.route('/:id/task/new').get((req, res) => {
   }
   return res.render('professor/5task/write', { subject_no: subject_no })
 })
-// 5task 접속
+
 router.route('/:id/task/').get((req, res) => {
   const subject_no = req.params.id
 
-  service.listAllTask(subject_no, (err, result) => {
+  taskService.listAllTask(subject_no, (err, result) => {
     if (err) {
       return res.send(`listAlltask Error\n ${err}`)
     }
@@ -271,7 +288,7 @@ router.route('/:id/task/:no').get((req, res) => {
   const subject_no = req.params.id;
   const blog_no = req.params.no;
 
-  service.readTask(subject_no, blog_no, (err, result) => {
+  taskService.readTask(subject_no, blog_no, (err, result) => {
     if (err) {
       return res.send(`readTask Error\n ${err}`)
     }
@@ -281,36 +298,28 @@ router.route('/:id/task/:no').get((req, res) => {
     return res.render('professor/5task/read', { subject_no: subject_no, board: result })
   })
 })
+
 // 5task 글등록
-router.route('/:id/task').post((req, res) => {
+router.route('/:id/task').post(noticeFile.single('uploadFile'), (req, res) => {
   let subject_no = req.params.id;
   req.body.subject_no = subject_no
   req.body.user_no = req.session.userinfo[0]
+  if (req.file) {
+    taskService.createFileTask(req.body,req.file, (err, result) => {
+      if (err) {
+        return res.send(err)
+      }
+      return res.redirect(`/myclass/${subject_no}/task`)
+    })
+  } else {
 
-  service.createTask(req.body, (err, result) => {
-    if (err) {
-      return res.send(err)
-    }
-    return res.redirect(`/myclass/${subject_no}/task`)
-  })
-})
-
-
-
-
-
-
-
-
-router.route('/:id/team').get((req, res) => {
-  const subject_no = req.params.id
-  return res.render('student/blog_team', { subject_no: subject_no })
-
-})
-
-router.route('/:id/grade/').get((req, res) => {
-  const subject_no = req.params.id
-  return res.render('student/blog_grade', { subject_no: subject_no })
+    taskService.createTask(req.body, (err, result) => {
+      if (err) {
+        return res.send(err)
+      }
+      return res.redirect(`/myclass/${subject_no}/task`)
+    })
+  }
 
 })
 
@@ -319,43 +328,8 @@ router.route('/:id/grade/').get((req, res) => {
 
 
 
-/*
-function listAllBlog(req, res, path, category){
-  const subject_no = req.params.id
 
-  service.listAllBlog(subject_no, category, (err, result) => {
-    if (err) {
-      return res.send(`listAllNotice Error\n ${err}`)
-    }
-    return res.render(`professor/${path}/index`, { subject_no: subject_no, board: result })
-  })
-}
 
-function readBlog(req, res, path){
-  const subject_no = req.params.id;
-  const blog_no = req.params.no;
 
-  service.readBlog(subject_no, blog_no, (err, result) => {
-    if (err) {
-      return res.send(`readNotice error \n ${err}`)
-    }
-    return res.render(`professor/${path}/read`, { subject_no: subject_no , board: result})
-  })
-}
-
-function createBlog(req, res, path, category){
-  let subject_no = req.params.id;
-  req.body.subject_no = subject_no
-  req.body.user_no = req.session.userinfo[0]
-
-  service.createBlog(req.body, category, (err, result) => {
-    if (err) {
-      return res.send(err)
-    }
-    return res.redirect(`/myclass/${subject_no}/${path}`)
-  })
-  //return res.render('professor/2notice/index' , {subject_no:subject_no})
-}
-*/
 
 module.exports = router;

@@ -14,9 +14,6 @@ module.exports = {
     , createPpt: createPpt          // 4ppt
     , listAllPpt: listAllPpt
     , readPpt: readPpt
-    , createTask: createTask        // 5task
-    , listAllTask: listAllTask
-    , readTask: readTask
 }
 
 function findClassByStu(userno, callback) {
@@ -159,38 +156,3 @@ function readPpt(subject_no, blog_no, callback) {
 
 
 
-// task 글작성
-function createTask(body, callback) {
-    let submit_period = `${body.yymmdd} ${body.hhmm}`
-    let time = new Date(submit_period)
-    console.log(time)
-    userDAO.findUserNameByNo(body.user_no, (err, result) => {
-        if (err) {
-            return callback(err)
-        }
-        myclassDAO.createTask(body, result.user_name, time, (err, result) => {
-            if (err) {
-                return callback(err)
-            }
-            return callback(null, result)
-        })
-    })
-}
-// task 게시글찾기
-function listAllTask(subject_no, callback) {
-    myclassDAO.findAllTask(subject_no, (err, result) => {
-        if (err) {
-            return callback(err)
-        }
-        return callback(null, result)
-    })
-}
-// task 글읽기
-function readTask(subject_no, blog_no, callback) {
-    myclassDAO.readTask(subject_no, blog_no, (err, result) => {
-        if (err) {
-            return callback(err)
-        }
-        return callback(null, result)
-    })
-}

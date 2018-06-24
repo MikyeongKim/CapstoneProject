@@ -1,10 +1,9 @@
 const models = require('../../models');
 
 const NOTICE = 5
-  , QNA = 6
-  , PPT = 7
-  , TASK = 8;
-
+    , QNA = 6
+    , PPT = 7
+    , TASK = 8;
 
 module.exports = {
     findClassByStu: findClassByStu
@@ -22,6 +21,7 @@ module.exports = {
     , createTask: createTask        // 5task
     , findAllTask: findAllTask
     , readTask: readTask
+    , createFileTask: createFileTask
 }
 
 
@@ -218,7 +218,7 @@ function readPpt(subject_no, blog_no, callback) {
 
 
 // task 글작성
-function createTask(body, user_name, time,callback) {
+function createTask(body, user_name, time, time_sec, callback) {
     return models.sequelize.transaction(function (t) {
         return models.blog.create({
             blog_title: body.title,
@@ -233,6 +233,7 @@ function createTask(body, user_name, time,callback) {
                     taskinfo_method: body.how,
                     taskinfo_name: body.taskName,
                     taskinfo_period: time,
+                    taskinfo_seconds: time_sec,
                     blog_no: result.blog_no
                 }, { transaction: t })
             })
@@ -242,6 +243,41 @@ function createTask(body, user_name, time,callback) {
         return callback(err)
     })
 }
+
+function createFileTask(body, user_name, time, time_sec, files, callback) {
+    return models.sequelize.transaction(function (t) {
+        return models.blog.create({
+            blog_title: body.title,
+            blog_content: body.content,
+            blog_writer: user_name,
+            blog_user_no: body.user_no,
+            blog_category: TASK,
+            subject_no: body.subject_no,
+        }, { transaction: t })
+            .then(result => {
+                models.sequelize.Promise.all([
+                    models.taskinfo.create({
+                        taskinfo_method: body.how,
+                        taskinfo_name: body.taskName,
+                        taskinfo_period: time,
+                        taskinfo_seconds: time_sec,
+                        blog_no: result.blog_no
+                    }),
+                    models.file.create({
+                        file_origin_name: files.originalname,
+                        file_save_name: files.filename,
+                        file_path: files.path,
+                        blog_no: result.blog_no
+                    })
+                ], { transaction: t })
+            })
+    }).then(result => {
+        return callback(null, result)
+    }).catch(err => {
+        return callback(err)
+    })
+}
+
 // task 게시글나열
 function findAllTask(subject_no, callback) {
     models.blog.findAll({
@@ -265,12 +301,11 @@ function readTask(subject_no, blog_no, callback) {
     models.blog.find({
         where: {
             blog_category: TASK,
-            subject_no: subject_no
+            blog_no : blog_no
         },
         include: [{
-            model: models.taskinfo,
-        }],
-        order: [['created_at', 'DESC']]
+            model: models.taskinfo
+        } , {model : models.file}],
     }).then(result => {
         return callback(null, result)
     }).catch(err => {

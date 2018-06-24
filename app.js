@@ -14,7 +14,7 @@ const index = require("./routes/index")
   , myclass = require("./routes/myclass")
   , reply = require("./routes/reply")
   , file = require("./routes/file")
-  , test = require("./routes/test")
+  , download = require('./routes/download')
 
 app.use(session({
   key: 'codit',
@@ -41,7 +41,7 @@ app.use('/community', community)
 app.use('/myclass', myclass)
 app.use('/reply', reply)
 app.use('/file', file)
-app.use('/test', test)
+app.use('/download',download)
 
 
 app.use((req, res) => {

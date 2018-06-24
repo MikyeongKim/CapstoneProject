@@ -10,6 +10,9 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING , allowNull : false },
         taskinfo_period: {
             type: DataTypes.DATE, allowNull: false
+        },
+        taskinfo_seconds: {
+            type: DataTypes.STRING, allowNull: false
         }
     }, {
             freezeTableName: true,
