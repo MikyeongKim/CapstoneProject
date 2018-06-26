@@ -1,5 +1,7 @@
 const myclassDAO = require('../Repository/Repo_myclass');
 const userDAO = require('../Repository/Repo_user');
+const submitDAO = require('../Repository/Repo_task_submit');
+const editFunc = require('../func/editfunc');
 
 module.exports = {
     findClassByStu: findClassByStu
@@ -14,6 +16,7 @@ module.exports = {
     , createPpt: createPpt          // 4ppt
     , listAllPpt: listAllPpt
     , readPpt: readPpt
+    , readCode: readCode
 }
 
 function findClassByStu(userno, callback) {
@@ -72,12 +75,12 @@ function listAllNotice(subject_no, callback) {
 }
 // notice 글읽기
 function readNotice(subject_no, blog_no, callback) {
-    myclassDAO.readNotice(subject_no,blog_no,(err,result) => {
-        if(err) {
+    myclassDAO.readNotice(subject_no, blog_no, (err, result) => {
+        if (err) {
             return callback(err)
         }
 
-        return callback(null,result)
+        return callback(null, result)
     })
 }
 
@@ -109,11 +112,11 @@ function listAllQna(subject_no, callback) {
 }
 // qna 글읽기
 function readQna(subject_no, blog_no, callback) {
-    myclassDAO.readQna(subject_no,blog_no,(err,result) => {
-        if(err) {
+    myclassDAO.readQna(subject_no, blog_no, (err, result) => {
+        if (err) {
             return callback(err)
         }
-        return callback(null,result)
+        return callback(null, result)
     })
 }
 
@@ -145,14 +148,29 @@ function listAllPpt(subject_no, callback) {
 }
 // ppt 글읽기
 function readPpt(subject_no, blog_no, callback) {
-    myclassDAO.readPpt(subject_no,blog_no,(err,result) => {
-        if(err) {
+    myclassDAO.readPpt(subject_no, blog_no, (err, result) => {
+        if (err) {
             return callback(err)
         }
-        return callback(null,result)
+        return callback(null, result)
     })
 }
 
+function readCode(path, submit_no, cb) {
 
+    submitDAO.findUserBySubNo(submit_no, (err, userInfo) => {
+        if (err) {
+            return cb(err)
+        }
+
+        editFunc.readCode(path, (err, code) => {
+            if (err) {
+                return cb(err)
+            }
+            let resultVal = { userInfo: userInfo, code: code }
+            cb(null, resultVal)
+        });
+    })
+}
 
 

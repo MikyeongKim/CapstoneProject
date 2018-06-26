@@ -1,14 +1,15 @@
 const models = require('../../models')
-    , exec = require('child_process')
-    , fs = require('fs')
+  , exec = require('child_process')
+  , fs = require('fs')
 
 module.exports = {
-    compileFunc: compileFunc
-    , createLog: createLog
-    , logicExecute: logicExecute
-    , javaCompile: javaCompile
-    , saveCode: saveCode
-    , paramExecute: paramExecute
+  compileFunc: compileFunc
+  , createLog: createLog
+  , logicExecute: logicExecute
+  , javaCompile: javaCompile
+  , saveCode: saveCode
+  , paramExecute: paramExecute
+  , readCode: readCode
 };
 
 function logicExecute(content, userno, lang, callback) {
@@ -16,7 +17,7 @@ function logicExecute(content, userno, lang, callback) {
   let editlogNo;
 
   createLog(filename, userno, lang, editLog => {
-      editlogNo = editLog;
+    editlogNo = editLog;
   });
 
   saveCode(filename, content, lang);
@@ -26,7 +27,7 @@ function logicExecute(content, userno, lang, callback) {
   }
   else {
     compileFunc(editlogNo, filename, lang, data => {
-        callback(data);
+      callback(data);
     })
   }
 }
@@ -36,7 +37,7 @@ function paramExecute(content, param, userno, lang, callback) {
   let editlogNo;
 
   createLog(filename, userno, lang, editLog => {
-      editlogNo = editLog;
+    editlogNo = editLog;
   });
 
   saveCode(filename, content, lang, param);
@@ -72,12 +73,12 @@ function createLog(filename, user_no, lang, callback) {
 }
 
 function updateLog(editlogNo) {
-    models.Editlog.update({
-        edit_isSuccess: true
-    }, { where: { edit_no: editlogNo } })
+  models.Editlog.update({
+    edit_isSuccess: true
+  }, { where: { edit_no: editlogNo } })
 }
 
-function saveCode(filename, content, lang, param=false) {
+function saveCode(filename, content, lang, param = false) {
   let files = [`complieFolder/${lang}/${filename}.${lang}`, `complieFolder/${lang}/origin-${filename}.txt`]
   if (lang == 'java') {
     files = [`complieFolder/${lang}/test.${lang}`, `complieFolder/${lang}/origin-${filename}.txt`]
@@ -107,9 +108,9 @@ function saveCode(filename, content, lang, param=false) {
 function compileFunc(editlogNo, filename, lang, callback) {
   let batch;
   if (lang == 'c') {
-      batch = 'batch\\c_Compile.bat'
+    batch = 'batch\\c_Compile.bat'
   } else if (lang == 'python') {
-      batch = 'batch\\python_Compile.bat'
+    batch = 'batch\\python_Compile.bat'
   }
 
   langPath(lang, (path) => {
@@ -129,9 +130,9 @@ function compileFunc(editlogNo, filename, lang, callback) {
 function compileParamFunc(editlogNo, filename, lang, callback) {
   let batch;
   if (lang == 'c') {
-      batch = 'batch\\c_Param.bat'
+    batch = 'batch\\c_Param.bat'
   } else if (lang == 'python') {
-      batch = 'batch\\python_Param.bat'
+    batch = 'batch\\python_Param.bat'
   }
 
   langPath(lang, (path) => {
@@ -150,30 +151,41 @@ function compileParamFunc(editlogNo, filename, lang, callback) {
 
 function javaCompile(editlogNo, callback) {
   exec.execFile('batch\\java_Compile.bat', [], (error, stdout, stderr) => {
-      if (error) {
-          return callback(`${error}`)
-      }
-      fs.readFile(`complieFolder/java/test.txt`, 'utf-8', (err, data) => {
-          updateLog(editlogNo)
-          fs.unlink(`complieFolder/java/test.class`, err => {
-            callback(data)
-          });
-
+    if (error) {
+      return callback(`${error}`)
+    }
+    fs.readFile(`complieFolder/java/test.txt`, 'utf-8', (err, data) => {
+      updateLog(editlogNo)
+      fs.unlink(`complieFolder/java/test.class`, err => {
+        callback(data)
       });
+
+    });
   })
 }
 
 function javaParamCompile(editlogNo, filename, callback) {
   exec.execFile('batch\\java_Param.bat', [`test`, `param-${filename}.txt`], (error, stdout, stderr) => {
-      if (error) {
-          return callback(`${error}`)
-      }
-      fs.readFile(`complieFolder/java/test.txt`, 'utf-8', (err, data) => {
-          updateLog(editlogNo)
-          fs.unlink(`complieFolder/java/test.class`, err => {
-            callback(data)
-          });
-
+    if (error) {
+      return callback(`${error}`)
+    }
+    fs.readFile(`complieFolder/java/test.txt`, 'utf-8', (err, data) => {
+      updateLog(editlogNo)
+      fs.unlink(`complieFolder/java/test.class`, err => {
+        callback(data)
       });
+
+    });
+  })
+}
+
+
+function readCode(path, cb) {
+
+  fs.readFile(path, 'utf-8', (err, data) => {
+    if (err) {
+      return cb(err)
+    }
+    return cb(null,data)
   })
 }

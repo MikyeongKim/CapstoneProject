@@ -38,7 +38,7 @@
 								<div class="content content-right">
 									<article class="box page-content">
 										<header>
-											<h2 style="font-size:2.5em;"><a href="#">강의자료</a>
+											<h2 style="font-size:2.5em;"><a href="#">강의자료 등록하기</a>
 											</h2>
 											<!--목록으로 가게끔 연결하기-->
 
@@ -130,6 +130,18 @@
 					focus: true
 				});
 				$('#subbtn').on('click', function() {
+
+					const title = $('#blog-in-title').val()
+					const content = $('textarea[name="content"]').val()
+
+					if (title === '') {
+						alert('제목을 입력하여 주십시오')
+						return
+					} else if (content === '') {
+						alert('내용을 입력하여 주십시오')
+						return
+					}
+
 					$('textarea[name="content"]').val($('.summernote').summernote('code'));
 					$('form').submit();
 				});

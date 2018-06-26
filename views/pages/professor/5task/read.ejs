@@ -3,284 +3,248 @@
 <html>
 
 <head>
-    <!--헤드내용 include -->
-    <% include ../../../partials/head.ejs %>
+  <!--헤드내용 include -->
+  <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+  <% include ../../../partials/head.ejs %>
+    <link rel="stylesheet" href="/stylesheets/summernote.css">
+    <% include ../../../partials/scripts.ejs %>
 </head>
 
 <body class="homepage">
-    <div id="page-wrapper">
+  <div id="page-wrapper">
 
-        <!-- Header -->
-        <% include ./../header.ejs %>
+    <!-- Header -->
+    <% include ./../header.ejs %>
 
-            <!-- Nav include -->
-            <% include ./../nav.ejs %>
+      <!-- Nav include -->
+      <% include ./../nav.ejs %>
 
 
-                <!-- Main -->
-                <div id="main-wrapper">
-                    <div id="main" class="container">
-                        <div class="row">
-                            <div class="2u">
+        <!-- Main -->
+        <div id="main-wrapper">
+          <div id="main" class="container">
+            <div class="row">
+              <div class="2u">
 
-                                <%- include ./../blog_sidebar.ejs %>
-                            </div>
+                <%- include ./../blog_sidebar.ejs %>
+              </div>
 
-                            <div class="10u 12u(mobile) important(mobile)">
+              <div class="10u 12u(mobile) important(mobile)">
 
-                                <!--
-							
+                <!--
+
 							section class= box feature 중간정렬
 							section class= box features 왼쪽정렬
 						 -->
-                                <div class="content content-right">
-                                    <article class="box page-content">
-                                        <header>
-                                            <h2 style="font-size:2.5em;">
-                                                <a href="#">과제</a>
-                                            </h2>
-                                            <a style="float:right; margin:2% 0; font-size:1em;" href="/myclass/<%=subject_no%>/task/" class="button">목록보기</a>
-                                            <a style="float:right; margin:2% 0; font-size:1em;" href="#" class="button">수정하기</a>
-                                            <h2 class="major"></h2>
-                                        </header>
+                <div class="content content-right">
+                  <article class="box page-content">
+                    <header>
+                      <h2 style="font-size:2.5em;">
+                        <a href="#">과제</a>
+                      </h2>
+                      <a style="float:right; margin:2% 0; font-size:1em;" href="/myclass/<%=subject_no%>/task/" class="button">목록보기</a>
+                      <a style="float:right; margin:2% 0; font-size:1em;" href="#" class="button">수정하기</a>
+                      <h2 class="major"></h2>
+                    </header>
 
-                                        <div>
+                    <div>
+                      <table class="type06" style="margin:0;">
+                        <colgroup>
+                          <col width="25%" />
+                          <col width="75%" />
+                        </colgroup>
 
+                        <tr>
+                          <th scope="row" class="even">
+                            <label for="blog-in-title">제목</label>
+                          </th>
+                          <td>
+                            <p style="margin:0;">
+                              <%= board.blog_title%>
+                            </p>
+                          </td>
+                        </tr>
 
-                                            <table class="type06" style="margin:0;">
-                                                <colgroup>
-                                                    <col width="25%" />
-                                                    <col width="75%" />
-                                                </colgroup>
+                        <tr>
+                          <th scope="row" class="even">
+                            <label for="blog-in-submit">제출방식</label>
+                          </th>
+                          <td>
+                            <p style="margin:0;">
+                              <%= board.taskinfo.taskinfo_method%>
+                            </p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <th scope="row" class="even">
+                            <label for="blog-in-name">과제명</label>
+                          </th>
+                          <td>
+                            <p style="margin:0;">
+                              <%= board.taskinfo.taskinfo_name%>
+                            </p>
+                          </td>
+                        </tr>
 
-                                                <tr>
-                                                    <th scope="row" class="even">
-                                                        <label for="blog-in-title">제목</label>
-                                                    </th>
-                                                    <td>
-                                                        <p style="margin:0;">
-                                                            <%= board.blog_title%>
-                                                        </p>
-                                                    </td>
-                                                </tr>
+                        <tr>
+                          <th scope="row" class="even">
+                            <label for="blog-in-loadday">등록일</label>
+                          </th>
+                          <td>
+                            <p style="margin:0;">
+                              <%= board.created_at%>
+                            </p>
 
-                                                <tr>
-                                                    <th scope="row" class="even">
-                                                        <label for="blog-in-submit">제출방식</label>
-                                                    </th>
-                                                    <td>
-                                                        <p style="margin:0;">
-                                                            <%= board.taskinfo.taskinfo_method%>
-                                                        </p>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row" class="even">
-                                                        <label for="blog-in-name">과제명</label>
-                                                    </th>
-                                                    <td>
-                                                        <p style="margin:0;">
-                                                            <%= board.taskinfo.taskinfo_name%>
-                                                        </p>
-                                                    </td>
-                                                </tr>
+                          </td>
+                        </tr>
 
-                                                <tr>
-                                                    <th scope="row" class="even">
-                                                        <label for="blog-in-loadday">등록일</label>
-                                                    </th>
-                                                    <td>
-                                                        <p style="margin:0;">
-                                                            <%= board.created_at%>
-                                                        </p>
+                        <tr>
+                          <th scope="row" class="even">
+                            <label for="blog-in-dday">마감일</label>
+                          </th>
+                          <td>
+                            <p style="margin:0;">
+                              <%= board.taskinfo.taskinfo_period %>
+                            </p>
+                          </td>
+                        </tr>
 
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <th scope="row" class="even">
-                                                        <label for="blog-in-dday">마감일</label>
-                                                    </th>
-                                                    <td>
-                                                        <p style="margin:0;">
-                                                            <%= board.taskinfo.taskinfo_period %>
-                                                        </p>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td colspan="2">
-
-                                                        <p style="height:20px; padding:8px;">
-                                                            <%= board.blog_content%>
-                                                        </p>
-                                                    </td>
-                                                </tr>
-                                                <% board.files.forEach((item,index) => { %>
-                                                    <tr>
-                                                        <th scope="row" class="even">
-                                                            <label for="blog-in-title">파일</label>
-                                                        </th>
-                                                        <td>
-                                                            <a href="/download/<%= item.file_save_name %>">
-                                                                <%= item.file_origin_name %>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                    <% }) %>
-
-                                            </table>
-                                        </div>
-                                        <div>
-                                            <!-- 학생들 목록 읽어와서 제출했음/안했음 표시하는 테이블//  -->
-                                            <!--아래div는 제출한 경우 (수정이 가능하게끔 수정버튼 남겨둠)-->
-                                            <div>
-                                                <form>
-                                                    <div style="margin-top:5%;">
-                                                        <h2 class="major"></h2>
-                                                    </div>
-
-                                                    <a style="float:right; margin:2% 0; font-size:1em;" href="#" class="button">수정하기</a>
-                                                    <table class="type06" style="margin:0; vertical-align:middle; text-align:center;">
-                                                        <colgroup>
-                                                            <col width="24%" />
-                                                            <col width="24%" />
-                                                            <col width="24%" />
-                                                            <col width="24%" />
-                                                        </colgroup>
-                                                        <style>
-                                                            th,
-                                                            td {
-                                                                padding-top: 2px;
-                                                                padding-bottom: 2px;
-                                                            }
-                                                        </style>
-                                                        <!-- 들어갈 내용은 다시 합의해야할 것 같아요 우선 메모장에 적어둠 -->
-                                                        <thead scope="row" class="even">
-                                                            <tr>
-                                                                <th>학번</th>
-                                                                <th>이름</th>
-                                                                <th>평가점수</th>
-                                                                <th>더보기</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody style="vertical-align:middle;">
+                        <tr>
+                          <td colspan="4" style="padding:40px 20px;">
+                            <textarea class="summernote">
+                              <%= board.blog_content %>
+                            </textarea>
+                          </td>
+                        </tr>
 
 
-                                                            <tr>
-                                                                <td>
-                                                                    학번
-                                                                </td>
-                                                                <td>
+                        <% board.files.forEach((item,index) => { %>
+                          <tr>
+                            <th scope="row" class="even">
+                              <label for="blog-in-title">파일</label>
+                            </th>
+                            <td>
+                              <a href="/download/<%= item.file_save_name %>">
+                                <%= item.file_origin_name %>
+                              </a>
+                            </td>
+                          </tr>
+                          <% }) %>
 
-                                                                </td>
-
-                                                                <td>
-                                                                    <p style="margin:0;"> </p>
-                                                                </td>
-                                                                <td>
-                                                                    <!--누르면 학생성적 수정가능, 상세성적 열람가능 -->
-                                                                    <a onclick="location = '/myclass/'+location.href.split('/')[4]+'/task/'+location.href.split('/')[7]+'/editor/'" class="icono-plusCircle"></a>
-                                                                </td>
-                                                            </tr>
-
-
-                                                        </tbody>
-
-                                                        <tfoot>
-
-                                                        </tfoot>
-
-                                                    </table>
-                                                    <!--
-                                                <div style="float:right; margin-top:20px;">
-                                                    <a style=" margin:2% 0; font-size:1em;" href="#" class="button">성적입력 및 강의종료</a>
-                                                    </div>
-                                                -->
-                                                </form>
-
-                                            </div>
-                                        </div>
-
-
-
-                                        <!--과제에 대한 문의댓글이 달렸을때 표시-->
-                                        <!--근데 굳이 넣어야하나 싶음..-->
-                                        <!--
-                                        <div>
-                                            <div>
-                                                <div style="margin-top:10%;">
-                                                        <h2 class="major" ></h2>
-                                                    </div>
-                                            
-                                            <a style="float:right; margin:2% 0; font-size:1em;" href="#" class="button">더보기</a>
-                                            <table class="type06" style="margin:0;">
-                                                    <colgroup>
-                                                        <col width="25%"/>
-                                                        <col width="75%"/>
-                                                    </colgroup>
-                                                <tr>
-                                                    <th scope="row" class="even">
-                                                        <label for="blog-in-submit-title">학생이름</label>
-                                                    </th>
-                                                    <th scope="row" class="even">
-                                                        <label for="blog-in-submit-title">문의내용</label>
-                                                    </th>
-                                                
-                                                </tr>-->
-
-                                        <!--댓글이 아무한테도 안달렸을 경우-->
-                                        <!--
-                                                <tr>
-                                                    
-                                                    <td colspan="2" style="text-align:center;">
-                                                        <p style="margin:0;">학생들로부터 등록된 문의내용이 없습니다.</p>
-                                                        
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <th scope="row" class="even">
-                                                        <label for="blog-in-stu-name">김미경</label>
-                                                    </th>
-                                                    <td>
-                                                        <p style="margin:0;">교수님 ppt파일로 제출해도 될까요?</p>
-                                                        
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                -->
-                                        <!--바로 아래에 대댓글 기능이 있는게 좋을거 같음 / 나중에 회의좀..-->
-                                        <!--아니면 버튼을 한개더 만들어서 해당 학생이 댓글달았던 페이지로 이동하게끔-->
-                                        <!--
-                                                    <td colspan="2" style="text-align:center;">
-                                                        <p style="margin:0;">└> 네 그렇게 하세요.</p>
-                                                        
-                                                    </td>
-                                                </tr>
-        
-                                            </table>
-                                            </div>
-                                        </div>
-                                    -->
-                                    </article>
-                                </div>
-                            </div>
-
-                        </div>
-
-
+                      </table>
                     </div>
+                    <div>
+                      <!-- 학생들 목록 읽어와서 제출했음/안했음 표시하는 테이블//  -->
+                      <!--아래div는 제출한 경우 (수정이 가능하게끔 수정버튼 남겨둠)-->
+                      <div>
+
+
+                        <form>
+                          <div style="margin-top:5%;">
+                            <h2 class="major"></h2>
+                          </div>
+
+                          <% task.forEach((item,index) => { %>
+                          <form>
+                            <table class="type06" style="margin:0; vertical-align:middle; border-collapse:collapse ">
+                            <colgroup>
+                                <col width="20%">
+                                <col width="50%">
+                                <col width="10%">
+                            </colgroup>
+
+                            
+                                <tr scope="row"  style="text-align:center; border-top-width:3px;">
+                                    <th scope="row" class="even">이름</th>
+                                    <td style="font-weight:bold;" colspan="2" > <%= item.User.user_name %> </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="even">제목</th>
+                                    <td colspan="2">
+                                    <%= item.task_submit_content %>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="even">내용</th>
+                                    <td colspan="2">
+                                        <textarea name="content" id="content" required rows="2" autofocus cols=90 readonly><%= item.task_submit_content%></textarea>
+                                    </td>
+                                </tr>
+                                
+                                <tr style="border-bottom-width:3px; margin-bottom:3%;">
+                                    <th scope="row" class="even">점수</th>
+                                    <td colspan="2" style="text-align:left; font-weight:bold; ">
+                                    <%= item.task_submit_score%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                <th scope="row" class="even">첨부파일</th>
+                                <td>
+                                    <a href="/download/submit/<%= item.submit_files[0].submit_file_save_name%>">
+                                    <%= item.submit_files[0].submit_file_origin_name%>
+                                  </a> 
+                                </td>
+                                <td>
+                                <% if(item.submit_files[0].submit_file_lang != 0) { %>
+                                    <a onclick="location = '/myclass/<%=subject_no%>/task/<%= board.blog_no%>/editor/<%=item.submit_files[0].submit_file_lang%>&<%= item.submit_files[0].submit_file_save_name%>&<%= item.submit_files[0].task_submit_no %>'"  class="icono-plusCircle"></a>
+                            <% } %>
+
+                                </td>
+                            </tr>
+                                
+
+                            </table>
+                            </form>
+                            <br>
+                          <% }) %>
+
+                            </tbody>
+
+                            <tfoot>
+
+                            </tfoot>
+
+                          </table>
+
+                        </form>
+
+                      </div>
+                    </div>
+                  </article>
                 </div>
+              </div>
+
+            </div>
+
+
+          </div>
+        </div>
 
 
 
-                <!-- Footer include -->
-                <% include ../../../partials/footer.ejs %>
+        <!-- Footer include -->
+        <% include ../../../partials/footer.ejs %>
 
-    </div>
+  </div>
 
-    <!-- Scripts -->
-    <% include ../../../partials/scripts.ejs %>
+  <!-- Scripts -->
+  <% include ../../../partials/scripts.ejs %>
+
+    <script>
+      $(document).ready(function () {
+        $('.summernote').summernote({
+          height: 300,
+          tabsize: 2,
+          focus: true,
+          airMode: true,
+          disableDragAndDrop: true,
+          popover: {
+            air: []
+          }
+        });
+        $('.summernote').summernote('disable');
+      });
+    </script>
 
 </body>
 

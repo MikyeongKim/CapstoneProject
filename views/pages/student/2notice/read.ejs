@@ -3,141 +3,151 @@
 <html>
 
 <head>
-    <!--헤드내용 include -->
-    <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
-    <% include ../../../partials/head.ejs %>
+  <!--헤드내용 include -->
+  <link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+  <% include ../../../partials/head.ejs %>
     <link rel="stylesheet" href="/stylesheets/summernote.css">
     <% include ../../../partials/scripts.ejs %>
 
 </head>
 
 <body class="homepage">
-	<div id="page-wrapper">
+  <div id="page-wrapper">
 
-	    <!-- Header -->
-		<% include ./../header.ejs %>
+    <!-- Header -->
+    <% include ./../header.ejs %>
 
-		<!-- Nav include -->
-		<% include ./../nav.ejs %>
+      <!-- Nav include -->
+      <% include ./../nav.ejs %>
 
 
-		<!-- Main -->
-		<div id="main-wrapper">
-			<div id="main" class="container">
-				<div class="row">
-					<div class="2u">
+        <!-- Main -->
+        <div id="main-wrapper">
+          <div id="main" class="container">
+            <div class="row">
+              <div class="2u">
 
-                        <% include ./../blog_sidebar.ejs %>
-					</div>
+                <% include ./../blog_sidebar.ejs %>
+              </div>
 
-					<div class="10u 12u(mobile) important(mobile)">
+              <div class="10u 12u(mobile) important(mobile)">
 
-						<!--
+                <!--
 							section class= box feature 중간정렬
 							section class= box features 왼쪽정렬
 						 -->
-						 <div class="content content-right">
-							<article class="box page-content">
-								<header>
-                                    <h2 style="font-size:2.5em;"><a href="#">공지사항</a></h2>
-                                    <!--목록으로 가게끔 연결하기-->
-                                     <!--공지사항 같은 경우는 학생이 등록할 수 없음!-->
+                <div class="content content-right">
+                  <article class="box page-content">
+                    <header>
+                      <h2 style="font-size:2.5em;"><a href="#">공지사항</a></h2>
+                      <a style="float:right; margin:2% 0; font-size:1em;" href="/myclass/<%=subject_no%>/notice/" class="button">목록보기</a>
+                      <h2 class="major"></h2>
+                    </header>
 
-                                     <h2 class="major"></h2>
-								</header>
-
-                                <div>
+                    <div>
 
 
-                                    <table class="type06" style="margin:0;">
-                                        <colgroup>
-                                            <col width="25%"/>
-                                            <col width="75%"/>
-                                        </colgroup>
+                      <table class="type06" style="margin:0;">
+                        <colgroup>
+                          <col width="25%" />
+                          <col width="75%" />
+                        </colgroup>
 
-                                        <tr>
-                                            <th scope="row" class="even">
-                                                <label for="blog-in-title">제목</label>
-                                            </th>
-                                            <td>
-                                                <p style="margin:0;"> <%= board.blog_title %> </p>
-                                            </td>
-                                        </tr>
+                        <tr>
+                          <th scope="row" class="even">
+                            <label for="blog-in-title">제목</label>
+                          </th>
+                          <td>
+                            <p style="margin:0;">
+                              <%= board.blog_title %>
+                            </p>
+                          </td>
+                        </tr>
 
 
-                                        <tr>
-                                            <th scope="row" class="even">
-                                                <label for="blog-in-date">작성자</label>
-                                            </th>
-                                            <td>
-                                                <p style="margin:0;"><%= board.blog_writer %></p>
+                        <tr>
+                          <th scope="row" class="even">
+                            <label for="blog-in-date">작성자</label>
+                          </th>
+                          <td>
+                            <p style="margin:0;">
+                              <%= board.blog_writer %>
+                            </p>
 
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                        <th scope="row" class="even">
-                                            <label for="blog-in-date">등록일</label>
-                                        </th>
-                                        <td>
-                                            <p style="margin:0;"><%= board.created_at %></p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <th scope="row" class="even">
+                            <label for="blog-in-date">등록일</label>
+                          </th>
+                          <td>
+                            <p style="margin:0;">
+                              <%= board.created_at %>
+                            </p>
 
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <!-- <td colspan="2" >
-                                            <p style="height:20px; padding:8px;" >
-                                            <%= board.blog_content %>
-                                            </p>
-                                        </td> -->
-                                        <td colspan="4" style="padding:40px 20px;">
-                                          <textarea class="summernote">
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td colspan="4" style="padding:40px 20px;">
+                            <textarea class="summernote">
                                             <%= board.blog_content %>
                                           </textarea>
-                                        </td>
-                                    </tr>
+                          </td>
+                        </tr>
 
-                                    </table>
+                        <tr>
+                          <th scope="row" class="even">
+                            <!--첨부파일 갯수 저장해서 n개 표시-->
+                            <label for="blog-in-upload">첨부파일(n개)</label>
+                          </th>
+                          <td>
+                            <a href="#">클릭하면 첨부파일 다운로드가능 하게 만들기</a>
+                          </td>
+                        </tr>
 
-
-                                     </div>
-
-                                <div style="margin-top:5%;">
-                                    <h2 class="major" ></h2>
-                                </div>
-							</article>
-						 </div>
-					</div>
-				</div>
-			</div>
-		</div>
+                      </table>
 
 
+                    </div>
 
-	<!-- Footer include -->
-	<% include ../../../partials/footer.ejs %>
+                    <div style="margin-top:5%;">
+                      <h2 class="major"></h2>
+                    </div>
+                  </article>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-	</div>
 
-	<!-- Scripts -->
-	<% include ../../../partials/scripts.ejs %>
 
-  <script>
-    // 얘네를 읽어옴
-    // subject_no: subject_no , board: result})
-    $(document).ready(function () {
-      $('.summernote').summernote({
-        height: 300,
-        tabsize: 2,
-        focus: true,
-        airMode: true,
-        disableDragAndDrop: true,
-        popover: {
-          air: []
-        }
+        <!-- Footer include -->
+        <% include ../../../partials/footer.ejs %>
+
+  </div>
+
+  <!-- Scripts -->
+  <% include ../../../partials/scripts.ejs %>
+
+    <script>
+      // 얘네를 읽어옴
+      // subject_no: subject_no , board: result})
+      $(document).ready(function() {
+        $('.summernote').summernote({
+          height: 300,
+          tabsize: 2,
+          focus: true,
+          airMode: true,
+          disableDragAndDrop: true,
+          popover: {
+            air: []
+          }
+        });
+        $('.summernote').summernote('disable');
       });
-      $('.summernote').summernote('disable');
-    });
-  </script>
+    </script>
 
 </body>
 

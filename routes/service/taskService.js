@@ -1,11 +1,18 @@
 const myclassDAO = require('../Repository/Repo_myclass');
 const userDAO = require('../Repository/Repo_user');
+const taskDAO = require('../Repository/Repo_task');
+const submitDAO = require('../Repository/Repo_task_submit')
 
 module.exports = {
     createTask: createTask        // 5task
     , listAllTask: listAllTask
-    , readTask: readTask
+    , readTaskPro: readTaskPro
+    , readTaskStu: readTaskStu
     , createFileTask: createFileTask
+    , taskSubmit: taskSubmit
+    , taskSubmitFile: taskSubmitFile
+    , delTaskSubmit: delTaskSubmit
+    ,saveScorebyTask :saveScorebyTask
 }
 
 
@@ -18,7 +25,7 @@ function createTask(body, callback) {
         if (err) {
             return callback(err)
         }
-        myclassDAO.createTask(body, result.user_name, time, time_sec, (err, result) => {
+        taskDAO.createTask(body, result.user_name, time, time_sec, (err, result) => {
             if (err) {
                 return callback(err)
             }
@@ -27,15 +34,18 @@ function createTask(body, callback) {
     })
 }
 
-function createFileTask(body,files, callback) {
+function createFileTask(body, files, callback) {
     let submit_period = `${body.yymmdd} ${body.hhmm}`
     let time = new Date(submit_period)
     let time_sec = time.getSeconds()
+
+
+
     userDAO.findUserNameByNo(body.user_no, (err, result) => {
         if (err) {
             return callback(err)
         }
-        myclassDAO.createFileTask(body, result.user_name, time, time_sec,files ,(err, result) => {
+        taskDAO.createFileTask(body, result.user_name, time, time_sec, files, (err, result) => {
             if (err) {
                 return callback(err)
             }
@@ -46,7 +56,7 @@ function createFileTask(body,files, callback) {
 
 
 function listAllTask(subject_no, callback) {
-    myclassDAO.findAllTask(subject_no, (err, result) => {
+    taskDAO.findAllTask(subject_no, (err, result) => {
         if (err) {
             return callback(err)
         }
@@ -54,11 +64,71 @@ function listAllTask(subject_no, callback) {
     })
 }
 // task 글읽기
-function readTask(subject_no, blog_no, callback) {
-    myclassDAO.readTask(subject_no, blog_no, (err, result) => {
+function readTaskPro(blog_no, callback) {
+    taskDAO.readTaskPro(blog_no, (err, result) => {
         if (err) {
             return callback(err)
         }
         return callback(null, result)
     })
 }
+
+function readTaskStu(user_no, blog_no, callback) {
+    taskDAO.readTaskStu(user_no, blog_no, (err, result) => {
+        if (err) {
+            return callback(err)
+        }
+        return callback(null, result)
+    })
+}
+
+function taskSubmit(body, blog_no, callback) {
+    taskDAO.taskSubmit(body, blog_no, (err, result) => {
+        if (err) {
+            return callback(err)
+        }
+        return callback(null, result)
+    })
+}
+
+function taskSubmitFile(body, blog_no, files, callback) {
+    let fileName = files.originalname;
+    let pathFileName = fileName.lastIndexOf(".") + 1;    //확장자 제외한 경로+파일명
+    let extension = (fileName.substr(pathFileName, fileName.length)).toLowerCase();	//확장자명
+    let lang = 0
+    if (extension == 'c') {
+        lang = 'c'
+    } else if ( extension == 'java') {
+        lang = 'java'
+    } else if ( extension == 'py') {
+        lang = 'py'
+    }
+
+    taskDAO.taskSubmitFile(body, blog_no, files,lang, (err, result) => {
+        if (err) {
+            return callback(err)
+        }
+        return callback(null, result)
+    })
+}
+
+function delTaskSubmit(submit_no, callback) {
+    taskDAO.delTaskSubmit(submit_no, (err, result) => {
+        if (err) {
+            return callback(err)
+        }
+        return callback(null, result)
+    })
+}
+
+
+
+function saveScorebyTask(task_no, score, cb) {
+    submitDAO.saveScorebyTask(task_no,score,(err,result) => {
+        if (err) {
+            return cb(err)
+        }
+        return cb(null, result)
+    })
+}
+

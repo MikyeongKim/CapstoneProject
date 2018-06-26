@@ -82,23 +82,21 @@
                               <i class="fas fa-user-circle fa-2x"></i>
                             </td>
 
-                            <th>학번</th>
-                            <td>2012150001</td>
 
                             <th>이름</th>
-                            <td style="text-align:left;">학생</td>
+                            <td style="text-align:left;"><%= info.userInfo.User.user_name %></td>
 
-                            <th style="text-align:right;"><label id="score">평가점수입력</label></th>
+                            <th style="text-align:right;">성적<label id="score"></label></th>
                             <td style="text-align:left;">
-                              <input type="number" id="score" name="score" />
+                              <input type="number" id="score2" name="score" />
                             </td>
                             <td style="text-align:left;">
                               <!--학생과제 평가점수 저장 버튼 / DB에 들어가는거 처리해주세요-->
-                              <input type="submit" value="저장" class="fas fa-save fa-2x">
+                              <input type="submit" value="저장" class="fas fa-save fa-2x" id='scoreSave'>
                             </td>
 
                             <td style="text-align:right;">
-                              <button class="button">뒤로가기</button>
+                              <button class="button" location.href='javascript:history.back()'>뒤로가기</button>
                               <!--버튼 누르면 과제 제출한 학생들 리스트로 감-->
                             </td>
                           </tr>
@@ -129,10 +127,6 @@
                                                     <option value="python">Python</option>
                                                 </select>
                             </td>
-
-
-
-
                             <td>
                               <!--코드 파일로 다운로드 버튼-->
                               <a href="#" class="fas fa-download fa-2x"></a>
@@ -155,7 +149,11 @@
 
                       <div class="6u 12u(mobile)" style="float: left;">
 
-                        <textarea id="content" rows="20"></textarea>
+                      <% if (!(info.readcode)) { %>
+                      <textarea id="content" rows="20"><%= info.code %></textarea>
+                    <% } else { %>
+                       <textarea id="content" rows="20"></textarea>
+                    <%  } %>
                       </div>
 
                       <div class="6u 12u(mobile)" style="float: right;">
@@ -208,7 +206,6 @@
       },
       styleActiveLine: true
     });
-    editor.setValue(`#include <stdio.h>\n\nvoid main(){\n\n\tprintf("Hello World!");\n\n}`);
 
     $('input[type=radio][name=inType]').on('change', function() {
       var radioValue = $(this).val();
@@ -246,6 +243,28 @@
           break;
       }
     });
+
+    $('#scoreSave').click(function(e) {
+      const target = $('#score2').val()
+      e.preventDefault()
+      $.ajax({
+          url: '/myclass/score/save',
+          dataType: 'json',
+          type: 'POST',
+          data: {
+            'task_no': <%=info.userInfo.task_submit_no %>,
+            'score': target
+          },
+          success: function(result) {
+            if (result.result) {
+              alert('저장성공')
+            } },
+            error : function(result) {
+              alert('저장실패,')
+          }
+        });
+      
+    })
 
 
     $('#run').click(function() {
@@ -316,7 +335,12 @@
         callback(reader.result)
       };
     }
+
+
+
+
   </script>
+
 
 
   <!-- Footer include  -->
@@ -329,16 +353,3 @@
 </body>
 
 </html>
-
-
-
-
-<!-- <% if (!readcode) { %>
-<script>
-editor.setValue(`#include <stdio.h>\n\nvoid main(){\n\n\tprintf("Hello World!");\n\n}`);
-</script>
-<% } else { %>
-<script>
-$("#lang").val('<%= code_lang %>').prop("selected", true);
-</script>
-<% } %> -->

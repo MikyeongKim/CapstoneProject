@@ -6,13 +6,13 @@ const express = require('express')
 const student = 1
 
 router.all('*', (req, res, next) => {
-  console.log(req.originalUrl)
+/*
   if (!req.session.userinfo) {
     if (req.originalUrl === '/editor') {
       return res.status(401).redirect('/login')
     }
     return res.status(401).json({ massage: '세션이 끊겼습니다.' });
-  }
+  }*/
   next('route')
 })
 
@@ -71,6 +71,10 @@ router.route('/python').post((req, res) => {
       return res.send({ result: true, content: result });
     })
   }
+})
+
+router.route('/pro/editor').get((req, res) => {
+  return res.render('professor/editor', { readcode: false })
 })
 
 /*
