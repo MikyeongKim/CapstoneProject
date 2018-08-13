@@ -1,15 +1,15 @@
-const models = require('../../models')
-  , exec = require('child_process')
-  , fs = require('fs')
+const models = require('../../models'),
+  exec = require('child_process'),
+  fs = require('fs')
 
 module.exports = {
-  compileFunc: compileFunc
-  , createLog: createLog
-  , logicExecute: logicExecute
-  , javaCompile: javaCompile
-  , saveCode: saveCode
-  , paramExecute: paramExecute
-  , readCode: readCode
+  compileFunc: compileFunc,
+  createLog: createLog,
+  logicExecute: logicExecute,
+  javaCompile: javaCompile,
+  saveCode: saveCode,
+  paramExecute: paramExecute,
+  readCode: readCode
 };
 
 function logicExecute(content, userno, lang, callback) {
@@ -24,8 +24,7 @@ function logicExecute(content, userno, lang, callback) {
 
   if (lang == 'java') {
     javaCompile(editlogNo, callback)
-  }
-  else {
+  } else {
     compileFunc(editlogNo, filename, lang, data => {
       callback(data);
     })
@@ -44,8 +43,7 @@ function paramExecute(content, param, userno, lang, callback) {
 
   if (lang == 'java') {
     javaParamCompile(editlogNo, filename, callback)
-  }
-  else {
+  } else {
     compileParamFunc(editlogNo, filename, lang, data => {
       callback(data);
     })
@@ -75,7 +73,11 @@ function createLog(filename, user_no, lang, callback) {
 function updateLog(editlogNo) {
   models.Editlog.update({
     edit_isSuccess: true
-  }, { where: { edit_no: editlogNo } })
+  }, {
+    where: {
+      edit_no: editlogNo
+    }
+  })
 }
 
 function saveCode(filename, content, lang, param = false) {
@@ -97,7 +99,6 @@ function saveCode(filename, content, lang, param = false) {
   if (param) {
     fs.writeFile(`complieFolder/${lang}/param-${filename}.txt`, param, 'utf-8', err => {
       if (err) {
-        console.log(`파람 write에러 ${err}`)
         return err
       }
     })
@@ -107,19 +108,23 @@ function saveCode(filename, content, lang, param = false) {
 
 function compileFunc(editlogNo, filename, lang, callback) {
   let batch;
+  let cutNum;
   if (lang == 'c') {
     batch = 'batch\\c_Compile.bat'
+    cutNum = 88
   } else if (lang == 'python') {
     batch = 'batch\\python_Compile.bat'
+    cutNum = 0
   }
 
   langPath(lang, (path) => {
     exec.execFile(batch, [`${filename}`], (error, stdout, stderr) => {
-      const errorhandle = error
+      const errorhandle = `${error}`.substr(0, `${error}`.length - cutNum)
       fs.readFile(`${path}${filename}.txt`, 'utf-8', (error, data) => {
         if (errorhandle && data.length == 0) {
-          return callback(`${errorhandle}`);
+          return callback(errorhandle);
         }
+
         updateLog(editlogNo)
         callback(data)
       });
@@ -129,18 +134,21 @@ function compileFunc(editlogNo, filename, lang, callback) {
 
 function compileParamFunc(editlogNo, filename, lang, callback) {
   let batch;
+  let cutNum;
   if (lang == 'c') {
     batch = 'batch\\c_Param.bat'
+    cutNum = 88
   } else if (lang == 'python') {
     batch = 'batch\\python_Param.bat'
+    cutNum = 0
   }
 
   langPath(lang, (path) => {
     exec.execFile(batch, [`${filename}`, `param-${filename}.txt`], (error, stdout, stderr) => {
-      const errorhandle = error
+      const errorhandle = `${error}`.substr(0, `${error}`.length - cutNum)
       fs.readFile(`${path}${filename}.txt`, 'utf-8', (error, data) => {
         if (errorhandle && data.length == 0) {
-          return callback(`${errorhandle}`);
+          return callback(errorhandle);
         }
         updateLog(editlogNo)
         callback(data)
@@ -152,14 +160,14 @@ function compileParamFunc(editlogNo, filename, lang, callback) {
 function javaCompile(editlogNo, callback) {
   exec.execFile('batch\\java_Compile.bat', [], (error, stdout, stderr) => {
     if (error) {
-      return callback(`${error}`)
+      const errMsg = `${error}`.substr(0, `${error}`.length - 50)
+      return callback(errMsg)
     }
     fs.readFile(`complieFolder/java/test.txt`, 'utf-8', (err, data) => {
       updateLog(editlogNo)
       fs.unlink(`complieFolder/java/test.class`, err => {
         callback(data)
       });
-
     });
   })
 }
@@ -167,7 +175,8 @@ function javaCompile(editlogNo, callback) {
 function javaParamCompile(editlogNo, filename, callback) {
   exec.execFile('batch\\java_Param.bat', [`test`, `param-${filename}.txt`], (error, stdout, stderr) => {
     if (error) {
-      return callback(`${error}`)
+      const errMsg = `${error}`.substr(0, `${error}`.length - 50)
+      return callback(errMsg)
     }
     fs.readFile(`complieFolder/java/test.txt`, 'utf-8', (err, data) => {
       updateLog(editlogNo)
@@ -186,6 +195,6 @@ function readCode(path, cb) {
     if (err) {
       return cb(err)
     }
-    return cb(null,data)
+    return cb(null, data)
   })
 }

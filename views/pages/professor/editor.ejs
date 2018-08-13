@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!--교수뷰-->
 <!--학생들이 제출한 코드를 돌려보고 점수를 줄 수 있는 페이지임-->
 <html lang="en">
 
@@ -127,6 +128,10 @@
                                                     <option value="python">Python</option>
                                                 </select>
                             </td>
+
+
+
+
                             <td>
                               <!--코드 파일로 다운로드 버튼-->
                               <a href="#" class="fas fa-download fa-2x"></a>
@@ -263,13 +268,23 @@
               alert('저장실패,')
           }
         });
-      
+
     })
 
 
     $('#run').click(function() {
-      const target = document.getElementById("lang")
-      const uri = "http://localhost:3000/editor/" + target.options[target.selectedIndex].value
+      // const target = document.getElementById("lang")
+      // const uri = "http://localhost:3000/editor/" + `<%=info.lang %>`
+      // if(<%=info.userInfo.lang %>){
+      //   alert('asdasd')
+      //   // <%=info.userInfo.lang %>
+      // }
+      let msg = `<%=info.lang %>`
+      if(msg=='py'){
+        msg='python'
+      }
+      const uri = "http://localhost:3000/editor/" + msg
+
 
       paramCheck(params => {
         $('#result').html('');
