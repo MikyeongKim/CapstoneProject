@@ -1,31 +1,31 @@
-const express = require('express')
-  , router = express.Router()
-  , models = require('../models')
-  , editFunc = require('./func/editfunc')
+const express = require('express');
+const router = express.Router();
+const models = require('../models');
+const editFunc = require('./func/editfunc');
 
-const student = 1
+const student = 1;
 
 router.all('*', (req, res, next) => {
-/*
+  /*
   if (!req.session.userinfo) {
     if (req.originalUrl === '/editor') {
       return res.status(401).redirect('/login')
     }
     return res.status(401).json({ massage: '세션이 끊겼습니다.' });
   }*/
-  next('route')
-})
+  next('route');
+});
 
 router.route('/').get((req, res) => {
   if (!req.session.userinfo) {
-    return res.status(401).redirect('/login')
+    return res.status(401).redirect('/login');
   }
 
   if (req.session.userinfo[1] === student) {
     return res.render('student/editor');
   }
   return res.render('student/editor', { readcode: false });
-})
+});
 
 router.route('/c').post((req, res) => {
   const content = req.body.content;
@@ -34,48 +34,47 @@ router.route('/c').post((req, res) => {
   if (param == 'false') {
     editFunc.logicExecute(content, 1, 'c', result => {
       return res.send({ result: true, content: result });
-    })
+    });
   } else {
     editFunc.paramExecute(content, param, 1, 'c', result => {
       return res.send({ result: true, content: result });
-    })
+    });
   }
-
-})
+});
 
 router.route('/java').post((req, res) => {
-  const content = req.body.content
+  const content = req.body.content;
   const param = req.body.params;
 
   if (param == 'false') {
     editFunc.logicExecute(content, 1, 'java', result => {
       return res.send({ result: true, content: result });
-    })
+    });
   } else {
     editFunc.paramExecute(content, param, 1, 'java', result => {
       return res.send({ result: true, content: result });
-    })
+    });
   }
-})
+});
 
 router.route('/python').post((req, res) => {
-  const content = req.body.content
+  const content = req.body.content;
   const param = req.body.params;
 
   if (param == 'false') {
     editFunc.logicExecute(content, 1, 'python', result => {
       return res.send({ result: true, content: result });
-    })
+    });
   } else {
     editFunc.paramExecute(content, param, 1, 'python', result => {
       return res.send({ result: true, content: result });
-    })
+    });
   }
-})
+});
 
 router.route('/pro/editor').get((req, res) => {
-  return res.render('professor/editor', { readcode: false })
-})
+  return res.render('professor/editor', { readcode: false });
+});
 
 /*
 router.route('/read/:no&:lang').get((req, res) => {

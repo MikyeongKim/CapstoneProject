@@ -10,62 +10,63 @@
   <div id="page-wrapper">
 
     <% include ./header.ejs %>
-      <%- include ./nav.ejs  %>
+    <%- include ./nav.ejs  %>
 
-        <!--main-->
-        <div id="main-wrapper">
-          <div id="main" class="container">
+    <!--main-->
+    <div id="main-wrapper">
+      <div id="main" class="container">
 
-            <div class="row 200%">
-              <div class="12u">
-                <div class="content content-left">
-                  <article class="box post">
-                    <header>
-                      <h3>
-                                        <a href="/community">#웰컴_코딧커뮤니티!!</a>
-                                    </h3>
-                      <p>공부 중 궁금한게 생길 때, 스터디를 구하고 싶을 때, 강의후기가 궁금할 때 등 이유불문 무엇이든 산기인들에게 물어보세요 :)</p>
+        <div class="row 200%">
+          <div class="12u">
+            <div class="content content-left">
+              <article class="box post">
+                <header>
+                  <h3>
+                    <a href="/community">#웰컴_코딧커뮤니티!!</a>
+                  </h3>
+                  <p>공부 중 궁금한게 생길 때, 스터디를 구하고 싶을 때, 강의후기가 궁금할 때 등 이유불문 무엇이든 산기인들에게 물어보세요 :)</p>
 
-                    </header>
-                    <a onclick="location.href='/community/new'" style="float:right; margin:2% 0; font-weight:inherit; font-size:1.1em;" href="#" class="button">글쓰기</a>
+                </header>
+                <a onclick="location.href='/community/new'" style="float:right; margin:2% 0; font-weight:inherit; font-size:1.1em;"
+                  href="#" class="button">글쓰기</a>
 
-                    <form method="POST">
-                      <table class="type06" style="vertical-align:middle; text-align:center;">
-                        <colgroup>
-                          <col width="10%">
-                          <col width="40%">
-                          <col width="20%">
-                          <col width="20%">
-                          <col width="10%">
-                        </colgroup>
+                <form method="POST">
+                  <table class="type06" style="vertical-align:middle; text-align:center;">
+                    <colgroup>
+                      <col width="10%">
+                      <col width="40%">
+                      <col width="20%">
+                      <col width="20%">
+                      <col width="10%">
+                    </colgroup>
 
-                        <thead scope="row" class="even">
-                          <tr>
-                            <th>번호</th>
-                            <th>제목</th>
-                            <th>작성자</th>
-                            <th>등록일</th>
-                            <th>조회수</th>
-                          </tr>
-                        </thead>
-                        <tbody scope="row" style="text-align:center;">
+                    <thead scope="row" class="even">
+                      <tr>
+                        <th>번호</th>
+                        <th>제목</th>
+                        <th>작성자</th>
+                        <th>등록일</th>
+                        <th>조회수</th>
+                      </tr>
+                    </thead>
+                    <tbody scope="row" style="text-align:center;">
 
-                          <!--td갯수는 최대15개로 fix해야함, 16번글부터는 2번째 페이지로 아웃-->
-                          <%
+                      <!--td갯수는 최대15개로 fix해야함, 16번글부터는 2번째 페이지로 아웃-->
+                      <%
                             board_list.forEach((item,index) => { %>
-                            <tr>
-                              <td>
-                                <%= index+1+board_list.skip %>
-                              </td>
-                              <td style="text-align:left;">
-                                <a href="/community/<%=item.board_no%>">
-                                  <%= item.board_title %>
-                              </td>
-                              <td>
-                                <%= item.board_writer %>
-                              </td>
-                              <td>
-                                <% let date2 = new Date(item.created_at)
+                      <tr>
+                        <td>
+                          <%= index+1+board_list.skip %>
+                        </td>
+                        <td style="text-align:left;">
+                          <a href="/community/<%=item.board_no%>">
+                            <%= item.board_title %>
+                        </td>
+                        <td>
+                          <%= item.board_writer %>
+                        </td>
+                        <td>
+                          <% let date2 = new Date(item.created_at)
                                                     const year = date2.getFullYear();
                                                     let month = date2.getMonth() - 1;
                                                     let day = date2.getDate();
@@ -87,66 +88,67 @@
                                                     }
                                                     const temp = `${year}.${month}.${day} ${hour}:${min}`
                                                      %>
-                                  <%=temp%>
-                              </td>
-                              <td>
-                                <%= item.board_count %>
-                              </td>
-                            </tr>
-                            <% }); %>
-                        </tbody>
+                          <%=temp%>
+                        </td>
+                        <td>
+                          <%= item.board_count %>
+                        </td>
+                      </tr>
+                      <% }); %>
+                    </tbody>
 
-                        <tfoot>
-                          <tr>
-                            <td scope="row" class="even" colspan="5">
+                    <tfoot>
+                      <tr>
+                        <td scope="row" class="even" colspan="5">
 
-                              <!--이전,다음 페이지로 넘어가는 값 구하기-->
-                              <!--현재페이지 값도-->
-                              <%
+                          <!--이전,다음 페이지로 넘어가는 값 구하기-->
+                          <!--현재페이지 값도-->
+                          <%
                               if(board_list.startp > 1){
                               %>
 
-                              <a href="/community?page=1" class="fas fa-angle-double-left fa-2x"></a>
-                              <a href="/community?page=<%=board_list.prevp%>" class="fas fa-angle-left fa-2x"></a>
-                              <% }
+                          <a href="/community?page=1" class="fas fa-angle-double-left fa-2x"></a>
+                          <a href="/community?page=<%=board_list.prevp%>" class="fas fa-angle-left fa-2x"></a>
+                          <% }
                               for(var i=board_list.startp; i<=board_list.endp; i++){
                               %>
-                              <a href="/community?page=<%=i%>"><%=i%></a>
-                              <% }
+                          <a href="/community?page=<%=i%>">
+                            <%=i%></a>
+                          <% }
                               if(board_list.endp < board_list.lastp){
                               %>
-                              <a href="/community?page=<%=board_list.endp+1%>" class="fas fa-angle-right fa-2x"></a>
-                              <a href="/community?page=<%=board_list.lastp%>" class="fas fa-angle-double-right fa-2x"></a>
-                              <% } %>
+                          <a href="/community?page=<%=board_list.endp+1%>" class="fas fa-angle-right fa-2x"></a>
+                          <a href="/community?page=<%=board_list.lastp%>" class="fas fa-angle-double-right fa-2x"></a>
+                          <% } %>
 
-                            </td>
+                        </td>
 
-                          </tr>
-                        </tfoot>
-                      </table>
+                      </tr>
+                    </tfoot>
+                  </table>
 
-                      <div style="text-align:center;">
-                        <select id="category" style="width:70px; display:inline-block;">
-                                        <option selected="selected">제목</option>
-                                        <option>내용</option>
-                                        <option>작성자</option>
-                                        <option>등록일</option>
-                                    </select>
-                        <input type="search" id="search" />
-                        <!--검색버튼 눌렀을때 목록중에서 쏘팅해주는거 코드짜야함-->
-                        <input type="submit" value="검색" style="padding:0.4em 1.5em; font-weight:initial; font-size:1em;" />
-                      </div>
+                  <div style="text-align:center;">
+                    <select id="category" style="width:70px; display:inline-block;">
+                      <option selected="selected">제목</option>
+                      <option>내용</option>
+                      <option>작성자</option>
+                      <option>등록일</option>
+                    </select>
+                    <input type="search" id="search" />
+                    <!--검색버튼 눌렀을때 목록중에서 쏘팅해주는거 코드짜야함-->
+                    <input type="submit" value="검색" style="padding:0.4em 1.5em; font-weight:initial; font-size:1em;" />
+                  </div>
 
-                    </form>
+                </form>
 
-                  </article>
-                </div>
-              </div>
+              </article>
             </div>
           </div>
         </div>
-        <!-- Footer include  -->
-        <% include ../../partials/footer.ejs %>
+      </div>
+    </div>
+    <!-- Footer include  -->
+    <% include ../../partials/footer.ejs %>
 
   </div>
 

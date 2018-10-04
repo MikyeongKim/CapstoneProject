@@ -1,49 +1,49 @@
-const express = require('express')
-  , router = express.Router()
-  , models = require('../models')
-  , multer = require('multer')
-  , fs = require('fs')
+const express = require('express');
+const router = express.Router();
+const models = require('../models');
+const multer = require('multer');
+const fs = require('fs');
 
 const _storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, 'uploads/')
+  destination: function(req, file, cb) {
+    cb(null, 'uploads/');
   },
-  filename: function (req, file, cb) {
-    cb(null, Date.now() + file.originalname ) //파일저장될때 현재시간 + 파일이름으로 저장됨
+  filename: function(req, file, cb) {
+    cb(null, Date.now() + file.originalname); //파일저장될때 현재시간 + 파일이름으로 저장됨
   }
-})
+});
 
-const upload = multer({ storage: _storage })
+const upload = multer({ storage: _storage });
 
-
-router.route('/')
+router
+  .route('/')
   .get((req, res) => {
-    res.render('common/file')
+    res.render('common/file');
   })
   .post(upload.array('userfile', 5), (req, res) => {
-    console.log(req.files)
+    console.log(req.files);
 
     if (!SavedFile(req.files)) {
-      return res.status(500).send("파일전송실패")
+      return res.status(500).send('파일전송실패');
     }
 
-    return res.status(303).redirect('/community')
+    return res.status(303).redirect('/community');
+  });
 
-  })
-
-function SavedFile(files) {   //실제 파일이 저장되있는지 확인하는 함수 
-  const file_len = files.length
-  console.log(files)
+function SavedFile(files) {
+  //실제 파일이 저장되있는지 확인하는 함수
+  const file_len = files.length;
+  console.log(files);
 
   for (let i = 0; i < file_len; i++) {
     //files[i].path : 저장된 path + 파일명
-    fs.stat(files[i].path, function (err, stat) {  
+    fs.stat(files[i].path, function(err, stat) {
       if (err) {
-        return false
+        return false;
       }
-    })
+    });
   }
-  return true
+  return true;
 }
 
-module.exports = router
+module.exports = router;
