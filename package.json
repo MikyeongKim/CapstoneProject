@@ -14,6 +14,7 @@
     "html": "^1.0.0",
     "multer": "^1.3.0",
     "mysql2": "^1.5.1",
+    "nodemon": "^1.18.4",
     "path": "^0.12.7",
     "sequelize": "^4.32.2",
     "serve-static": "^1.13.1",
@@ -21,7 +22,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "echo \"Server Start\"",
+    "start": "nodemon -w ./routes app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
