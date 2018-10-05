@@ -1,12 +1,5 @@
 const models = require('../../models');
-module.exports = {
-  listAllCommunity,
-  createCommunity,
-  readCommunity,
-  findBoard,
-  updateCommunity,
-  deleteCommunity
-};
+
 const community_category = 3;
 
 function listAllCommunity() {
@@ -95,3 +88,11 @@ function deleteCommunity(board_no, callback) {
     }
   });
 }
+module.exports = {
+  listAllCommunity,
+  createCommunity,
+  readCommunity,
+  findBoard,
+  updateCommunity,
+  deleteCommunity
+};

@@ -35,178 +35,19 @@ router.all('*', (req, res, next) => {
   next('route');
 });
 
-router.route('/').get((req, res) => {
-  const userGrade = req.session.userinfo[1];
-  const userno = req.session.userinfo[0];
+router.route('/').get(service.findClass);
 
-  if (userGrade === Student) {
-    service.findClassByStu(userno, (err, result) => {
-      if (err) {
-        return res.send(
-          'Myclass error 이것좀 작업해 종화야 에러처리 등록해라.!'
-        );
-      }
-      return res.render('student/myclass', { myclass: result });
-    });
-  } else {
-    service.findClassByPro(userno, (err, result) => {
-      if (err) {
-        return res.send(
-          'Myclass error 이것좀 작업해 종화야 에러처리 등록해라.!'
-        );
-      }
-      return res.render('professor/myclass', { myclass: result });
-    });
-  }
-});
+router.route(['/:id/main/', '/:id/plan/']).get(service.showPlan);
 
-router.route(['/:id/main/', '/:id/plan/']).get((req, res) => {
-  const subject_no = req.params.id;
-  const userGrade = req.session.userinfo[1];
+router.route('/:id/notice/new').get(service.createNoticeForm);
+router.route('/:id/notice').get(service.listAllNotice);
+router.route('/:id/notice/:no').get(service.readNotice);
+router.route('/:id/notice/').post(service.createNotice);
 
-  let path = 'professor';
-  if (userGrade === Student) {
-    path = 'student';
-  }
-
-  service.findPlanByAll(subject_no, (err, result) => {
-    if (err) {
-      return res.send('Myclass error 이것좀 작업해 종화야 에러처리 등록해라.!');
-    }
-    return res.render(`${path}/blog_plan`, {
-      subject_no: result.subject_no,
-      plan: result
-    });
-  });
-});
-
-// 2notice 글쓰기
-router.route('/:id/notice/new').get((req, res) => {
-  const subject_no = req.params.id;
-
-  if (req.session.userinfo[1] === Student) {
-    return res.redirect(`/myclass/${subject_no}/notice/`);
-  }
-  return res.render('professor/2notice/write', { subject_no: subject_no });
-});
-// 2notice 접속
-router.route('/:id/notice').get((req, res) => {
-  const subject_no = req.params.id;
-
-  service.listAllNotice(subject_no, (err, result) => {
-    if (err) {
-      return res.send(`listAllNotice Error\n ${err}`);
-    }
-    if (req.session.userinfo[1] === Student) {
-      return res.render('student/2notice/index', {
-        subject_no: subject_no,
-        board: result
-      });
-    }
-    return res.render('professor/2notice/index', {
-      subject_no: subject_no,
-      board: result
-    });
-  });
-});
-// 2notice 게시글 읽기
-router.route('/:id/notice/:no').get((req, res) => {
-  const subject_no = req.params.id;
-  const blog_no = req.params.no;
-
-  service.readNotice(subject_no, blog_no, (err, result) => {
-    if (err) {
-      return res.send(`readNotice error \n ${err}`);
-    }
-    if (req.session.userinfo[1] === Student) {
-      return res.render('student/2notice/read', {
-        subject_no: subject_no,
-        board: result
-      });
-    }
-    return res.render('professor/2notice/read', {
-      subject_no: subject_no,
-      board: result
-    });
-  });
-});
-// 2notice 글등록
-router.route('/:id/notice/').post((req, res) => {
-  let subject_no = req.params.id;
-  req.body.subject_no = subject_no;
-  req.body.user_no = req.session.userinfo[0];
-
-  if (req.session.userinfo[1] === Student) {
-    return res.status(403).send('권한없음');
-  }
-  service.createNotice(req.body, (err, result) => {
-    if (err) {
-      return res.send(err);
-    }
-    return res.redirect(`/myclass/${subject_no}/notice`);
-  });
-});
-
-// 3qna 글쓰기
-router.route('/:id/qna/new').get((req, res) => {
-  const subject_no = req.params.id;
-
-  return res.render('professor/3qna/write', { subject_no: subject_no });
-});
-// 3qna 접속
-router.route('/:id/qna').get((req, res) => {
-  const subject_no = req.params.id;
-
-  service.listAllQna(subject_no, (err, result) => {
-    if (err) {
-      return res.send(`listAllNotice Error\n ${err}`);
-    }
-    if (req.session.userinfo[1] === Student) {
-      return res.render('student/3qna/index', {
-        subject_no: subject_no,
-        board: result
-      });
-    }
-    return res.render('professor/3qna/index', {
-      subject_no: subject_no,
-      board: result
-    });
-  });
-});
-
-router.route('/:id/qna/:no').get((req, res) => {
-  const subject_no = req.params.id;
-  const blog_no = req.params.no;
-
-  service.readQna(subject_no, blog_no, (err, result) => {
-    if (err) {
-      return res.send(`readNotice error \n ${err}`);
-    }
-    if (req.session.userinfo[1] === Student) {
-      return res.render('student/3qna/read', {
-        subject_no: subject_no,
-        board: result
-      });
-    }
-    return res.render('professor/3qna/read', {
-      subject_no: subject_no,
-      board: result
-    });
-  });
-});
-
-router.route('/:id/qna/').post((req, res) => {
-  let subject_no = req.params.id;
-  req.body.subject_no = subject_no;
-  req.body.user_no = req.session.userinfo[0];
-
-  service.createQna(req.body, (err, result) => {
-    if (err) {
-      return res.send(err);
-    }
-    return res.redirect(`/myclass/${subject_no}/qna`);
-  });
-});
+router.route('/:id/qna/new').get(service.createQnaForm);
+router.route('/:id/qna').get(service.listAllQna);
+router.route('/:id/qna/:no').get(service.readQna);
+router.route('/:id/qna/').post(service.createQna);
 
 router.route('/:id/ppt/new').get((req, res) => {
   const subject_no = req.params.id;
@@ -367,49 +208,45 @@ router.route('/:id/task').post(noticeFile.single('uploadFile'), (req, res) => {
   }
 });
 
-router
-  .route('/:id/task/:no')
-  .post(submitFile.single('uploadFile'), (req, res) => {
-    const subject_no = req.params.id;
-    const blog_no = req.params.no;
-    req.body.user_no = req.session.userinfo[0];
-    if (req.file) {
-      taskService.taskSubmitFile(req.body, blog_no, req.file, (err, result) => {
-        if (err) {
-          return res.send(err);
-        }
-        return res.redirect(`/myclass/${subject_no}/task/${blog_no}`);
-      });
-    } else {
-      taskService.taskSubmit(req.body, blog_no, (err, result) => {
-        if (err) {
-          return res.send(err);
-        }
-        return res.redirect(`/myclass/${subject_no}/task/${blog_no}`);
-      });
-    }
-  });
-
-router
-  .route('/:subject/task/:blog_no/editor/:lang&:filename&:submit_no')
-  .get((req, res) => {
-    const subject_no = req.params.subject;
-    const blog_no = req.params.blog_no;
-    const lang = req.params.lang;
-    const filename = req.params.filename;
-    const submit_no = req.params.submit_no;
-
-    let filePath = `${__dirname}/../uploads/submit/${filename}`;
-
-    service.readCode(filePath, submit_no, (err, result) => {
+router.route('/:id/task/:no').post(submitFile.single('uploadFile'), (req, res) => {
+  const subject_no = req.params.id;
+  const blog_no = req.params.no;
+  req.body.user_no = req.session.userinfo[0];
+  if (req.file) {
+    taskService.taskSubmitFile(req.body, blog_no, req.file, (err, result) => {
       if (err) {
         return res.send(err);
       }
-      result.lang = lang;
-      result.readcode = false;
-      return res.render('professor/editor', { info: result });
+      return res.redirect(`/myclass/${subject_no}/task/${blog_no}`);
     });
+  } else {
+    taskService.taskSubmit(req.body, blog_no, (err, result) => {
+      if (err) {
+        return res.send(err);
+      }
+      return res.redirect(`/myclass/${subject_no}/task/${blog_no}`);
+    });
+  }
+});
+
+router.route('/:subject/task/:blog_no/editor/:lang&:filename&:submit_no').get((req, res) => {
+  const subject_no = req.params.subject;
+  const blog_no = req.params.blog_no;
+  const lang = req.params.lang;
+  const filename = req.params.filename;
+  const submit_no = req.params.submit_no;
+
+  let filePath = `${__dirname}/../uploads/submit/${filename}`;
+
+  service.readCode(filePath, submit_no, (err, result) => {
+    if (err) {
+      return res.send(err);
+    }
+    result.lang = lang;
+    result.readcode = false;
+    return res.render('professor/editor', { info: result });
   });
+});
 
 router.route('/:id/task/delete/:blog_no&:submit_no').get((req, res) => {
   const subject_no = req.params.id;
@@ -438,16 +275,12 @@ router.route('/:id/grade/').get((req, res) => {
 router.route('/score/save').post((req, res) => {
   console.log(req.body);
 
-  taskService.saveScorebyTask(
-    req.body.task_no,
-    req.body.score,
-    (err, result) => {
-      if (err) {
-        return res.status(401).json({ massage: '실패했습니다.' });
-      }
-      return res.send({ result: true, content: result });
+  taskService.saveScorebyTask(req.body.task_no, req.body.score, (err, result) => {
+    if (err) {
+      return res.status(401).json({ massage: '실패했습니다.' });
     }
-  );
+    return res.send({ result: true, content: result });
+  });
 });
 
 module.exports = router;

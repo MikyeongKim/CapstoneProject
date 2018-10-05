@@ -48,105 +48,105 @@
     <% include ./nav.ejs %>
 
 
-      <!--main-->
-      <div id="main-wrapper">
-        <div id="main" class="container">
+    <!--main-->
+    <div id="main-wrapper">
+      <div id="main" class="container">
 
-          <div class="row 200%">
-            <div class="12u" style="width:100%;">
-              <section class="box blog">
-                <div>
-                  <form>
-                    <!-- 학생 :: 언어선택 / 저장버튼/ 제출버튼/ 다운로드버튼 / debug버튼 / run버튼 / 코드미러옵션선택(체크박스)-->
-                    <!-- 교수 :: 언어선택 / 저장버튼/ 성적입력/ 다운로드버튼 / debug버튼 / run버튼 / 코드미러옵션선택(체크박스)-->
-                    <div>
-                      <table class="type06" style="text-align:left; border:none; margin-bottom:0;">
-                        <colgroup>
-                          <col width="1%">
-                          <col width="10%">
-                          <col width="1%">
-                          <col width="1%">
-                          <col width="87%">
+        <div class="row 200%">
+          <div class="12u" style="width:100%;">
+            <section class="box blog">
+              <div>
+                <form>
+                  <!-- 학생 :: 언어선택 / 저장버튼/ 제출버튼/ 다운로드버튼 / debug버튼 / run버튼 / 코드미러옵션선택(체크박스)-->
+                  <!-- 교수 :: 언어선택 / 저장버튼/ 성적입력/ 다운로드버튼 / debug버튼 / run버튼 / 코드미러옵션선택(체크박스)-->
+                  <div>
+                    <table class="type06" style="text-align:left; border:none; margin-bottom:0;">
+                      <colgroup>
+                        <col width="1%">
+                        <col width="10%">
+                        <col width="1%">
+                        <col width="1%">
+                        <col width="87%">
 
-                        </colgroup>
-                        <tr>
-                          <td>
-                            <!-- 코드미러 옵션 바꾸는 버튼임-->
-                            <a href="#" class="fas fa-cog fa-2x"></a>
-                          </td>
-                          <td>
-                            <!--언어선택할수 있는 옵션바-->
-                            <select name="editor_lang" id="lang">
-                              <!--value값은 디비 맞춰서 수정해주세요-->
-                              <option value="c">C</option>
-                              <option value="java">JAVA</option>
-                              <option value="python">Python</option>
-                            </select>
-                          </td>
+                      </colgroup>
+                      <tr>
+                        <td>
+                          <!-- 코드미러 옵션 바꾸는 버튼임-->
+                          <a href="#" class="fas fa-cog fa-2x"></a>
+                        </td>
+                        <td>
+                          <!--언어선택할수 있는 옵션바-->
+                          <select name="editor_lang" id="lang">
+                            <!--value값은 디비 맞춰서 수정해주세요-->
+                            <option value="c">C</option>
+                            <option value="java">JAVA</option>
+                            <option value="python">Python</option>
+                          </select>
+                        </td>
 
-                          <td>
-                            <!--임시저장 버튼-->
-                            <a href="#" class="fas fa-save fa-2x"></a>
-                          </td>
+                        <td>
+                          <!--임시저장 버튼-->
+                          <a href="#" class="fas fa-save fa-2x"></a>
+                        </td>
 
-                          <td>
-                            <!--코드 파일로 다운로드 버튼-->
-                            <a href="#" class="fas fa-download fa-2x"></a>
-                          </td>
+                        <td>
+                          <!--코드 파일로 다운로드 버튼-->
+                          <a href="#" class="fas fa-download fa-2x"></a>
+                        </td>
 
-                          <td style="text-align:right;">
-                            <!--run버튼
+                        <td style="text-align:right;">
+                          <!--run버튼
                                            <a href="#" class="fas fa-play fa-2x"></a> -->
-                            <input type="button" id="run" value="Run" />
-                          </td>
+                          <input type="button" id="run" value="Run" />
+                        </td>
 
-                          <td >
+                        <td>
                           <!--과제제출 버튼-->
-                          <td>
+                        <td>
                           <input type="submit" value="과제제출">
                           <!--                            <a class="fas fa-check-square fa-2x">submit</a>  -->
                         </td>
 
-                        </tr>
-                      </table>
+                      </tr>
+                    </table>
+                  </div>
+                  <h2 class="major" style="margin-bottom: 3%;"></h2>
+
+                  <div class="row">
+
+                    <div class="6u 12u(mobile)" style="float: left;">
+
+                      <textarea id="content" rows="20"></textarea>
                     </div>
-                    <h2 class="major" style="margin-bottom: 3%;"></h2>
 
-                    <div class="row">
+                    <div class="6u 12u(mobile)" style="float: right;">
+                      <div style="margin-bottom:3%;">
 
-                      <div class="6u 12u(mobile)" style="float: left;">
+                        <input type="radio" id="r1" name="inType" value="1">
+                        <label id="r1t">학생매개변수없음</label>
+                        </input>
 
-                        <textarea id="content" rows="20"></textarea>
+                        <input type="radio" id="r2" name="inType" value="2">
+                        <label id="r2t">파일입력</label>
+                        </input>
+
+                        <input type="radio" id="r3" name="inType" value="3">
+                        <label id="r3t">Text입력</label>
+                        <input type="text" placeholder="입력값 작성" id="textIn" />
+                        </input>
+
+                        <input type="file" id="fileIn" accept=".txt" />
                       </div>
-
-                      <div class="6u 12u(mobile)" style="float: right;">
-                        <div style="margin-bottom:3%;">
-
-                          <input type="radio" id="r1" name="inType" value="1">
-                          <label id="r1t">학생매개변수없음</label>
-                          </input>
-
-                          <input type="radio" id="r2" name="inType" value="2">
-                          <label id="r2t">파일입력</label>
-                          </input>
-
-                          <input type="radio" id="r3" name="inType" value="3">
-                          <label id="r3t">Text입력</label>
-                          <input type="text" placeholder="입력값 작성" id="textIn" />
-                          </input>
-
-                          <input type="file" id="fileIn" accept=".txt" />
-                        </div>
-                        <textarea id="result" rows="10" readonly></textarea>
-                      </div>
+                      <textarea id="result" rows="10" readonly></textarea>
                     </div>
-                  </form>
-                </div>
-              </section>
-            </div>
+                  </div>
+                </form>
+              </div>
+            </section>
           </div>
         </div>
       </div>
+    </div>
   </div>
 
   <script>
@@ -171,7 +171,7 @@
     });
     editor.setValue(`#include <stdio.h>\n\nvoid main(){\n\n\tprintf("Hello World!");\n\n}`);
 
-    $('input[type=radio][name=inType]').on('change', function() {
+    $('input[type=radio][name=inType]').on('change', function () {
       var radioValue = $(this).val();
 
       if (radioValue == "1") {
@@ -187,7 +187,7 @@
     $('#r1').attr('checked', true);
     $('#fileIn, #textIn').hide();
 
-    $('#lang').on('change', function() {
+    $('#lang').on('change', function () {
       const lang = $(this).children("option:selected").val();
       switch (lang) {
         case 'c':
@@ -208,7 +208,7 @@
       }
     });
 
-    $('#run').click(function() {
+    $('#run').click(function () {
       const target = document.getElementById("lang")
       const uri = "http://localhost:3000/editor/" + target.options[target.selectedIndex].value
 
@@ -222,14 +222,15 @@
             'content': editor.getValue(),
             'params': params
           },
-          success: function(result) {
+          success: function (result) {
             if (result.result) {
               $('#result').html(result['content']);
-            } },
-          error : function(result) {
-            alert('세션이 끊겼습니다,')
-            window.location.href = "/login";
-          }
+            }
+          },
+          // error : function(result) {
+          //   alert('세션이 끊겼습니다,')
+          //   window.location.href = "/login";
+          // }
         });
       })
     })
@@ -272,7 +273,7 @@
     function textRead(file, callback) {
       var reader = new FileReader();
       reader.readAsText(file, "euc-kr");
-      reader.onload = function() {
+      reader.onload = function () {
         callback(reader.result)
       };
     }
@@ -282,10 +283,10 @@
   <!-- Footer include  -->
   <% include ../../partials/footer.ejs %>
 
-    </div>
+  </div>
 
-    <!-- Scripts -->
-    <% include ../../partials/scripts.ejs %>
+  <!-- Scripts -->
+  <% include ../../partials/scripts.ejs %>
 </body>
 
 </html>

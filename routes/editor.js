@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const models = require('../models');
 const editFunc = require('./func/editfunc');
-
+const service = require('./service/compileService');
 const student = 1;
 
 router.all('*', (req, res, next) => {
@@ -27,20 +26,7 @@ router.route('/').get((req, res) => {
   return res.render('student/editor', { readcode: false });
 });
 
-router.route('/c').post((req, res) => {
-  const content = req.body.content;
-  const param = req.body.params;
-
-  if (param == 'false') {
-    editFunc.logicExecute(content, 1, 'c', result => {
-      return res.send({ result: true, content: result });
-    });
-  } else {
-    editFunc.paramExecute(content, param, 1, 'c', result => {
-      return res.send({ result: true, content: result });
-    });
-  }
-});
+router.route('/c').post(service.cCompile);
 
 router.route('/java').post((req, res) => {
   const content = req.body.content;
