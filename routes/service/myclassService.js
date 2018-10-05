@@ -4,7 +4,188 @@ const submitDAO = require('../Repository/Repo_task_submit');
 const editFunc = require('../func/editfunc');
 
 const STUDENT = 1;
-const PROFESSOR = 2;
+
+createNoticeForm = (req, res, next) => {
+  const subject_no = req.params.id;
+
+  if (req.session.userinfo[1] === STUDENT) {
+    return res.redirect(`/myclass/${subject_no}/notice/`);
+  }
+  return res.render('professor/2notice/write', { subject_no: subject_no });
+};
+
+createQnaForm = (req, res, next) => {
+  const subject_no = req.params.id;
+  return res.render('professor/3qna/write', { subject_no: subject_no });
+};
+
+createPptForm = (req, res) => {
+  const subject_no = req.params.id;
+  if (req.session.userinfo[1] === STUDENT) {
+    return res.redirect(`/myclass/${subject_no}/ppt/`);
+  }
+  return res.render('professor/4ppt/write', { subject_no: subject_no });
+};
+
+createTaskForm = (req, res) => {
+  const subject_no = req.params.id;
+
+  if (req.session.userinfo[1] === STUDENT) {
+    return res.redirect(`/myclass/${subject_no}/task/`);
+  }
+  return res.render('professor/5task/write', { subject_no: subject_no });
+};
+
+// notice 게시글찾기
+listAllNotice = async (req, res, next) => {
+  const subject_no = req.params.id;
+  const userGrade = req.session.userinfo[1];
+  let result;
+  try {
+    result = await myclassDAO.findAllNotice(subject_no);
+  } catch (e) {
+    return res.send(`listAllNotice Error`);
+  }
+
+  const path = userGrade === STUDENT ? 'student/2notice/index' : 'professor/2notice/index';
+  return res.render(path, { subject_no: subject_no, board: result });
+};
+
+listAllQna = async (req, res, next) => {
+  const subject_no = req.params.id;
+  let result;
+  try {
+    result = await myclassDAO.findAllQna(subject_no);
+  } catch (e) {
+    return res.send('listAllNotice Error');
+  }
+
+  let path = req.session.userinfo[1] === STUDENT ? 'student/3qna/index' : 'professor/3qna/index';
+
+  return res.render(path, {
+    subject_no,
+    board: result
+  });
+};
+
+listAllPpt = async (req, res, next) => {
+  const subject_no = req.params.id;
+  let result;
+  try {
+    result = await myclassDAO.findAllPpt(subject_no);
+  } catch (e) {
+    return res.send(`listAllNotice Error`);
+  }
+
+  const path = req.session.userinfo[1] === STUDENT ? 'student/4ppt/index' : 'professor/4ppt/index';
+
+  return res.render(path, {
+    subject_no: subject_no,
+    board: result
+  });
+};
+
+listAllTask = async (req, res, next) => {
+  const subjectNo = req.params.id;
+  let result;
+  try {
+    result = await myclassDAO.findAllTask(subjectNo);
+  } catch (e) {
+    return res.send('listAlltask Error');
+  }
+
+  const path =
+    req.session.userinfo[1] === STUDENT ? 'student/5task/index' : 'professor/5task/index';
+
+  return res.render(path, {
+    subject_no: subjectNo,
+    board: result
+  });
+};
+
+readNotice = async (req, res, next) => {
+  const subjectNo = req.params.id;
+  const blogNo = req.params.no;
+  let result;
+  try {
+    result = await myclassDAO.readNotice(subjectNo, blogNo);
+  } catch (e) {
+    return res.send('readNotice error');
+  }
+  let path =
+    req.session.userinfo[1] === STUDENT ? 'student/2notice/read' : 'professor/2notice/read';
+
+  return res.render(path, {
+    subject_no: subjectNo,
+    board: result
+  });
+};
+
+readQna = async (req, res, next) => {
+  const subject_no = req.params.id;
+  const blog_no = req.params.no;
+  let result;
+  try {
+    result = await myclassDAO.readQna(subject_no, blog_no);
+  } catch (e) {
+    return res.send('readQna error');
+  }
+  const path = req.session.userinfo[1] === STUDENT ? 'student/3qna/read' : 'professor/3qna/read';
+
+  return res.render(path, {
+    subject_no: subject_no,
+    board: result
+  });
+};
+
+readPpt = async (req, res, next) => {
+  const subject_no = req.params.id;
+  const blog_no = req.params.no;
+
+  try {
+    result = await myclassDAO.readPpt(subject_no, blog_no);
+  } catch (e) {
+    return res.send(`readPpt readPpt error \n ${err}`);
+  }
+
+  const path = req.session.userinfo[1] === STUDENT ? 'student/4ppt/read' : 'professor/4ppt/read';
+
+  return res.render(path, {
+    subject_no: subject_no,
+    board: result
+  });
+};
+
+readTask = async (req, res, next) => {
+  const subjectNo = req.params.id;
+  const blogNo = req.params.no;
+  const userNo = req.session.userinfo[0];
+  let blogResult, taskResult;
+  let isStudent = req.session.userinfo[1] === STUDENT;
+  try {
+    [blogResult, taskResult] = isStudent
+      ? await myclassDAO.readTaskStu(userNo, blogNo)
+      : await myclassDAO.readTaskPro(blogNo);
+  } catch (e) {
+    return res.status(500).send('readTask readTaskStu error');
+  }
+
+  if (isStudent) {
+    let isSubmit = taskResult == null ? false : true;
+    return res.render('student/5task/read', {
+      subject_no: subjectNo,
+      board: blogResult,
+      task: taskResult,
+      isSubmit: isSubmit
+    });
+  }
+
+  return res.render('professor/5task/read', {
+    subject_no: subjectNo,
+    board: blogResult,
+    task: taskResult
+  });
+};
 
 findClass = async (req, res, next) => {
   const userGrade = req.session.userinfo[1];
@@ -41,20 +222,6 @@ showPlan = async (req, res, next) => {
   });
 };
 
-createNoticeForm = (req, res, next) => {
-  const subject_no = req.params.id;
-
-  if (req.session.userinfo[1] === STUDENT) {
-    return res.redirect(`/myclass/${subject_no}/notice/`);
-  }
-  return res.render('professor/2notice/write', { subject_no: subject_no });
-};
-
-createQnaForm = (req, res, next) => {
-  const subject_no = req.params.id;
-  return res.render('professor/3qna/write', { subject_no: subject_no });
-};
-
 createNotice = async (req, res, next) => {
   let subject_no = req.params.id;
   req.body.subject_no = subject_no;
@@ -81,39 +248,6 @@ createNotice = async (req, res, next) => {
   return res.redirect(`/myclass/${subject_no}/notice`);
 };
 
-// notice 게시글찾기
-listAllNotice = async (req, res, next) => {
-  const subject_no = req.params.id;
-  const userGrade = req.session.userinfo[1];
-  let result;
-  try {
-    result = await myclassDAO.findAllNotice(subject_no);
-  } catch (e) {
-    return res.send(`listAllNotice Error`);
-  }
-
-  const path = userGrade === STUDENT ? 'student/2notice/index' : 'professor/2notice/index';
-  return res.render(path, { subject_no: subject_no, board: result });
-};
-
-readNotice = async (req, res, next) => {
-  const subjectNo = req.params.id;
-  const blogNo = req.params.no;
-  let result;
-  try {
-    result = await myclassDAO.readNotice(subjectNo, blogNo);
-  } catch (e) {
-    return res.send('readNotice error');
-  }
-  let path =
-    req.session.userinfo[1] === STUDENT ? 'student/2notice/read' : 'professor/2notice/read';
-
-  return res.render(path, {
-    subject_no: subjectNo,
-    board: result
-  });
-};
-
 createQna = async (req, res, next) => {
   let subject_no = req.params.id;
   req.body.subject_no = subject_no;
@@ -134,72 +268,26 @@ createQna = async (req, res, next) => {
   return res.redirect(`/myclass/${subject_no}/qna`);
 };
 
-listAllQna = async (req, res, next) => {
-  const subject_no = req.params.id;
+createPpt = async (req, res, next) => {
+  let subject_no = req.params.id;
+  req.body.subject_no = subject_no;
+  req.body.user_no = req.session.userinfo[0];
   let result;
+
   try {
-    result = await myclassDAO.findAllQna(subject_no);
+    result = await userDAO.findUserNameByNo(req.body.user_no);
   } catch (e) {
-    return res.send('listAllNotice Error');
+    return res.status(500).send('createPpt findUserNameByNo error');
   }
 
-  let path = req.session.userinfo[1] === STUDENT ? 'student/3qna/index' : 'professor/3qna/index';
-
-  return res.render(path, {
-    subject_no,
-    board: result
-  });
-};
-
-readQna = async (req, res, next) => {
-  const subject_no = req.params.id;
-  const blog_no = req.params.no;
-  let result;
   try {
-    result = await myclassDAO.readQna(subject_no, blog_no);
+    await myclassDAO.createPpt(req.body, result.user_name);
   } catch (e) {
-    return res.send('readQna error');
+    return res.status(500).send('createPpt createPpt error');
   }
-  const path = req.session.userinfo[1] === STUDENT ? 'student/3qna/read' : 'professor/3qna/read';
 
-  return res.render(path, {
-    subject_no: subject_no,
-    board: result
-  });
+  return res.redirect(`/myclass/${subject_no}/ppt`);
 };
-
-// ppt 글작성
-function createPpt(body, callback) {
-  userDAO.findUserNameByNo(body.user_no, (err, result) => {
-    if (err) {
-      return callback(err);
-    }
-    myclassDAO.createPpt(body, result.user_name, (err, result) => {
-      if (err) {
-        return callback(err);
-      }
-      return callback(null, result);
-    });
-  });
-}
-// ppt 게시글찾기
-function listAllPpt(subject_no, callback) {
-  myclassDAO.findAllPpt(subject_no, (err, result) => {
-    if (err) {
-      return callback(err);
-    }
-    return callback(null, result);
-  });
-}
-// ppt 글읽기
-function readPpt(subject_no, blog_no, callback) {
-  myclassDAO.readPpt(subject_no, blog_no, (err, result) => {
-    if (err) {
-      return callback(err);
-    }
-    return callback(null, result);
-  });
-}
 
 function readCode(path, submit_no, cb) {
   submitDAO.findUserBySubNo(submit_no, (err, userInfo) => {
@@ -217,19 +305,63 @@ function readCode(path, submit_no, cb) {
   });
 }
 
+taskSubmit = (req, res) => {
+  const subject_no = req.params.id;
+  const blog_no = req.params.no;
+
+  return res.render('student/5task/task_write');
+};
+
+createTask = async (req, res, next) => {
+  let subject_no = req.params.id;
+  req.body.subject_no = subject_no;
+  req.body.user_no = req.session.userinfo[0];
+
+  let submit_period = `${req.body.yymmdd} ${req.body.hhmm}`;
+  let time = new Date(submit_period);
+  let time_sec = time.getSeconds();
+  let result;
+
+  try {
+    result = await userDAO.findUserNameByNo(req.body.user_no);
+  } catch (e) {
+    return res.status(500).send('createFileTask findUserNameByNo error');
+  }
+
+  if (!result) return res.status(400).send('400 bad Request');
+
+  try {
+    req.file
+      ? await myclassDAO.createFileTask(req.body, result.user_name, time, time_sec, req.file)
+      : await myclassDAO.createTask(req.body, result.user_name, time, time_sec);
+  } catch (e) {
+    console.log(e);
+    return res.status(500).send('createFileTask createFileTask error');
+  }
+
+  return res.redirect(`/myclass/${subject_no}/task`);
+};
+
 module.exports = {
+  createNoticeForm,
+  createQnaForm,
+  createPptForm,
+  createTaskForm,
+  listAllNotice,
+  listAllQna,
+  listAllPpt,
+  listAllTask,
+
   findClass,
   showPlan,
   createNotice,
-  createNoticeForm,
-  createQnaForm,
-  listAllNotice,
-  readNotice,
   createQna, // 3qna
-  listAllQna,
-  readQna,
   createPpt, // 4ppt
-  listAllPpt,
+  readNotice,
+  readQna,
   readPpt,
-  readCode
+  readCode,
+  readTask,
+  taskSubmit,
+  createTask
 };

@@ -186,12 +186,7 @@ function readTaskStu(user_no, blog_no, callback) {
         blog_no: blog_no,
         user_no: user_no
       },
-      attributes: [
-        'task_submit_no',
-        'task_submit_content',
-        'task_submit_score',
-        'created_at'
-      ],
+      attributes: ['task_submit_no', 'task_submit_content', 'task_submit_score', 'created_at'],
       include: [
         {
           model: models.submit_file,
