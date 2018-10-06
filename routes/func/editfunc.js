@@ -199,11 +199,11 @@ function javaParamCompile(editlogNo, filename, callback) {
   );
 }
 
-function readCode(path, cb) {
-  fs.readFile(path, 'utf-8', (err, data) => {
-    if (err) {
-      return cb(err);
-    }
-    return cb(null, data);
+function readCode(path) {
+  return new Promise((resolve, reject) => {
+    fs.readFile(path, 'utf-8', (err, data) => {
+      if (err) reject('error');
+      else resolve(data);
+    });
   });
 }

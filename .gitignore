@@ -6,5 +6,5 @@ complieFolder/
 task/
 tmp/
 submit/
-batch/
+batch/*
 *.gitignore/

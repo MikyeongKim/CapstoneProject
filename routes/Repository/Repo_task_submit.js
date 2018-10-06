@@ -5,22 +5,15 @@ module.exports = {
   saveScorebyTask
 };
 
-function findUserBySubNo(sub_no, cb) {
-  models.task_submit
-    .findOne({
-      where: { task_submit_no: sub_no },
-      include: [
-        {
-          model: models.User
-        }
-      ]
-    })
-    .then(result => {
-      cb(null, result);
-    })
-    .catch(err => {
-      cb(err);
-    });
+function findUserBySubNo(sub_no) {
+  return models.task_submit.findOne({
+    where: { task_submit_no: sub_no },
+    include: [
+      {
+        model: models.User
+      }
+    ]
+  });
 }
 
 function saveScorebyTask(task_no, score, cb) {

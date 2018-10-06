@@ -24,18 +24,12 @@ function createTask(body, callback) {
     if (err) {
       return callback(err);
     }
-    taskDAO.createTask(
-      body,
-      result.user_name,
-      time,
-      time_sec,
-      (err, result) => {
-        if (err) {
-          return callback(err);
-        }
-        return callback(null, result);
+    taskDAO.createTask(body, result.user_name, time, time_sec, (err, result) => {
+      if (err) {
+        return callback(err);
       }
-    );
+      return callback(null, result);
+    });
   });
 }
 
@@ -48,19 +42,12 @@ function createFileTask(body, files, callback) {
     if (err) {
       return callback(err);
     }
-    taskDAO.createFileTask(
-      body,
-      result.user_name,
-      time,
-      time_sec,
-      files,
-      (err, result) => {
-        if (err) {
-          return callback(err);
-        }
-        return callback(null, result);
+    taskDAO.createFileTask(body, result.user_name, time, time_sec, files, (err, result) => {
+      if (err) {
+        return callback(err);
       }
-    );
+      return callback(null, result);
+    });
   });
 }
 

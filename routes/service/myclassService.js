@@ -166,12 +166,15 @@ readTask = async (req, res, next) => {
     [blogResult, taskResult] = isStudent
       ? await myclassDAO.readTaskStu(userNo, blogNo)
       : await myclassDAO.readTaskPro(blogNo);
+    if (taskResult === null) {
+      taskResult = await myclassDAO.readTaskFindOne(userNo, blogNo);
+    }
   } catch (e) {
     return res.status(500).send('readTask readTaskStu error');
   }
 
   if (isStudent) {
-    let isSubmit = taskResult == null ? false : true;
+    let isSubmit = taskResult === null ? false : true;
     return res.render('student/5task/read', {
       subject_no: subjectNo,
       board: blogResult,
@@ -289,27 +292,53 @@ createPpt = async (req, res, next) => {
   return res.redirect(`/myclass/${subject_no}/ppt`);
 };
 
-function readCode(path, submit_no, cb) {
-  submitDAO.findUserBySubNo(submit_no, (err, userInfo) => {
-    if (err) {
-      return cb(err);
-    }
+readCode = async (req, res, next) => {
+  const subjectNo = req.params.subject;
+  const blogNo = req.params.blog_no;
+  const lang = req.params.lang;
+  const filename = req.params.filename;
+  const submitNo = req.params.submit_no;
+  let filePath = `${__dirname}/../../uploads/submit/${filename}`;
+  let result;
+  try {
+    let userInfo = await submitDAO.findUserBySubNo(submitNo);
+    let code = await editFunc.readCode(filePath);
+    result = { userInfo, code, lang, readcode: false };
+  } catch (e) {
+    return res.status(500).send('readCode error');
+  }
 
-    editFunc.readCode(path, (err, code) => {
-      if (err) {
-        return cb(err);
-      }
-      let resultVal = { userInfo: userInfo, code: code };
-      cb(null, resultVal);
-    });
-  });
-}
+  return res.render('professor/editor', { info: result });
+};
 
 taskSubmit = (req, res) => {
   const subject_no = req.params.id;
   const blog_no = req.params.no;
 
   return res.render('student/5task/task_write');
+};
+
+taskSubmit2 = async (req, res, next) => {
+  const subjectNo = req.params.id;
+  const blogNo = req.params.no;
+  req.body.user_no = req.session.userinfo[0];
+  let extension;
+
+  if (req.file) {
+    let fileName = req.file.originalname;
+    let pathFileName = fileName.lastIndexOf('.') + 1; //확장자 제외한 경로+파일명
+    extension = fileName.substr(pathFileName, fileName.length).toLowerCase(); //확장자명
+  }
+
+  try {
+    req.file
+      ? await myclassDAO.taskSubmitFile(req.body, blogNo, req.file, extension)
+      : await myclassDAO.taskSubmit(req.body, blogNo);
+  } catch (e) {
+    return res.status(500).send('taskSubmit2 taskSubmit error ');
+  }
+
+  return res.redirect(`/myclass/${subjectNo}/task/${blogNo}`);
 };
 
 createTask = async (req, res, next) => {
@@ -342,6 +371,20 @@ createTask = async (req, res, next) => {
   return res.redirect(`/myclass/${subject_no}/task`);
 };
 
+delTaskSubmit = async (req, res, next) => {
+  const subject_no = req.params.id;
+  const submit_no = req.params.submit_no;
+  const blog_no = req.params.blog_no;
+  const user_no = req.session.userinfo[0];
+
+  try {
+    await myclassDAO.delTaskSubmit(submit_no);
+  } catch (e) {
+    return res.status(500).send('delTaskSubmit error');
+  }
+  return res.redirect(`/myclass/${subject_no}/task/${blog_no}`);
+};
+
 module.exports = {
   createNoticeForm,
   createQnaForm,
@@ -351,17 +394,18 @@ module.exports = {
   listAllQna,
   listAllPpt,
   listAllTask,
-
   findClass,
   showPlan,
   createNotice,
-  createQna, // 3qna
-  createPpt, // 4ppt
+  createQna,
+  createPpt,
   readNotice,
   readQna,
   readPpt,
   readCode,
   readTask,
   taskSubmit,
-  createTask
+  createTask,
+  taskSubmit2,
+  delTaskSubmit
 };

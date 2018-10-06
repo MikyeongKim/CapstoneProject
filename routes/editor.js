@@ -15,17 +15,7 @@ router.all('*', (req, res, next) => {
   next('route');
 });
 
-router.route('/').get((req, res) => {
-  if (!req.session.userinfo) {
-    return res.status(401).redirect('/login');
-  }
-
-  if (req.session.userinfo[1] === student) {
-    return res.render('student/editor');
-  }
-  return res.render('student/editor', { readcode: false });
-});
-
+router.route('/').get(service.index);
 router.route('/c').post(service.cCompile);
 
 router.route('/java').post((req, res) => {

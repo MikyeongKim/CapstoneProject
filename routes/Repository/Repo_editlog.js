@@ -10,6 +10,20 @@ create = (lang, filepath, filename, userNo) => {
   });
 };
 
+function updateLog(editlogNo) {
+  return models.Editlog.update(
+    {
+      edit_isSuccess: true
+    },
+    {
+      where: {
+        edit_no: editlogNo
+      }
+    }
+  );
+}
+
 module.exports = {
-  create
+  create,
+  updateLog
 };

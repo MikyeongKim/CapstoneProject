@@ -201,6 +201,17 @@ function readTaskStu(user_no, blog_no) {
   ]);
 }
 
+// 위에 쿼리문 잘못짜서 임시용으로 작성
+function readTaskFindOne(user_no, blog_no) {
+  return models.task_submit.findOne({
+    where: {
+      blog_no: blog_no,
+      user_no: user_no
+    },
+    attributes: ['task_submit_no', 'task_submit_content', 'task_submit_score', 'created_at']
+  });
+}
+
 function readTaskPro(blog_no) {
   return models.sequelize.Promise.all([
     models.blog.find({
@@ -301,6 +312,69 @@ function createTask(body, user_name, time, time_sec) {
   });
 }
 
+function taskSubmit(body, blog_no) {
+  return models.task_submit.create({
+    blog_no,
+    task_submit_content: body.content,
+    user_no: body.user_no
+  });
+}
+
+function taskSubmitFile(body, blog_no, files, lang) {
+  return models.sequelize.transaction(function(t) {
+    return models.task_submit
+      .create(
+        {
+          task_submit_content: body.content,
+          blog_no,
+          user_no: body.user_no
+        },
+        { transaction: t }
+      )
+      .then(result => {
+        return models.submit_file.create(
+          {
+            submit_file_origin_name: files.originalname,
+            submit_file_save_name: files.filename,
+            submit_file_path: files.path,
+            submit_file_lang: lang,
+            task_submit_no: result.task_submit_no
+          },
+          { transaction: t }
+        );
+      });
+  });
+}
+
+function delTaskSubmit(submit_no) {
+  return models.sequelize.transaction(function(t) {
+    return models.task_submit
+      .destroy(
+        {
+          where: {
+            task_submit_no: submit_no
+          }
+        },
+        { transaction: t }
+      )
+      .then(
+        result => {
+          models.submit_file.update(
+            {
+              submit_file_isdelete: '1'
+            },
+            {
+              where: {
+                task_submit_no: submit_no
+              }
+            }
+          );
+        },
+        { transaction: t }
+      );
+  });
+}
+
 module.exports = {
   findAllTask,
   findAllNotice,
@@ -318,5 +392,9 @@ module.exports = {
   readTaskStu,
   readTaskPro,
   createFileTask,
-  createTask
+  createTask,
+  taskSubmit,
+  taskSubmitFile,
+  readTaskFindOne,
+  delTaskSubmit
 };

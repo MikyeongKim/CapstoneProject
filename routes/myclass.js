@@ -57,59 +57,11 @@ router.route('/:id/task/submit').get(service.taskSubmit);
 router.route('/:id/task/:no').get(service.readTask);
 router.route('/:id/task').post(noticeFile.single('uploadFile'), service.createTask);
 
-router.route('/:id/task/:no').post(submitFile.single('uploadFile'), (req, res) => {
-  const subject_no = req.params.id;
-  const blog_no = req.params.no;
-  req.body.user_no = req.session.userinfo[0];
-  if (req.file) {
-    taskService.taskSubmitFile(req.body, blog_no, req.file, (err, result) => {
-      if (err) {
-        return res.send(err);
-      }
-      return res.redirect(`/myclass/${subject_no}/task/${blog_no}`);
-    });
-  } else {
-    taskService.taskSubmit(req.body, blog_no, (err, result) => {
-      if (err) {
-        return res.send(err);
-      }
-      return res.redirect(`/myclass/${subject_no}/task/${blog_no}`);
-    });
-  }
-});
+router.route('/:id/task/:no').post(submitFile.single('uploadFile'), service.taskSubmit2);
 
-router.route('/:subject/task/:blog_no/editor/:lang&:filename&:submit_no').get((req, res) => {
-  const subject_no = req.params.subject;
-  const blog_no = req.params.blog_no;
-  const lang = req.params.lang;
-  const filename = req.params.filename;
-  const submit_no = req.params.submit_no;
+router.route('/:subject/task/:blog_no/editor/:lang&:filename&:submit_no').get(service.readCode);
 
-  let filePath = `${__dirname}/../uploads/submit/${filename}`;
-
-  service.readCode(filePath, submit_no, (err, result) => {
-    if (err) {
-      return res.send(err);
-    }
-    result.lang = lang;
-    result.readcode = false;
-    return res.render('professor/editor', { info: result });
-  });
-});
-
-router.route('/:id/task/delete/:blog_no&:submit_no').get((req, res) => {
-  const subject_no = req.params.id;
-  const submit_no = req.params.submit_no;
-  const blog_no = req.params.blog_no;
-  const user_no = req.session.userinfo[0];
-
-  taskService.delTaskSubmit(submit_no, (err, result) => {
-    if (err) {
-      return res.send(err);
-    }
-    return res.redirect(`/myclass/${subject_no}/task/${blog_no}`);
-  });
-});
+router.route('/:id/task/delete/:blog_no&:submit_no').get(service.delTaskSubmit);
 
 router.route('/:id/team').get((req, res) => {
   const subject_no = req.params.id;
@@ -122,8 +74,6 @@ router.route('/:id/grade/').get((req, res) => {
 });
 
 router.route('/score/save').post((req, res) => {
-  console.log(req.body);
-
   taskService.saveScorebyTask(req.body.task_no, req.body.score, (err, result) => {
     if (err) {
       return res.status(401).json({ massage: '실패했습니다.' });
