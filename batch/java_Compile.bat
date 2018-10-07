@@ -1,7 +1,6 @@
 @echo off
 title Java Compile
-
-cd C:\gitFolder\CapstoneProject\complieFolder\java
-
+chcp 65001
+cd C:\gitfolder\CapstoneProject\complieFolder\java
 javac test.java -encoding UTF-8
-java test > test.txt
+java test > test.txt 

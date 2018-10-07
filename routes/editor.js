@@ -5,33 +5,16 @@ const service = require('./service/compileService');
 const student = 1;
 
 router.all('*', (req, res, next) => {
-  /*
   if (!req.session.userinfo) {
-    if (req.originalUrl === '/editor') {
-      return res.status(401).redirect('/login')
-    }
-    return res.status(401).json({ massage: '세션이 끊겼습니다.' });
-  }*/
+    return res.status(401).redirect('/login');
+  }
   next('route');
 });
 
 router.route('/').get(service.index);
 router.route('/c').post(service.cCompile);
 
-router.route('/java').post((req, res) => {
-  const content = req.body.content;
-  const param = req.body.params;
-
-  if (param == 'false') {
-    editFunc.logicExecute(content, 1, 'java', result => {
-      return res.send({ result: true, content: result });
-    });
-  } else {
-    editFunc.paramExecute(content, param, 1, 'java', result => {
-      return res.send({ result: true, content: result });
-    });
-  }
-});
+router.route('/java').post(service.javaCompile);
 
 router.route('/python').post((req, res) => {
   const content = req.body.content;
