@@ -64,6 +64,28 @@ javaCompile = async (req, res, next) => {
   return res.send({ result: true, content: data });
 };
 
+pythonCompile = async (req, res, next) => {
+  const userNo = req.session.userinfo[0];
+  const { content, params } = req.body;
+  const FILE_PATH = 'complieFolder/python/';
+  const filename = Date.now() + '-' + userNo;
+  let editlogNo, data;
+  try {
+    editlogNo = (await logDAO.create('python', FILE_PATH, filename, userNo)).edit_no;
+  } catch (e) {
+    return res.send('로그저장 실패');
+  }
+  try {
+    await saveCode(filename, content, 'python', params);
+    data =
+      params !== 'false'
+        ? await compileFunc(editlogNo, filename, 'python', true)
+        : await compileFunc(editlogNo, filename, 'python');
+  } catch (e) {
+    return res.send({ result: true, content: 'error' });
+  }
+  return res.send({ result: true, content: data });
+};
 /*----------------------------------------------------------------*/
 /*----------------------------------------------------------------*/
 /*----------------------------------------------------------------*/
@@ -113,11 +135,17 @@ async function compileFunc(editlogNo, filename, lang, isParam) {
   let path = `complieFolder/${lang}/`;
   let result = false;
 
+  console.info(`batch ${batch}`);
+  console.log(`isparam ${isParam}`);
+  console.log(filename);
+
   try {
     isParam
       ? await execPromise(batch, [filename, `param-${filename}.txt`], { encoding: 'utf8' })
       : await execPromise(batch, [filename], { encoding: 'utf8' });
   } catch (e) {
+    console.log('이응');
+    console.log(e);
     if (e.stderr !== '') {
       result = e.stderr;
     }
@@ -142,6 +170,8 @@ function batchPath(lang, isParam) {
     val = isParam ? 'batch\\c_Param.bat' : 'batch\\c_Compile.bat';
   } else if (lang === 'java') {
     val = isParam ? 'batch\\java_Param.bat' : 'batch\\java_Compile.bat';
+  } else if (lang === 'python') {
+    val = isParam ? 'batch\\python_Param.bat' : 'batch\\python_Compile.bat';
   }
   return val;
 }
@@ -153,6 +183,11 @@ async function saveCode(filename, content, lang, param = false) {
   ];
   if (lang === 'java') {
     files = [`complieFolder/${lang}/test.${lang}`, `complieFolder/${lang}/origin-${filename}.txt`];
+  } else if (lang == 'python') {
+    files = [
+      `complieFolder/${lang}/${filename}.py`,
+      `complieFolder/${lang}/origin-${filename}.txt`
+    ];
   }
 
   try {
@@ -203,5 +238,6 @@ function fileUnlink(path) {
 module.exports = {
   index,
   cCompile,
-  javaCompile
+  javaCompile,
+  pythonCompile
 };

@@ -16,20 +16,7 @@ router.route('/c').post(service.cCompile);
 
 router.route('/java').post(service.javaCompile);
 
-router.route('/python').post((req, res) => {
-  const content = req.body.content;
-  const param = req.body.params;
-
-  if (param == 'false') {
-    editFunc.logicExecute(content, 1, 'python', result => {
-      return res.send({ result: true, content: result });
-    });
-  } else {
-    editFunc.paramExecute(content, param, 1, 'python', result => {
-      return res.send({ result: true, content: result });
-    });
-  }
-});
+router.route('/python').post(service.pythonCompile);
 
 router.route('/pro/editor').get((req, res) => {
   return res.render('professor/editor', { readcode: false });

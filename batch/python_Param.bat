@@ -1,7 +1,8 @@
 @echo off
 title PYTHON Compile
 
-cd C:\gitFolder\CapstoneProject\complieFolder\python
+chcp 65001
+cd C:\gitfolder\CapstoneProject\complieFolder\python
 
 setlocal EnableDelayedExpansion
 set /a count=0

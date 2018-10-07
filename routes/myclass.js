@@ -58,11 +58,8 @@ router.route('/:id/task/:no').get(service.readTask);
 router.route('/:id/task').post(noticeFile.single('uploadFile'), service.createTask);
 
 router.route('/:id/task/:no').post(submitFile.single('uploadFile'), service.taskSubmit2);
-
 router.route('/:subject/task/:blog_no/editor/:lang&:filename&:submit_no').get(service.readCode);
-
 router.route('/:id/task/delete/:blog_no&:submit_no').get(service.delTaskSubmit);
-
 router.route('/:id/team').get((req, res) => {
   const subject_no = req.params.id;
   return res.render('student/6team/blog_team', { subject_no: subject_no });
