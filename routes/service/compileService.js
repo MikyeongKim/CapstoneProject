@@ -86,12 +86,6 @@ pythonCompile = async (req, res, next) => {
   }
   return res.send({ result: true, content: data });
 };
-/*----------------------------------------------------------------*/
-/*----------------------------------------------------------------*/
-/*----------------------------------------------------------------*/
-/*----------------------------------------------------------------*/
-/*----------------------------------------------------------------*/
-/*----------------------------------------------------------------*/
 
 /**
  * @param {number} editlogNo
@@ -135,17 +129,12 @@ async function compileFunc(editlogNo, filename, lang, isParam) {
   let path = `complieFolder/${lang}/`;
   let result = false;
 
-  console.info(`batch ${batch}`);
-  console.log(`isparam ${isParam}`);
-  console.log(filename);
-
   try {
     isParam
       ? await execPromise(batch, [filename, `param-${filename}.txt`], { encoding: 'utf8' })
       : await execPromise(batch, [filename], { encoding: 'utf8' });
   } catch (e) {
-    console.log('이응');
-    console.log(e);
+    console.log(e.stderr);
     if (e.stderr !== '') {
       result = e.stderr;
     }
@@ -200,13 +189,6 @@ async function saveCode(filename, content, lang, param = false) {
     console.log(e);
   }
 }
-
-/*----------------------------------------------------------------*/
-/*----------------------------------------------------------------*/
-/*----------------------------------------------------------------*/
-/*----------------------------------------------------------------*/
-/*----------------------------------------------------------------*/
-/*----------------------------------------------------------------*/
 
 function fileSave(path, data) {
   return new Promise(function(resolve, reject) {

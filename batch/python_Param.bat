@@ -3,7 +3,6 @@ title PYTHON Compile
 
 chcp 65001
 cd C:\gitfolder\CapstoneProject\complieFolder\python
-
 setlocal EnableDelayedExpansion
 set /a count=0
 

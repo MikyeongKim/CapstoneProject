@@ -303,7 +303,13 @@ readCode = async (req, res, next) => {
   try {
     let userInfo = await submitDAO.findUserBySubNo(submitNo);
     let code = await editFunc.readCode(filePath);
-    result = { userInfo, code, lang, readcode: false };
+    result = {
+      userInfo,
+      code,
+      lang,
+      readcode: false,
+      url: `/myclass/${subjectNo}/task/${blogNo}`
+    };
   } catch (e) {
     return res.status(500).send('readCode error');
   }

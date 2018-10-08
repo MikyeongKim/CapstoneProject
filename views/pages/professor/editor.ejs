@@ -49,146 +49,149 @@
     <% include ./nav.ejs %>
 
 
-      <!--main-->
-      <div id="main-wrapper">
-        <div id="main" class="container">
+    <!--main-->
+    <div id="main-wrapper">
+      <div id="main" class="container">
 
 
 
-          <div class="row 200%">
-            <div class="12u" style="width:100%;">
-              <section class="box blog">
-                <div>
-                  <form method="POST">
-                    <!-- 학생 :: 언어선택 / 저장버튼/ 제출버튼/ 다운로드버튼 / debug버튼 / run버튼 / 코드미러옵션선택(체크박스)-->
-                    <!-- 교수 :: 언어선택 / 저장버튼/ 성적입력/ 다운로드버튼 / debug버튼 / run버튼 / 코드미러옵션선택(체크박스)-->
+        <div class="row 200%">
+          <div class="12u" style="width:100%;">
+            <section class="box blog">
+              <div>
+                <form method="POST">
+                  <!-- 학생 :: 언어선택 / 저장버튼/ 제출버튼/ 다운로드버튼 / debug버튼 / run버튼 / 코드미러옵션선택(체크박스)-->
+                  <!-- 교수 :: 언어선택 / 저장버튼/ 성적입력/ 다운로드버튼 / debug버튼 / run버튼 / 코드미러옵션선택(체크박스)-->
+                  <div>
                     <div>
-                      <div>
-                        <table class="type06" style="border:none;">
-                          <colgroup>
-                            <col width="1%">
-                            <col width="7%">
-                            <col width="7%">
-                            <col width="7%">
-                            <col width="7%">
-                            <col width="37%">
-                            <col width="7%">
-                            <col width="1%">
-                            <col width="26%">
-                          </colgroup>
+                      <table class="type06" style="border:none;">
+                        <colgroup>
+                          <col width="1%">
+                          <col width="7%">
+                          <col width="7%">
+                          <col width="7%">
+                          <col width="7%">
+                          <col width="37%">
+                          <col width="7%">
+                          <col width="1%">
+                          <col width="26%">
+                        </colgroup>
 
-                          <tr>
-                            <!--여기 아래 전부, 학생정보 긁어와주세요-->
-                            <td>
-                              <i class="fas fa-user-circle fa-2x"></i>
-                            </td>
-
-
-                            <th>이름</th>
-                            <td style="text-align:left;"><%= info.userInfo.User.user_name %></td>
-
-                            <th style="text-align:right;">성적<label id="score"></label></th>
-                            <td style="text-align:left;">
-                              <input type="number" id="score2" name="score" />
-                            </td>
-                            <td style="text-align:left;">
-                              <!--학생과제 평가점수 저장 버튼 / DB에 들어가는거 처리해주세요-->
-                              <input type="submit" value="저장" class="fas fa-save fa-2x" id='scoreSave'>
-                            </td>
-
-                            <td style="text-align:right;">
-                              <button class="button" location.href='javascript:history.back()'>뒤로가기</button>
-                              <!--버튼 누르면 과제 제출한 학생들 리스트로 감-->
-                            </td>
-                          </tr>
-
-                        </table>
-                      </div>
-                      <div>
-                        <table class="type06" style="text-align:left; border:none; margin-bottom:0;">
-                          <colgroup>
-                            <col width="1%">
-                            <col width="10%">
-                            <col width="1%">
-                            <col width="88%">
-
-                          </colgroup>
-
-                          <tr>
-                            <td>
-                              <!-- 코드미러 옵션 바꾸는 버튼임-->
-                              <a href="#" class="fas fa-cog fa-2x"></a>
-                            </td>
-                            <td>
-                              <!--언어선택할수 있는 옵션바-->
-                              <select name="editor_lang" id="lang">
-                                                    <!--value값은 디비 맞춰서 수정해주세요-->
-                                                    <option value="c">C</option>
-                                                    <option value="java">JAVA</option>
-                                                    <option value="python">Python</option>
-                                                </select>
-                            </td>
+                        <tr>
+                          <!--여기 아래 전부, 학생정보 긁어와주세요-->
+                          <td>
+                            <i class="fas fa-user-circle fa-2x"></i>
+                          </td>
 
 
+                          <th>이름</th>
+                          <td style="text-align:left;">
+                            <%= info.userInfo.User.user_name %>
+                          </td>
+
+                          <th style="text-align:right;">성적<label id="score"></label></th>
+                          <td style="text-align:left;">
+                            <input type="number" id="score2" name="score" />
+                          </td>
+                          <td style="text-align:left;">
+                            <!--학생과제 평가점수 저장 버튼 / DB에 들어가는거 처리해주세요-->
+                            <input type="submit" value="저장" class="fas fa-save fa-2x" id='scoreSave'>
+                          </td>
+
+                          <td style="text-align:right;">
+                            <!--/myclass/-->
+                            <a class="button" onclick="location.href='<%= info.url %>'">뒤로가기</a>
+                            <!--버튼 누르면 과제 제출한 학생들 리스트로 감-->
+                          </td>
+                        </tr>
+
+                      </table>
+                    </div>
+                    <div>
+                      <table class="type06" style="text-align:left; border:none; margin-bottom:0;">
+                        <colgroup>
+                          <col width="1%">
+                          <col width="10%">
+                          <col width="1%">
+                          <col width="88%">
+
+                        </colgroup>
+
+                        <tr>
+                          <td>
+                            <!-- 코드미러 옵션 바꾸는 버튼임-->
+                            <a href="#" class="fas fa-cog fa-2x"></a>
+                          </td>
+                          <td>
+                            <!--언어선택할수 있는 옵션바-->
+                            <select name="editor_lang" id="lang">
+                              <!--value값은 디비 맞춰서 수정해주세요-->
+                              <option value="c">C</option>
+                              <option value="java">JAVA</option>
+                              <option value="python">Python</option>
+                            </select>
+                          </td>
 
 
-                            <td>
-                              <!--코드 파일로 다운로드 버튼-->
-                              <a href="#" class="fas fa-download fa-2x"></a>
-                            </td>
 
-                            <td style="text-align:right;">
-                              <!--run버튼
+
+                          <td>
+                            <!--코드 파일로 다운로드 버튼-->
+                            <a href="#" class="fas fa-download fa-2x"></a>
+                          </td>
+
+                          <td style="text-align:right;">
+                            <!--run버튼
                                                 <a href="#" class="fas fa-play fa-2x" id="run">run</a>
                                                 -->
-                              <input type="button" id="run" value="Run" />
-                            </td>
-                          </tr>
+                            <input type="button" id="run" value="Run" />
+                          </td>
+                        </tr>
 
-                        </table>
-                      </div>
+                      </table>
                     </div>
-                    <h2 class="major" style="margin-bottom: 3%;"></h2>
+                  </div>
+                  <h2 class="major" style="margin-bottom: 3%;"></h2>
 
-                    <div class="row">
+                  <div class="row">
 
-                      <div class="6u 12u(mobile)" style="float: left;">
+                    <div class="6u 12u(mobile)" style="float: left;">
 
                       <% if (!(info.readcode)) { %>
                       <textarea id="content" rows="20"><%= info.code %></textarea>
-                    <% } else { %>
-                       <textarea id="content" rows="20"></textarea>
-                    <%  } %>
-                      </div>
-
-                      <div class="6u 12u(mobile)" style="float: right;">
-                        <div style="margin-bottom:3%;">
-
-                          <input type="radio" id="r1" name="inType" value="1">
-                          <label id="r1t">교수매개변수없음</label>
-                          </input>
-
-                          <input type="radio" id="r2" name="inType" value="2">
-                          <label id="r2t">파일입력</label>
-                          </input>
-
-                          <input type="radio" id="r3" name="inType" value="3">
-                          <label id="r3t">Text입력</label>
-                          <input type="text" placeholder="입력값 작성" id="textIn" />
-                          </input>
-
-                          <input type="file" id="fileIn" accept=".txt" />
-                        </div>
-                        <textarea id="result" rows="10" readonly></textarea>
-                      </div>
+                      <% } else { %>
+                      <textarea id="content" rows="20"></textarea>
+                      <%  } %>
                     </div>
-                  </form>
-                </div>
-              </section>
-            </div>
+
+                    <div class="6u 12u(mobile)" style="float: right;">
+                      <div style="margin-bottom:3%;">
+
+                        <input type="radio" id="r1" name="inType" value="1">
+                        <label id="r1t">교수매개변수없음</label>
+                        </input>
+
+                        <input type="radio" id="r2" name="inType" value="2">
+                        <label id="r2t">파일입력</label>
+                        </input>
+
+                        <input type="radio" id="r3" name="inType" value="3">
+                        <label id="r3t">Text입력</label>
+                        <input type="text" placeholder="입력값 작성" id="textIn" />
+                        </input>
+
+                        <input type="file" id="fileIn" accept=".txt" />
+                      </div>
+                      <textarea id="result" rows="10" readonly></textarea>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </section>
           </div>
         </div>
       </div>
+    </div>
   </div>
 
   <script>
@@ -212,7 +215,7 @@
       styleActiveLine: true
     });
 
-    $('input[type=radio][name=inType]').on('change', function() {
+    $('input[type=radio][name=inType]').on('change', function () {
       var radioValue = $(this).val();
 
       if (radioValue == "1") {
@@ -228,7 +231,7 @@
     $('#r1').attr('checked', true);
     $('#fileIn, #textIn').hide();
 
-    $('#lang').on('change', function() {
+    $('#lang').on('change', function () {
       const lang = $(this).children("option:selected").val();
       switch (lang) {
         case 'c':
@@ -249,30 +252,31 @@
       }
     });
 
-    $('#scoreSave').click(function(e) {
+    $('#scoreSave').click(function (e) {
       const target = $('#score2').val()
       e.preventDefault()
       $.ajax({
-          url: '/myclass/score/save',
-          dataType: 'json',
-          type: 'POST',
-          data: {
-            'task_no': <%=info.userInfo.task_submit_no %>,
-            'score': target
-          },
-          success: function(result) {
-            if (result.result) {
-              alert('저장성공')
-            } },
-            error : function(result) {
-              alert('저장실패,')
+        url: '/myclass/score/save',
+        dataType: 'json',
+        type: 'POST',
+        data: {
+          'task_no': <%=info.userInfo.task_submit_no %>,
+          'score': target
+        },
+        success: function (result) {
+          if (result.result) {
+            alert('저장성공')
           }
-        });
+        },
+        error: function (result) {
+          alert('저장실패,')
+        }
+      });
 
     })
 
 
-    $('#run').click(function() {
+    $('#run').click(function () {
       // const target = document.getElementById("lang")
       // const uri = "http://localhost:3000/editor/" + `<%=info.lang %>`
       // if(<%=info.userInfo.lang %>){
@@ -280,8 +284,8 @@
       //   // <%=info.userInfo.lang %>
       // }
       let msg = `<%=info.lang %>`
-      if(msg=='py'){
-        msg='python'
+      if (msg == 'py') {
+        msg = 'python'
       }
       const uri = "http://localhost:3000/editor/" + msg
 
@@ -296,11 +300,12 @@
             'content': editor.getValue(),
             'params': params
           },
-          success: function(result) {
+          success: function (result) {
             if (result.result) {
               $('#result').html(result['content']);
-            } },
-          error : function(result) {
+            }
+          },
+          error: function (result) {
             alert('세션이 끊겼습니다,')
             window.location.href = "/login";
           }
@@ -346,7 +351,7 @@
     function textRead(file, callback) {
       var reader = new FileReader();
       reader.readAsText(file, "euc-kr");
-      reader.onload = function() {
+      reader.onload = function () {
         callback(reader.result)
       };
     }
@@ -361,10 +366,10 @@
   <!-- Footer include  -->
   <% include ../../partials/footer.ejs %>
 
-    </div>
+  </div>
 
-    <!-- Scripts -->
-    <% include ../../partials/scripts.ejs %>
+  <!-- Scripts -->
+  <% include ../../partials/scripts.ejs %>
 </body>
 
 </html>

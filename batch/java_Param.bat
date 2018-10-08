@@ -1,6 +1,6 @@
 @echo off
 title Java Compile
-
+chcp 65001
 cd C:\gitfolder\CapstoneProject\complieFolder\java
 setlocal EnableDelayedExpansion
 set /a count=0
